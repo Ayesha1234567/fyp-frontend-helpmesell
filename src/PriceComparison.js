@@ -209,16 +209,24 @@ function PriceComparison()
 
         history.push('/products/')
     }
-    useEffect(async()=>{
-
-        let result=await fetch(BASE_URL+'/api/products/');
-        result=await result.json();
-        // if (result)
-        // { setCOUNT(COUNT+1);
-        //     console.log("this is COUNT ", {COUNT}) }
-        setData(result);
+    const fetch_products = async () => {
+      
+          let result = await fetch(BASE_URL+"/api/products/")
+          result = await result.json();
+          setData(result);
+    }
+    
+    useEffect(() => {
         setUser(JSON.parse(localStorage.getItem('current_user')))
-    },[])
+    
+        if (user && typeof user !== "undefined"){
+        fetch_products()
+        if (user['is_subscribed'] == false){
+            history("/payment");
+        }
+        }
+    }, [user]);
+
     async function search(key)
     { if (key.length>3)
     {

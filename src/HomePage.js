@@ -189,6 +189,25 @@ function HomePage({ children }) {
     setPage(newPage);
   };
 
+
+  const fetch_products = async () => {
+
+    let result = await fetch(BASE_URL+"/api/products/")
+    result = await result.json();
+    setData(result);
+  }
+
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem('current_user')))
+
+    if (user && typeof user !== "undefined"){
+      fetch_products()
+      if (user['is_subscribed'] == false){
+        history("/payment");
+    }
+    }
+  }, [user]);
+
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
@@ -203,16 +222,13 @@ function HomePage({ children }) {
   function Submit() {
     history.push("/uploadfile/");
   }
-  useEffect(async () => {
-    // axios;
-    let result = await fetch(
-      BASE_URL+"/api/products/"
-    );
-    result = await result.json();
+  // useEffect(async () => {
+  //   // axios;
 
-    setData(result);
-    setUser(JSON.parse(localStorage.getItem('current_user')))
-  }, []);
+
+  //   setData(result);
+  //   setUser(JSON.parse(localStorage.getItem('current_user')))
+  // }, []);
 
   function passValues() {
     console.log("thats the click handler");

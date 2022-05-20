@@ -138,7 +138,7 @@ function Login() {
       console.log("this is the response: ", { response });
       //   const { data } = response;
       if (response.data.token) {
-        const { token, first_name, username,state,id} = response.data || {};
+        const { token, first_name, username,state,id, is_subscribed} = response.data || {};
 
         let userObj = {
           token,
@@ -146,6 +146,7 @@ function Login() {
           username,
           state,
           id,
+          is_subscribed
         };
         localStorage.setItem("current_user", JSON.stringify(userObj));
         history("/homepage");
