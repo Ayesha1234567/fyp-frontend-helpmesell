@@ -12,9 +12,6 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import LaptopMacIcon from '@mui/icons-material/LaptopMac';
 import LogoutIcon from '@mui/icons-material/Logout';
-import CircularProgress, {
-  CircularProgressProps,
-} from '@mui/material/CircularProgress';
 
 import {
   makeStyles,
@@ -167,7 +164,7 @@ const useStyles=makeStyles({
   },
   bottom:{
     position:"absolute",
-    top:656,
+    top:657,
     left:-1,
   },
   label:{
@@ -300,7 +297,7 @@ function UploadFile()
 
   async function Submit(){
     console.warn(file)
-    const formdata = new FormData();
+    const formdata=new FormData();
     console.log(file)
     formdata.append(" ls_product_file",file)
     formdata.append(" user",JSON.parse(localStorage.getItem('current_user')).id)
@@ -472,7 +469,7 @@ function UploadFile()
               <Typography  style={{top:127}} className={classes.label} >
                 Choose File :
               </Typography>
-              <TextField className={classes.field} type={"file"} required  onChange={(e)=>setFile(e.target.files[0])} id="outlined-basic"  variant="outlined" size="small" />
+              <TextField className={classes.field} type={"file"} required  onChange={(e)=>setFile(e.target.files[0])} id="outlined-basic"  variant="outlined" size="small" Password/>
               <Button  className={classes.button} onClick={Submit}  variant="contained" color="primary">
                 Upload File
               </Button>
@@ -488,7 +485,7 @@ function UploadFile()
               </Toolbar>
             </Container>
           </AppBar>
-
+          {/*{success && <Alert className={classes.success} severity="success">This is a success alert — check it out!</Alert>}*/}
         </form>
         {success && <Alert  action={close}  className={classes.success} severity="success">File Uploaded Successfully</Alert>}
 
@@ -516,10 +513,9 @@ function UploadFile()
         <Snackbar
             open={openSnackBAr}
             autoHideDuration={3000}
-            message={"Invalid File"}
+            message={"File not selected"}
             anchorOrigin={{ vertical: "top", horizontal: "right" }}
             action={action}
-
         />
 
 

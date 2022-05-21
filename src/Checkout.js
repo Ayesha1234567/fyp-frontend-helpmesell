@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { PaymentInputsWrapper, usePaymentInputs } from 'react-payment-inputs';
 import images from 'react-payment-inputs/images';
 import {Button, Grid, IconButton, makeStyles, Snackbar, TextField} from "@material-ui/core";
@@ -52,6 +52,7 @@ function PaymentInputs() {
     const[name,setName]= useState("");
     const[email,setEmail]= useState("");
     const [data, setData] = useState([]);
+    const [user,setUser]=useState({});
     const [cardNumber,setCardNumber] =useState("")
     const [expiryDate,setExpiryDate]=useState("")
     const [cvc,setCVC]=useState("");
@@ -70,6 +71,9 @@ function PaymentInputs() {
     const handleClose = () => {
         setOpenTwo(false);
     };
+    useEffect(() => {
+        setUser(JSON.parse(localStorage.getItem('current_user')))
+    }, []);
     const close = (
         <IconButton
             size="small"
@@ -97,8 +101,9 @@ function PaymentInputs() {
             number: cardNumber,
             exp_date: expiryDate,
             cvc: cvc,
-            // price:"price_1Kvnt3FVG2XMVBbYQcqT5iWH"
+            id:user.id,
         };
+
         const requestOptions = {
             method: "POST",
             headers: {

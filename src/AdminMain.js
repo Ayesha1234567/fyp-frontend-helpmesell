@@ -19,7 +19,6 @@ import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 import InputBase from "@mui/material/InputBase";
 // import {History} from "@material-ui/icons";
 // import { browserHistory } from "react-router";
-import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
 import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import ExpandLess from "@mui/icons-material/ExpandLess";
@@ -44,8 +43,6 @@ import EqualizerIcon from "@mui/icons-material/Equalizer";
 import PaidRoundedIcon from "@mui/icons-material/PaidRounded";
 import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import CloseIcon from "@mui/icons-material/Close";
-import {Alert} from "@mui/material";
-import {ProgressBar} from "react-bootstrap";
 // import router from "react-router-dom/es/Router";
 
 const drawerWidth = 240;
@@ -68,12 +65,6 @@ const useStyles = makeStyles({
     uptoolbar: {
         height: 10,
         width: -300,
-    },
-    success:{
-        position:"relative",
-        width:300,
-        left:650,
-        bottom:300
     },
     app: {
         right: -240,
@@ -210,10 +201,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 
-
-
-
-
 function AdminMain({ children }) {
     const classes = useStyles();
     const history = useNavigate();
@@ -224,17 +211,10 @@ function AdminMain({ children }) {
     const [link,setLink]=useState({});
     const [website, setWebsite] = React.useState('');
     const [openSnackBAr, setOpenSnackBAR] = useState(false);
-    const [success,setSuccess]=useState(false);
-    const [status,setStatus]=useState({
-        uploadedPercentage :0,
-        avatar:''
-    })
 
     const handleChange = (event: SelectChangeEvent) => {
         setWebsite(event.target.value);
     };
-
-
 
     const action = (
         <IconButton
@@ -246,18 +226,6 @@ function AdminMain({ children }) {
             <CloseIcon fontSize="small" />
         </IconButton>
     );
-    const close = (
-        <IconButton
-            size="small"
-            aria-label="close"
-            color="inherit"
-            onClick={() => setSuccess(false)}
-        >
-            <CloseIcon fontSize="small" />
-        </IconButton>
-    );
-
-
 
 
     const theme = useTheme();
@@ -267,6 +235,9 @@ function AdminMain({ children }) {
             sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
         ></Box>
     );
+    // function Submit() {
+    //     history.push("/uploadfile/");
+    // }
     useEffect(async () => {
 
         // axios;
@@ -278,22 +249,19 @@ function AdminMain({ children }) {
         setUser(JSON.parse(localStorage.getItem('current_user')))
     }, []);
 
-
+    function passValues() {
+        console.log("thats the click handler");
+        //     {data.map((row) => (
+        //         localStorage.setItem('data',row.id),
+        //       alert(row.id)
+        // ))}
+        // history.push("/products/");
+    }
     async function Submit() {
         let item = {
             website: website
         };
-        const options ={
-            onUploadProgress: (progressEvent)=>{
-                const {loaded,total}=progressEvent;
-                let percent=Math.floor((loaded*100)/total)
-                console.log(`${loaded} kb of ${total}kb | ${percent}%`);
-                if(percent<100)
-                {
-                    setStatus({uploadedPercentage:percent})
-                }
-            }
-        }
+
         const requestOptions = {
             method: "POST",
             headers: {
@@ -304,12 +272,11 @@ function AdminMain({ children }) {
         };
         try {
             const response = await axios({
-                url:  BASE_URL +"/api/Scrapers/",options,
+                url:  BASE_URL +"/api/Scrapers/",
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     Accept: "application/json",
-
                 },
                 data: item,
             });
@@ -465,19 +432,19 @@ function AdminMain({ children }) {
                 </AppBar>
                 <Container>
 
-{/*<Typography style={{left:19,top:134,position:"absolute", fontSize:26,fontFamily:"serif", color:"slateblue"}}>Scrape website:</Typography>*/}
-{/*                    <TextField*/}
-{/*                        className={classes.field}*/}
-{/*                        type={"text"}*/}
-{/*                        required*/}
-{/*                        value={""}*/}
-{/*                        onChange={(e) => setLink(e.target.value)}*/}
-{/*                        id="outlined-basic"*/}
-{/*                        label="URl"*/}
-{/*                        variant="outlined"*/}
-{/*                        size="small"*/}
+                    {/*<Typography style={{left:19,top:134,position:"absolute", fontSize:26,fontFamily:"serif", color:"slateblue"}}>Scrape website:</Typography>*/}
+                    {/*                    <TextField*/}
+                    {/*                        className={classes.field}*/}
+                    {/*                        type={"text"}*/}
+                    {/*                        required*/}
+                    {/*                        value={""}*/}
+                    {/*                        onChange={(e) => setLink(e.target.value)}*/}
+                    {/*                        id="outlined-basic"*/}
+                    {/*                        label="URl"*/}
+                    {/*                        variant="outlined"*/}
+                    {/*                        size="small"*/}
 
-{/*                    />*/}
+                    {/*                    />*/}
                     <Box  className={classes.dropdown} sx={{ minWidth: 120 }}>
                         <FormControl fullWidth>
                             <InputLabel id="demo-simple-select-label">Website Name</InputLabel>
@@ -499,24 +466,19 @@ function AdminMain({ children }) {
                             </Select>
                         </FormControl>
                     </Box>
-                    <Button  className={classes.button}  onClick={Submit}  variant="contained" color="primary">
+                    <Button  className={classes.button} onClick={Submit}  variant="contained" color="primary">
                         Start Scrapper
                     </Button>
-                    {status.uploadedPercentage > 0 && <ProgressBar now={status.uploadedPercentage} active label={`${status.uploadedPercentage}%`} />}
-
-
-
 
                 </Container>
             </Box>
             <Snackbar
                 open={openSnackBAr}
                 autoHideDuration={6000}
-                message={"Data Has Failed to Scrape"}
+                message={"Data Has Started to Scrape"}
                 anchorOrigin={{ vertical: "top", horizontal: "right" }}
                 action={action}
             />
-            {success && <Alert  action={close}  className={classes.success} severity="success">File Uploaded Successfully</Alert>}
         </div>
     );
 }

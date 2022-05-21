@@ -138,7 +138,7 @@ function Login() {
       console.log("this is the response: ", { response });
       //   const { data } = response;
       if (response.data.token) {
-        const { token, first_name, username,state,id, is_subscribed} = response.data || {};
+        const { token, first_name, username,state,id} = response.data || {};
 
         let userObj = {
           token,
@@ -236,6 +236,7 @@ function Login() {
                     size="small"
                     Username
                 />
+
                 <TextField
                     className={classes.field}
                     type={"password"}
@@ -249,6 +250,7 @@ function Login() {
                     Password
                 />
               </Grid>
+
               <Button
                   className={classes.button}
                   onClick={Submit}
@@ -267,11 +269,13 @@ function Login() {
                     variant="body1"
                     color="inherit"
                 >
+
                 </Typography>
               </Toolbar>
             </Container>
           </AppBar>
         </form>
+
         <Snackbar
             open={openSnackBAr}
             autoHideDuration={6000}

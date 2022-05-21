@@ -76,7 +76,7 @@ const useStyles=makeStyles({
     },
     bottom: {
         position: "relative",
-        bottom: -610,
+        bottom: -490,
         left: 200,
         width:1319,
     },
@@ -209,16 +209,24 @@ function PriceComparison()
 
         history.push('/products/')
     }
-    useEffect(async()=>{
+    const fetch_products = async () => {
 
-        let result=await fetch(BASE_URL+'/api/products/');
-        result=await result.json();
-        // if (result)
-        // { setCOUNT(COUNT+1);
-        //     console.log("this is COUNT ", {COUNT}) }
+        let result = await fetch(BASE_URL+"/api/products/")
+        result = await result.json();
         setData(result);
+    }
+
+    useEffect(() => {
         setUser(JSON.parse(localStorage.getItem('current_user')))
-    },[])
+
+        if (user && typeof user !== "undefined"){
+            fetch_products()
+            if (user['is_subscribed'] == false){
+                history("/payment");
+            }
+        }
+    }, [user]);
+
     async function search(key)
     { if (key.length>3)
     {
@@ -353,7 +361,7 @@ function PriceComparison()
             <SearchIconWrapper>
                 <SearchIcon style={{color:"slateblue",left:580, width:100, height:100, top:85,position:"absolute"}}/>
             </SearchIconWrapper>
-            <Button variant="contained" color={"primary"} style={{left:1120, top:185}} onClick={Search}>Search</Button>
+            {/*<Button variant="contained" color={"primary"} style={{left:1120, top:185}} onClick={Search}>Search</Button>*/}
             {<Box
                 sx={{
                     display: 'flex',

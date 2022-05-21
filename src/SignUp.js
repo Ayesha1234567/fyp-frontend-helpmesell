@@ -10,7 +10,6 @@ import { Box, Toolbar, ButtonGroup, Button, AppBar } from "@material-ui/core";
 import CloseIcon from "@mui/icons-material/Close";
 import { Wave } from "react-animated-text";
 import axios from "axios";
-import {Formik} from "formik"
 import {BASE_URL} from "./Constants";
 
 const useStyles = makeStyles({
@@ -150,225 +149,223 @@ function SignUp() {
   }
 
   const action = (
-    <IconButton
-      size="small"
-      aria-label="close"
-      color="inherit"
-      onClick={() => setOpenSnackBAR(false)}
-    >
-      <CloseIcon fontSize="small" />
-    </IconButton>
+      <IconButton
+          size="small"
+          aria-label="close"
+          color="inherit"
+          onClick={() => setOpenSnackBAR(false)}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
   );
 
   return (
-    <div>
-      <AppBar position="static">
-        <Toolbar className={classes.uptoolbar}>
-          <Typography variant="h6" className={classes.title}>
-            HelpMeSell
-          </Typography>
-          <Typography className={classes.mainTitle}>HelpMeSell</Typography>
-          <ButtonGroup>
-          </ButtonGroup>
-        </Toolbar>
-      </AppBar>
+      <div>
+        <AppBar position="static">
+          <Toolbar className={classes.uptoolbar}>
+            <Typography variant="h6" className={classes.title}>
+              HelpMeSell
+            </Typography>
+            <Typography className={classes.mainTitle}>HelpMeSell</Typography>
+            <ButtonGroup>
+            </ButtonGroup>
+          </Toolbar>
+        </AppBar>
 
-      <Typography className={classes.textLogo}>
-        <Wave
-          text="Make Your Buying Decisions        SMARTER!"
-          effect="stretch"
-          effectChange={1.2}
-        />{" "}
-      </Typography>
+        <Typography className={classes.textLogo}>
+          <Wave
+              text="Make Your Buying Decisions        SMARTER!"
+              effect="stretch"
+              effectChange={1.2}
+          />{" "}
+        </Typography>
 
+        <form>
+          <Box
+              className={classes.mainHandler}
+              sx={{
+                width: 430,
+                height: 370,
+                p: 1,
+                border: "2px solid",
+                borderColor: "#89a0cc",
+                position: "relative",
+                borderRadius: 4,
+                bgcolor: "",
+              }}
+          >
+            <AppBar position="static">
+              <Toolbar>
+                <Typography variant="h5" className={classes.title}>
+                  SignUp
+                </Typography>
+              </Toolbar>
+            </AppBar>
+            <Container>
+              <Grid container direction={"row"} spacing={2}>
+                <Grid item xs={6}>
+                  <TextField
+                      className={classes.field}
+                      required
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      id="outlined-basic"
+                      label="First Name"
+                      variant="outlined"
+                      size="small"
+                      First
+                      Name
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                      className={classes.field}
+                      required
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      id="outlined-basic"
+                      label="Last Name"
+                      variant="outlined"
+                      size="small"
+                      Last
+                      Name
+                  />
+                </Grid>
+              </Grid>
 
-        <Box
-          className={classes.mainHandler}
-          sx={{
-            width: 430,
-            height: 370,
-            p: 1,
-            border: "2px solid",
-            borderColor: "#89a0cc",
-            position: "relative",
-            borderRadius: 4,
-            bgcolor: "",
-          }}
-        >
-          <AppBar position="static">
+              <Grid container direction={"row"} spacing={2}>
+                <Grid item xs={6}>
+                  <TextField
+                      className={classes.field}
+                      required
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      id="outlined-basic"
+                      label="Username"
+                      variant="outlined"
+                      size="small"
+                      Username
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                      className={classes.field}
+                      type={"email"}
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      id="outlined-basic"
+                      label="Email"
+                      variant="outlined"
+                      size="small"
+                      Email
+                  />
+                </Grid>
+              </Grid>
+
+              <Grid container direction={"row"} spacing={2}>
+                <Grid item xs={6}>
+                  <TextField
+                      className={classes.field}
+                      type={"number"}
+                      required
+                      value={contactNo}
+                      onChange={(e) => setContactNo(e.target.value)}
+                      id="outlined-basic"
+                      label="Contact No"
+                      variant="outlined"
+                      size="small"
+                      Contact
+                      No
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                      className={classes.field}
+                      required
+                      value={dob}
+                      label={"date of birth"}
+                      onChange={(e) => setDob(e.target.value)}
+                      id="outlined-basic"
+                      variant="outlined"
+                      // type={"date"}
+                      size="small"
+                      views={['day']}
+                      Dob
+                  />
+                </Grid>
+              </Grid>
+
+              <Grid container direction={"row"} spacing={2}>
+                <Grid item xs={6}>
+                  <TextField
+                      className={classes.field}
+                      type={"password"}
+                      required
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      id="outlined-basic"
+                      label="Password"
+                      variant="outlined"
+                      size="small"
+                      Password
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                      className={classes.field}
+                      type={"password"}
+                      required
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      id="outlined-basic"
+                      label="Confirm Password"
+                      variant="outlined"
+                      size="small"
+                      Confirm
+                      Password
+                  />
+                </Grid>
+              </Grid>
+
+              <Button
+                  className={classes.button}
+                  onClick={Submit}
+                  variant="contained"
+                  color="primary"
+              >
+                Signup
+              </Button>
+              <Link to={"/signuplocalseller/"}>
+                <Typography style={{position:"absolute",top:338}}>Signup as a local seller</Typography> </Link>
+              <Typography style={{position:"absolute",top:338,left:210}}>Or</Typography>
+              <Link to={"/login"} > <Typography style={{position:"absolute",top:338,left:240}}>Login</Typography> </Link>
+
+            </Container>
+          </Box>
+        </form>
+
+        <AppBar className={classes.bottom} position="static" color="primary">
+          <Container maxWidth="md">
             <Toolbar>
-              <Typography variant="h5" className={classes.title}>
-                SignUp
+              <Typography
+                  className={classes.writeBottom}
+                  variant="body1"
+                  color="inherit"
+              >
               </Typography>
             </Toolbar>
-          </AppBar>
-          <Container>
-            <form>
-            <Grid container direction={"row"} spacing={2}>
-              <Grid item xs={6}>
-                <TextField
-                  className={classes.field}
-                  required
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  id="outlined-basic"
-                  label="First Name"
-                  variant="outlined"
-                  size="small"
-                  First
-                  Name
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  className={classes.field}
-                  required
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                  id="outlined-basic"
-                  label="Last Name"
-                  variant="outlined"
-                  size="small"
-                  Last
-                  Name
-                />
-              </Grid>
-            </Grid>
-
-            <Grid container direction={"row"} spacing={2}>
-              <Grid item xs={6}>
-                <TextField
-                  className={classes.field}
-                  required
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  id="outlined-basic"
-                  label="Username"
-                  variant="outlined"
-                  size="small"
-                  Username
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  className={classes.field}
-                  type={"email"}
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  id="outlined-basic"
-                  label="Email"
-                  variant="outlined"
-                  size="small"
-                  Email
-                />
-              </Grid>
-            </Grid>
-
-            <Grid container direction={"row"} spacing={2}>
-              <Grid item xs={6}>
-                <TextField
-                  className={classes.field}
-                  type={"number"}
-                  required
-                  value={contactNo}
-                  onChange={(e) => setContactNo(e.target.value)}
-                  id="outlined-basic"
-                  label="Contact No"
-                  variant="outlined"
-                  size="small"
-                  Contact
-                  No
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  className={classes.field}
-                  required
-                  value={dob}
-                 label={"date of birth"}
-                  onChange={(e) => setDob(e.target.value)}
-                  id="outlined-basic"
-                  variant="outlined"
-                  // type={"date"}
-                  size="small"
-                  views={['day']}
-                  Dob
-                />
-              </Grid>
-            </Grid>
-
-            <Grid container direction={"row"} spacing={2}>
-              <Grid item xs={6}>
-                <TextField
-                  className={classes.field}
-                  type={"password"}
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  id="outlined-basic"
-                  label="Password"
-                  variant="outlined"
-                  size="small"
-                  Password
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  className={classes.field}
-                  type={"password"}
-                  required
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  id="outlined-basic"
-                  label="Confirm Password"
-                  variant="outlined"
-                  size="small"
-                  Confirm
-                  Password
-                />
-              </Grid>
-            </Grid>
-            </form>
-
-            <Button
-              className={classes.button}
-              onClick={Submit}
-              variant="contained"
-              color="primary"
-            >
-              Signup
-            </Button>
-            <Link to={"/signuplocalseller/"}>
-              <Typography style={{position:"absolute",top:338}}>Signup as a local seller</Typography> </Link>
-              <Typography style={{position:"absolute",top:338,left:210}}>Or</Typography>
-            <Link to={"/login"} > <Typography style={{position:"absolute",top:338,left:240}}>Login</Typography> </Link>
-
           </Container>
-        </Box>
+        </AppBar>
 
-
-      <AppBar className={classes.bottom} position="static" color="primary">
-        <Container maxWidth="md">
-          <Toolbar>
-            <Typography
-              className={classes.writeBottom}
-              variant="body1"
-              color="inherit"
-            >
-            </Typography>
-          </Toolbar>
-        </Container>
-      </AppBar>
-
-      <Snackbar
-        open={openSnackBAr}
-        autoHideDuration={6000}
-        message={"Sign Up Failed"}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        action={action}
-      />
-    </div>
+        <Snackbar
+            open={openSnackBAr}
+            autoHideDuration={6000}
+            message={"Sign Up Failed"}
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            action={action}
+        />
+      </div>
   );
 }
 export default SignUp;

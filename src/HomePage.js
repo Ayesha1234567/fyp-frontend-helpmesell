@@ -18,18 +18,6 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import LaptopMacIcon from "@mui/icons-material/LaptopMac";
 import LogoutIcon from "@mui/icons-material/Logout";
-// Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/effect-fade";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-
-// import required modules
-import { EffectFade, Navigation, Pagination } from "swiper";
-
 import TableRow from "@mui/material/TableRow";
 import {
   makeStyles,
@@ -82,8 +70,8 @@ const useStyles = makeStyles({
     left: 1000,
   },
   bottom: {
-    position: "relative",
-    bottom: -610,
+    position: "absolute",
+    bottom: -450,
     left: 95,
   },
   searchmain: {
@@ -197,14 +185,28 @@ function HomePage({ children }) {
   const [user,setUser]=useState({});
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  let state;
-  state={
-    percentage:0,
-    avatar:''
-  }
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
+
+
+  const fetch_products = async () => {
+
+    let result = await fetch(BASE_URL+"/api/products/")
+    result = await result.json();
+    setData(result);
+  }
+
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem('current_user')))
+
+    if (user && typeof user !== "undefined"){
+      fetch_products()
+      if (user['is_subscribed'] == false){
+        history("/payment");
+      }
+    }
+  }, [user]);
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
@@ -220,23 +222,13 @@ function HomePage({ children }) {
   function Submit() {
     history.push("/uploadfile/");
   }
-  const options = {
-    onUploadProgress: (progressEvent) => {
-      const {loaded, total} = progressEvent;
-      let percent = Math.floor((loaded * 100) / total)
-      console.log(`${loaded} kb of ${total} kb | ${percent}%`)
-    }
-  }
-  useEffect(async () => {
-    // axios;
-    let result = await fetch(
-        BASE_URL+"/api/products/",options,
-    );
-    result = await result.json();
+  // useEffect(async () => {
+  //   // axios;
 
-    setData(result);
-    setUser(JSON.parse(localStorage.getItem('current_user')))
-  }, []);
+
+  //   setData(result);
+  //   setUser(JSON.parse(localStorage.getItem('current_user')))
+  // }, []);
 
   function passValues() {
     console.log("thats the click handler");
@@ -259,7 +251,6 @@ function HomePage({ children }) {
 
   return (
       <div>
-
         <Box sx={{ display: "flex" }}>
           <Box sx={{ flexGrow: 5 }}>
             <AppBar position="static" className={classes.app}>

@@ -15,67 +15,65 @@ import SignupLocalseller from "./SignupLocalseller";
 import Laptops from "./Laptops";
 import Smartphones from "./Smartphones";
 import Payment from "./Payment";
-import Checkout from "./Checkout";
 // import './App.css';
 
 const App = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path="/login" exact={true} element={<Login />} />
-        {/* <Login /  >
+      <Router>
+        <Routes>
+          <Route path="/login" exact={true} element={<Login />} />
+          {/* <Login /  >
         </Route> */}
-        <Route path="/" exact={true} element={<SignUp />} />
-        {/* <SignUp />
+          <Route path="/" exact={true} element={<SignUp />} />
+          {/* <SignUp />
         </Route> */}
-        <Route path="/homepage" exact={true} element={<HomePage />} />
-        {/* <HomePage />
+          <Route path="/homepage" exact={true} element={<HomePage />} />
+          {/* <HomePage />
         </Route> */}
-        <Route path="/adminmain" exact={true} element={<AdminMain />} />
-        {/* <AdminMain />
+          <Route path="/adminmain" exact={true} element={<AdminMain />} />
+          {/* <AdminMain />
         </Route> */}
-        <Route path="/adminlogin" exact={true} element={<AdminLogin />} />
-        {/* <AdminLogin />
+          <Route path="/adminlogin" exact={true} element={<AdminLogin />} />
+          {/* <AdminLogin />
         </Route> */}
-        <Route path="/marketsurvey" exact={true} element={<MarketSurvey />} />
-        {/* <MarketSurvey />
+          <Route path="/marketsurvey" exact={true} element={<MarketSurvey />} />
+          {/* <MarketSurvey />
         </Route> */}
-        <Route
-          path="/pricecomparison"
-          exact={true}
-          element={<PriceComparison />}
-        />
-        {/* <PriceComparison />
+          <Route
+              path="/pricecomparison"
+              exact={true}
+              element={<PriceComparison />}
+          />
+          {/* <PriceComparison />
         </Route> */}
-        <Route path="/products/:id" exact={true} element={<DynamicPage />} />
-        {/* <DynamicPage />
+          <Route path="/products/:id" exact={true} element={<DynamicPage />} />
+          {/* <DynamicPage />
         </Route> */}
-        <Route path="/uploadfile" exact={true} element={<UploadFile />} />
-        <Route path="/signuplocalseller" exact={true} element={<SignupLocalseller />} />
-        <Route path="/laptops" exact={true} element={<Laptops />} />
-        <Route path="/smartphones" exact={true} element={<Smartphones />} />
-        <Route path="/payment" exact={true} element={<Payment />} />
-        <Route path="/checkout" exact={true} element={<Checkout />} />
+          <Route path="/uploadfile" exact={true} element={<UploadFile />} />
+          <Route path="/signuplocalseller" exact={true} element={<SignupLocalseller />} />
+          <Route path="/laptops" exact={true} element={<Laptops />} />
+          <Route path="/smartphones" exact={true} element={<Smartphones />} />
+          <Route path="/payment" exact={true} element={<Payment />} />
 
-      </Routes>
-    </Router>
+        </Routes>
+      </Router>
 
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <p>
-    //       Edit <code>src/App.js</code> and save to reload.
-    //     </p>
-    //     <a
-    //       className="App-link"
-    //       href="https://reactjs.org"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       Learn React
-    //     </a>
-    //   </header>
-    // </div>
+      // <div className="App">
+      //   <header className="App-header">
+      //     <img src={logo} className="App-logo" alt="logo" />
+      //     <p>
+      //       Edit <code>src/App.js</code> and save to reload.
+      //     </p>
+      //     <a
+      //       className="App-link"
+      //       href="https://reactjs.org"
+      //       target="_blank"
+      //       rel="noopener noreferrer"
+      //     >
+      //       Learn React
+      //     </a>
+      //   </header>
+      // </div>
   );
 };
 

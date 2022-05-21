@@ -388,143 +388,75 @@ function Payment()
     },[])
 
     const [product, setProduct]=useState({
-        // name:user.first_name+user.last_name,
-        name:"Ayesha",
-        price : 0,
-        // productBy: "HelpMeSell",
-        packageId:"prod_Ld41FbP0ws0ytC",
         priceId:"price_1KvntgFVG2XMVBbYF9GP2cqJ",
-        number: number,
-        exp_month: exp_month,
-        exp_year: exp_year,
-        cvc: cvc,
-
     });
     const [secondaryProduct, setSecondaryProduct]=useState({
-        name:"Ayesha",
-        price : 700,
-        // productBy: "HelpMeSell",
-        packageId:"prod_Ld41so8Y14AYVS",
+
         priceId:"price_1Kvnt3FVG2XMVBbYQcqT5iWH",
-        number: number,
-        exp_month: exp_month,
-        exp_year: exp_year,
-        cvc: cvc,
-
-
-
     });
     const [tertiaryProduct, setTertiaryProduct]=useState({
-        name:"Ayesha",
-        price : 1200,
-        // productBy: "HelpMeSell",
-        packageId:"prod_Ld40YnBLY7Bdak",
+
         priceId:"price_1KvnsYFVG2XMVBbY4b3Kio3b",
-        number: number,
-        exp_month: exp_month,
-        exp_year: exp_year,
-        cvc: cvc,
-
     });
-    async function Submit() {
-        let item = {
-            number: number,
-            exp_month: exp_month,
-            exp_year: exp_year,
-            cvc: cvc,
-        };
-        console.log("In the submit function: ", item);
-        const requestOptions = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-            },
-            body: JSON.stringify(item),
-        };
-        try {
-            const response = await axios({
-                url: BASE_URL + "/api/Payment",
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Accept: "application/json",
-                },
-                data: item,
-            });
-
-            const {data} = response || {};
-            if (data.username) {
-                history("/login");
-            }
-        } catch (error) {
-            console.log("error", {error});
-            const {response} = error;
-            const {data} = response;
-            const {message} = data;
-        }
-
-    }
-
     const logoutHandler = () => {
         localStorage.setItem("current_user", "");
         history("/login");
     };
-    // const makePayment= token => {
-    //     const body ={
-    //         token,
-    //         product,
-    //     }
-    //     const headers={
-    //         "Content-Type": "application/json"
-    //     }
-    //     return fetch(BASE_URL+'/api/Payment/',{
-    //         method:"POST",
-    //         headers,
-    //         body: JSON.stringify(body)
-    //     }).then(response => {
-    //         console.log("RESPONSE",response)
-    //         const {status}=response;
-    //         console.log("STATUS", status)
-    //     }).catch(error => console.log(error));
-    // }
+    const makePayment= token => {
+        const body ={
+            token,
+            product,
+        }
+        const headers={
+            "Content-Type": "application/json"
+        }
+        return fetch(BASE_URL+'/api/Payment/',{
+            method:"POST",
+            headers,
+            body: JSON.stringify(body)
+        }).then(response => {
+            console.log("RESPONSE",response)
+            const {status}=response;
+            console.log("STATUS", status)
+        }).catch(error => console.log(error));
+    }
 
-    // const makePaymentSecond= token => {
-    //     const body ={
-    //         token,
-    //         secondaryProduct
-    //     }
-    //     const headers={
-    //         "Content-Type": "application/json"
-    //     }
-    //     return fetch(BASE_URL+'/api/Payment/',{
-    //         method:"POST",
-    //         headers,
-    //         body: JSON.stringify(body)
-    //     }).then(response => {
-    //         console.log("RESPONSE",response)
-    //         const {status}=response;
-    //         console.log("STATUS", status)
-    //     }).catch(error => console.log(error));
-    // }
-    // const makePaymentThird= token => {
-    //     const body ={
-    //         token,
-    //         tertiaryProduct
-    //     }
-    //     const headers={
-    //         "Content-Type": "application/json"
-    //     }
-    //     return fetch(BASE_URL+'/api/Payment/',{
-    //         method:"POST",
-    //         headers,
-    //         body: JSON.stringify(body)
-    //     }).then(response => {
-    //         console.log("RESPONSE",response)
-    //         const {status}=response;
-    //         console.log("STATUS", status)
-    //     }).catch(error => console.log(error));
-    // }
+    const makePaymentSecond= token => {
+        const body ={
+            token,
+            secondaryProduct
+        }
+        const headers={
+            "Content-Type": "application/json"
+        }
+        return fetch(BASE_URL+'/api/Payment/',{
+            method:"POST",
+            headers,
+            body: JSON.stringify(body)
+        }).then(response => {
+            console.log("RESPONSE",response)
+            const {status}=response;
+            console.log("STATUS", status)
+        }).catch(error => console.log(error));
+    }
+    const makePaymentThird= token => {
+        const body ={
+            token,
+            tertiaryProduct
+        }
+        const headers={
+            "Content-Type": "application/json"
+        }
+        return fetch(BASE_URL+'/api/Payment/',{
+            method:"POST",
+            headers,
+            body: JSON.stringify(body)
+        }).then(response => {
+            console.log("RESPONSE",response)
+            const {status}=response;
+            console.log("STATUS", status)
+        }).catch(error => console.log(error));
+    }
     return(
         <div>
             <AppBar position="static" className={classes.app}>
@@ -646,8 +578,8 @@ function Payment()
                     <Typography className={classes.offer2}> Upto 15 Keywords</Typography>
                 </CardContent>
                 <CardActions>
-                    <Button onClick={handleClickOpen} variant={"outlined"} color={"primary"} size="medium" className={classes.button}>
-                       Subscribe
+                    <Button token={makePayment} onClick={handleClickOpen} variant={"outlined"} color={"primary"} size="medium" className={classes.button}>
+                        Subscribe
                     </Button>
                 </CardActions>
             </Card>
@@ -673,7 +605,7 @@ function Payment()
                     <Typography className={classes.offer3}> Upto 700 Keywords</Typography>
                 </CardContent>
                 <CardActions>
-                    <Button onClick={handleClickOpen} variant={"outlined"} color={"primary"} size="medium" className={classes.button}>
+                    <Button token={makePaymentSecond} onClick={handleClickOpen} variant={"outlined"} color={"primary"} size="medium" className={classes.button}>
                         Subscribe
                     </Button>
                 </CardActions>
@@ -699,7 +631,7 @@ function Payment()
 
                 </CardContent>
                 <CardActions>
-                    <Button onClick={handleClickOpen} variant={"outlined"} color={"primary"} size="medium" className={classes.button}>
+                    <Button token={makePaymentThird} onClick={handleClickOpen} variant={"outlined"} color={"primary"} size="medium" className={classes.button}>
                         Subscribe
                     </Button>
                 </CardActions>
@@ -715,12 +647,12 @@ function Payment()
                     Subscription Form
                 </BootstrapDialogTitle>
                 <DialogContent dividers>
-                  <PaymentInputs />
+                    <PaymentInputs />
                 </DialogContent>
             </BootstrapDialog>
 
-    );
-}
+            );
+            }
 
             <AppBar  className={classes.bottom} position="static" color="primary">
                 <Container maxWidth="md">
