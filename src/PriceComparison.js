@@ -76,7 +76,7 @@ const useStyles=makeStyles({
     },
     bottom: {
         position: "relative",
-        bottom: -450,
+        bottom: -610,
         left: 200,
         width:1319,
     },
@@ -353,7 +353,7 @@ function PriceComparison()
             <SearchIconWrapper>
                 <SearchIcon style={{color:"slateblue",left:580, width:100, height:100, top:85,position:"absolute"}}/>
             </SearchIconWrapper>
-            {/*<Button variant="contained" color={"primary"} style={{left:1120, top:185}} onClick={Search}>Search</Button>*/}
+            <Button variant="contained" color={"primary"} style={{left:1120, top:185}} onClick={Search}>Search</Button>
             {<Box
                 sx={{
                     display: 'flex',

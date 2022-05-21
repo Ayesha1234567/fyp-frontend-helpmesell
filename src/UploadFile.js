@@ -12,6 +12,9 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import LaptopMacIcon from '@mui/icons-material/LaptopMac';
 import LogoutIcon from '@mui/icons-material/Logout';
+import CircularProgress, {
+  CircularProgressProps,
+} from '@mui/material/CircularProgress';
 
 import {
   makeStyles,
@@ -164,7 +167,7 @@ const useStyles=makeStyles({
   },
   bottom:{
     position:"absolute",
-    top:657,
+    top:656,
     left:-1,
   },
   label:{
@@ -273,7 +276,7 @@ function UploadFile()
   );
 
 
-    console.log("This is the useEffect of dynamic Function: ");
+  console.log("This is the useEffect of dynamic Function: ");
 
 
 
@@ -297,7 +300,7 @@ function UploadFile()
 
   async function Submit(){
     console.warn(file)
-    const formdata=new FormData();
+    const formdata = new FormData();
     console.log(file)
     formdata.append(" ls_product_file",file)
     formdata.append(" user",JSON.parse(localStorage.getItem('current_user')).id)
@@ -374,7 +377,7 @@ function UploadFile()
                 }
             >
               {
-                parseInt(user.state)==1 &&
+                  parseInt(user.state)==1 &&
                   <ListItemButton component={Link} to="/adminmain">
                     <ListItemIcon>
                       <EqualizerIcon color={"primary"} />
@@ -422,7 +425,7 @@ function UploadFile()
                 </List>
               </Collapse>
               {
-                parseInt(user.state) == 2 &&
+                  parseInt(user.state) == 2 &&
                   <ListItemButton component={Link} to="/payment">
                     <ListItemIcon>
                       <SubscriptionsIcon color={"primary"}/>
@@ -469,7 +472,7 @@ function UploadFile()
               <Typography  style={{top:127}} className={classes.label} >
                 Choose File :
               </Typography>
-              <TextField className={classes.field} type={"file"} required  onChange={(e)=>setFile(e.target.files[0])} id="outlined-basic"  variant="outlined" size="small" Password/>
+              <TextField className={classes.field} type={"file"} required  onChange={(e)=>setFile(e.target.files[0])} id="outlined-basic"  variant="outlined" size="small" />
               <Button  className={classes.button} onClick={Submit}  variant="contained" color="primary">
                 Upload File
               </Button>
@@ -485,7 +488,7 @@ function UploadFile()
               </Toolbar>
             </Container>
           </AppBar>
-          {/*{success && <Alert className={classes.success} severity="success">This is a success alert — check it out!</Alert>}*/}
+
         </form>
         {success && <Alert  action={close}  className={classes.success} severity="success">File Uploaded Successfully</Alert>}
 
@@ -513,9 +516,10 @@ function UploadFile()
         <Snackbar
             open={openSnackBAr}
             autoHideDuration={3000}
-            message={"File not selected"}
+            message={"Invalid File"}
             anchorOrigin={{ vertical: "top", horizontal: "right" }}
             action={action}
+
         />
 
 

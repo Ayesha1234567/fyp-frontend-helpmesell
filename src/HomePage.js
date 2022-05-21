@@ -18,6 +18,18 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import LaptopMacIcon from "@mui/icons-material/LaptopMac";
 import LogoutIcon from "@mui/icons-material/Logout";
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/effect-fade";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
+// import required modules
+import { EffectFade, Navigation, Pagination } from "swiper";
+
 import TableRow from "@mui/material/TableRow";
 import {
   makeStyles,
@@ -70,8 +82,8 @@ const useStyles = makeStyles({
     left: 1000,
   },
   bottom: {
-    position: "absolute",
-    bottom: -450,
+    position: "relative",
+    bottom: -610,
     left: 95,
   },
   searchmain: {
@@ -185,6 +197,11 @@ function HomePage({ children }) {
   const [user,setUser]=useState({});
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  let state;
+  state={
+    percentage:0,
+    avatar:''
+  }
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -195,18 +212,25 @@ function HomePage({ children }) {
   };
   const theme = useTheme();
   const bull = (
-    <Box
-      component="span"
-      sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
-    ></Box>
+      <Box
+          component="span"
+          sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
+      ></Box>
   );
   function Submit() {
     history.push("/uploadfile/");
   }
+  const options = {
+    onUploadProgress: (progressEvent) => {
+      const {loaded, total} = progressEvent;
+      let percent = Math.floor((loaded * 100) / total)
+      console.log(`${loaded} kb of ${total} kb | ${percent}%`)
+    }
+  }
   useEffect(async () => {
     // axios;
     let result = await fetch(
-      BASE_URL+"/api/products/"
+        BASE_URL+"/api/products/",options,
     );
     result = await result.json();
 
@@ -234,236 +258,237 @@ function HomePage({ children }) {
   };
 
   return (
-    <div>
-      <Box sx={{ display: "flex" }}>
-        <Box sx={{ flexGrow: 5 }}>
-          <AppBar position="static" className={classes.app}>
-            <Toolbar>
-              <Search className={classes.search}>
-                <SearchIconWrapper>
-                  <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase
-                  placeholder="Search…"
-                  inputProps={{ "aria-label": "search" }}
-                />
-              </Search>
-            </Toolbar>
+      <div>
+
+        <Box sx={{ display: "flex" }}>
+          <Box sx={{ flexGrow: 5 }}>
+            <AppBar position="static" className={classes.app}>
+              <Toolbar>
+                <Search className={classes.search}>
+                  <SearchIconWrapper>
+                    <SearchIcon />
+                  </SearchIconWrapper>
+                  <StyledInputBase
+                      placeholder="Search…"
+                      inputProps={{ "aria-label": "search" }}
+                  />
+                </Search>
+              </Toolbar>
+            </AppBar>
+          </Box>
+          <Drawer
+              className={classes.drawer}
+              variant="permanent"
+              anchor="left"
+              classes={{ paper: classes.drawerPaper }}
+          >
+            <AppBar position="static">
+              <Toolbar className={classes.uptoolbar}>
+                <Typography variant="h6" className={classes.title}>
+                  HelpMeSell
+                </Typography>
+              </Toolbar>
+            </AppBar>
+            <List
+                sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+                component="nav"
+                aria-labelledby="nested-list-subheader"
+                subheader={
+                  <ListSubheader
+                      component="div"
+                      id="nested-list-subheader"
+                  ></ListSubheader>
+                }
+            >
+              {parseInt(user.state) == 2 &&
+                  <ListItemButton component={Link} to="/uploadfile">
+                    <ListItemIcon>
+                      <FileUploadIcon color={"primary"}></FileUploadIcon>
+                    </ListItemIcon>
+                    <ListItemText primary="User Data"/>
+                  </ListItemButton>
+              }
+              {parseInt(user.state)==1 &&
+                  <ListItemButton component={Link} to="/adminmain">
+                    <ListItemIcon>
+                      <EqualizerIcon color={"primary"} />
+                    </ListItemIcon>
+                    <ListItemText primary=" Scrape Website Data" />
+                  </ListItemButton>
+              }
+              <ListItemButton component={Link} to="/marketsurvey">
+                <ListItemIcon>
+                  <EqualizerIcon color={"primary"} />
+                </ListItemIcon>
+                <ListItemText primary="Market Survey" />
+              </ListItemButton>
+              <ListItemButton component={Link} to="/pricecomparison">
+                <ListItemIcon>
+                  <PaidRoundedIcon color={"primary"} />
+                </ListItemIcon>
+                <ListItemText primary="Price Comparison" />
+              </ListItemButton>
+              <ListItemButton
+                  onClick={handleClick}
+                  component={Link}
+                  to="/homepage"
+              >
+                <ListItemIcon>
+                  <AppsIcon color={"primary"} />
+                </ListItemIcon>
+                <ListItemText primary="Category" />
+                {open ? <ExpandLess /> : <ExpandMore />}
+              </ListItemButton>
+              <Collapse in={open} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <ListItemButton  component={Link}  to="/smartphones" sx={{ pl: 4 }}>
+                    <ListItemIcon>
+                      <PhoneIphoneIcon color={"primary"} />
+                    </ListItemIcon>
+                    <ListItemText  primary="Smartphones" />
+                  </ListItemButton>
+                  <ListItemButton  component={Link}  to="/laptops" sx={{ pl: 4 }}>
+                    <ListItemIcon>
+                      <LaptopMacIcon color={"primary"} />
+                    </ListItemIcon>
+                    <ListItemText   primary="Laptops" />
+                  </ListItemButton>
+                </List>
+              </Collapse>
+              {parseInt(user.state) == 2 &&
+                  <ListItemButton component={Link} to="/payment">
+                    <ListItemIcon>
+                      <SubscriptionsIcon color={"primary"}/>
+                    </ListItemIcon>
+                    <ListItemText primary="Subscribe" />
+                  </ListItemButton>
+              }
+              <ListItemButton component={Link} to="/">
+                <ListItemIcon>
+                  <LogoutIcon color={"primary"} />
+                </ListItemIcon>
+                <ListItemText primary="Logout" onClick={logoutHandler} />
+              </ListItemButton>
+            </List>
+          </Drawer>
+        </Box>
+        <Typography
+            className={classes.titile}
+            variant={"body2"}
+            color={"primary"}
+        >Recently Added :
+        </Typography>
+
+        <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              p: 1,
+              m: 1,
+              alignContent: "flex-end",
+              borderRadius: 1,
+              flexWrap: "wrap",
+              maxWidth: 1400,
+              position:"relative"
+            }}
+        >
+          {/* <Router> */}
+
+          { data.slice(page*rowsPerPage,page*rowsPerPage+rowsPerPage).map((row) => {
+            return (
+                <Card
+                    className={classes.card}
+                    sx={{ minWidth: 250, boxShadow: 2, padding: 2, margin: 1 }}
+                >
+                  <CardContent>
+                    <TableRow
+                        key={row.id}
+                        sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <Link to={"/products/" + row.id}>
+                        <Typography
+                            align="left"
+                            style={{
+                              width: 220,
+                              overflow: "hidden",
+                              fontFamily: "sans-serif",
+                              fontSize: 13,
+                              fontWeight: "bold",
+                              position: "absolute",
+                              top: 232,
+                              left: 20,
+                            }}
+                            className={classes.media}
+                            onClick={passValues}
+                        >
+                          {" "}
+                          {row.product_name}
+                        </Typography>{" "}
+                      </Link>
+
+                      {
+                        // <Typography
+                        //   align="left"
+                        //   style={{
+                        //     width: 200,
+                        //     overflow: "hidden",
+                        //     fontFamily: "sans-serif",
+                        //     fontSize: 10,
+                        //     position: "relative",
+                        //     top: 172,
+                        //     left: 80,
+                        //   }}
+                        //   className={classes.media}
+                        // >
+                        //   {" "}
+                        //   {row.product_description}
+                        // </Typography>
+                      }
+                      {
+                        <Typography align="left" className={classes.media}>
+                          {row.Username}
+                        </Typography>
+                      }
+                      <Typography align="left" className={classes.mediaImage}>
+                        {<img style={{ width: 140 }} src={row.product_image} />}
+                      </Typography>
+                    </TableRow>
+                  </CardContent>
+                  {/*<CardActions>*/}
+                  {/*  <Button*/}
+                  {/*    style={{ position: "absolute", top: 600 }}*/}
+                  {/*    color={"primary"}*/}
+                  {/*    variant={"contained"}*/}
+                  {/*    size="large"*/}
+                  {/*  >*/}
+                  {/*    Reviews*/}
+                  {/*  </Button>*/}
+                  {/*</CardActions>*/}
+                </Card>
+
+            );
+          })}
+
+          <AppBar  className={classes.bottom} position="static" color="primary">
+            <Container maxWidth="md">
+              <Toolbar>
+                <Typography className={classes.writebottom} variant="body1" color="inherit" >
+
+                </Typography>
+              </Toolbar>
+            </Container>
           </AppBar>
         </Box>
-        <Drawer
-          className={classes.drawer}
-          variant="permanent"
-          anchor="left"
-          classes={{ paper: classes.drawerPaper }}
-        >
-          <AppBar position="static">
-            <Toolbar className={classes.uptoolbar}>
-              <Typography variant="h6" className={classes.title}>
-                HelpMeSell
-              </Typography>
-            </Toolbar>
-          </AppBar>
-          <List
-            sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-            component="nav"
-            aria-labelledby="nested-list-subheader"
-            subheader={
-              <ListSubheader
-                component="div"
-                id="nested-list-subheader"
-              ></ListSubheader>
-            }
-          >
-            {parseInt(user.state) == 2 &&
-                <ListItemButton component={Link} to="/uploadfile">
-                  <ListItemIcon>
-                    <FileUploadIcon color={"primary"}></FileUploadIcon>
-                  </ListItemIcon>
-                  <ListItemText primary="User Data"/>
-                </ListItemButton>
-            }
-            {parseInt(user.state)==1 &&
-                <ListItemButton component={Link} to="/adminmain">
-                  <ListItemIcon>
-                    <EqualizerIcon color={"primary"} />
-                  </ListItemIcon>
-                  <ListItemText primary=" Scrape Website Data" />
-                </ListItemButton>
-            }
-            <ListItemButton component={Link} to="/marketsurvey">
-              <ListItemIcon>
-                <EqualizerIcon color={"primary"} />
-              </ListItemIcon>
-              <ListItemText primary="Market Survey" />
-            </ListItemButton>
-            <ListItemButton component={Link} to="/pricecomparison">
-              <ListItemIcon>
-                <PaidRoundedIcon color={"primary"} />
-              </ListItemIcon>
-              <ListItemText primary="Price Comparison" />
-            </ListItemButton>
-            <ListItemButton
-              onClick={handleClick}
-              component={Link}
-              to="/homepage"
-            >
-              <ListItemIcon>
-                <AppsIcon color={"primary"} />
-              </ListItemIcon>
-              <ListItemText primary="Category" />
-              {open ? <ExpandLess /> : <ExpandMore />}
-            </ListItemButton>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <ListItemButton  component={Link}  to="/smartphones" sx={{ pl: 4 }}>
-                  <ListItemIcon>
-                    <PhoneIphoneIcon color={"primary"} />
-                  </ListItemIcon>
-                  <ListItemText  primary="Smartphones" />
-                </ListItemButton>
-                <ListItemButton  component={Link}  to="/laptops" sx={{ pl: 4 }}>
-                  <ListItemIcon>
-                    <LaptopMacIcon color={"primary"} />
-                  </ListItemIcon>
-                  <ListItemText   primary="Laptops" />
-                </ListItemButton>
-              </List>
-            </Collapse>
-            {parseInt(user.state) == 2 &&
-                <ListItemButton component={Link} to="/payment">
-                  <ListItemIcon>
-                    <SubscriptionsIcon color={"primary"}/>
-                  </ListItemIcon>
-                  <ListItemText primary="Subscribe" />
-                </ListItemButton>
-            }
-            <ListItemButton component={Link} to="/">
-              <ListItemIcon>
-                <LogoutIcon color={"primary"} />
-              </ListItemIcon>
-              <ListItemText primary="Logout" onClick={logoutHandler} />
-            </ListItemButton>
-          </List>
-        </Drawer>
-      </Box>
-      <Typography
-        className={classes.titile}
-        variant={"body2"}
-        color={"primary"}
-      >Recently Added :
-      </Typography>
-
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          p: 1,
-          m: 1,
-          alignContent: "flex-end",
-          borderRadius: 1,
-          flexWrap: "wrap",
-          maxWidth: 1400,
-          position:"relative"
-        }}
-      >
-        {/* <Router> */}
-
-        { data.slice(page*rowsPerPage,page*rowsPerPage+rowsPerPage).map((row) => {
-          return (
-            <Card
-              className={classes.card}
-              sx={{ minWidth: 250, boxShadow: 2, padding: 2, margin: 1 }}
-            >
-              <CardContent>
-                <TableRow
-                  key={row.id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <Link to={"/products/" + row.id}>
-                    <Typography
-                      align="left"
-                      style={{
-                        width: 220,
-                        overflow: "hidden",
-                        fontFamily: "sans-serif",
-                        fontSize: 13,
-                        fontWeight: "bold",
-                        position: "absolute",
-                        top: 232,
-                        left: 20,
-                      }}
-                      className={classes.media}
-                      onClick={passValues}
-                    >
-                      {" "}
-                      {row.product_name}
-                    </Typography>{" "}
-                  </Link>
-
-                  {
-                    // <Typography
-                    //   align="left"
-                    //   style={{
-                    //     width: 200,
-                    //     overflow: "hidden",
-                    //     fontFamily: "sans-serif",
-                    //     fontSize: 10,
-                    //     position: "relative",
-                    //     top: 172,
-                    //     left: 80,
-                    //   }}
-                    //   className={classes.media}
-                    // >
-                    //   {" "}
-                    //   {row.product_description}
-                    // </Typography>
-                  }
-                  {
-                    <Typography align="left" className={classes.media}>
-                      {row.Username}
-                    </Typography>
-                  }
-                  <Typography align="left" className={classes.mediaImage}>
-                    {<img style={{ width: 140 }} src={row.product_image} />}
-                  </Typography>
-                </TableRow>
-              </CardContent>
-              {/*<CardActions>*/}
-              {/*  <Button*/}
-              {/*    style={{ position: "absolute", top: 600 }}*/}
-              {/*    color={"primary"}*/}
-              {/*    variant={"contained"}*/}
-              {/*    size="large"*/}
-              {/*  >*/}
-              {/*    Reviews*/}
-              {/*  </Button>*/}
-              {/*</CardActions>*/}
-            </Card>
-
-        );
-        })}
-
-        <AppBar  className={classes.bottom} position="static" color="primary">
-          <Container maxWidth="md">
-            <Toolbar>
-              <Typography className={classes.writebottom} variant="body1" color="inherit" >
-
-              </Typography>
-            </Toolbar>
-          </Container>
-        </AppBar>
-      </Box>
-      <TablePagination
-          className={classes.paginate}
-          component="div"
-          count={400}
-          page={page}
-          onPageChange={handleChangePage}
-          rowsPerPage={rowsPerPage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-</div>
+        <TablePagination
+            className={classes.paginate}
+            component="div"
+            count={400}
+            page={page}
+            onPageChange={handleChangePage}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </div>
 
 
   );

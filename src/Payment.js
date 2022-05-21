@@ -28,6 +28,16 @@ import {Box, Button, CardActions, CardMedia} from "@mui/material";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
 import {BASE_URL} from "./Constants";
+import axios from "axios";
+import { styled } from '@mui/material/styles';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import PaymentInputs from "./Checkout";
+
 const drawerWidth = 240;
 const useStyles=makeStyles({
     drawer:{
@@ -46,6 +56,11 @@ const useStyles=makeStyles({
     },
     title:{
         fontFamily:"serif",
+    },
+    head:{
+        fontFamily:"sans-serif",
+        color:"#423294",
+        fontWeight:"bold"
     },
     uptoolbar:{
         height:10,
@@ -287,6 +302,12 @@ const useStyles=makeStyles({
         top:200,
         color:"#9ea3a8"
     },
+    dialog:{
+        width:450,
+        bottom:290,
+        position:"absolute",
+        right:500
+    }
 
 });
 
@@ -297,16 +318,71 @@ const bull = (
     >
     </Box>
 );
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+    '& .MuiDialogContent-root': {
+        padding: theme.spacing(2),
+        width:450
+    },
+    '& .MuiDialogActions-root': {
+        padding: theme.spacing(1),
+    },
+}));
+
+export interface DialogTitleProps {
+    id: string;
+    children?: React.ReactNode;
+    onClose: () => void;
+}
+
+const BootstrapDialogTitle = (props: DialogTitleProps) => {
+    const { children, onClose, ...other } = props;
+
+    return (
+        <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+            {children}
+            {onClose ? (
+                <IconButton
+                    aria-label="close"
+                    onClick={onClose}
+                    sx={{
+                        position: 'absolute',
+                        right: 8,
+                        top: 8,
+                        color: (theme) => theme.palette.grey[500],
+                    }}
+                >
+                    <CloseIcon />
+                </IconButton>
+            ) : null}
+        </DialogTitle>
+    );
+};
 function Payment()
 {  const classes=useStyles();
     const history = useNavigate();
     const [open, setOpen] = React.useState(false);
     const [user,setUser]=useState({});
+    const [number,setNumber]=useState({});
+    const [exp_month,setExp_Month]=useState({});
+    const [exp_year,setExp_Year]=useState({});
+    const [cvc,setCVC]=useState({});
+    const [openTwo, setOpenTwo] = React.useState(false);
+
+
+    const handleClickOpen = () => {
+        setOpenTwo(true);
+    };
+    const handleClose = () => {
+        setOpenTwo(false);
+    };
     // let item = {
     //     username: name,
     //     price: priceId,
     //     product:packageId,
     // };
+    function handleClick() {
+        setOpen(!open);
+    }
     useEffect(async()=>{
         setUser(JSON.parse(localStorage.getItem("current_user")))
     },[])
@@ -318,6 +394,10 @@ function Payment()
         // productBy: "HelpMeSell",
         packageId:"prod_Ld41FbP0ws0ytC",
         priceId:"price_1KvntgFVG2XMVBbYF9GP2cqJ",
+        number: number,
+        exp_month: exp_month,
+        exp_year: exp_year,
+        cvc: cvc,
 
     });
     const [secondaryProduct, setSecondaryProduct]=useState({
@@ -325,7 +405,12 @@ function Payment()
         price : 700,
         // productBy: "HelpMeSell",
         packageId:"prod_Ld41so8Y14AYVS",
-        priceId:"price_1Kvnt3FVG2XMVBbYQcqT5iWH"
+        priceId:"price_1Kvnt3FVG2XMVBbYQcqT5iWH",
+        number: number,
+        exp_month: exp_month,
+        exp_year: exp_year,
+        cvc: cvc,
+
 
 
     });
@@ -334,73 +419,112 @@ function Payment()
         price : 1200,
         // productBy: "HelpMeSell",
         packageId:"prod_Ld40YnBLY7Bdak",
-        priceId:"price_1KvnsYFVG2XMVBbY4b3Kio3b"
+        priceId:"price_1KvnsYFVG2XMVBbY4b3Kio3b",
+        number: number,
+        exp_month: exp_month,
+        exp_year: exp_year,
+        cvc: cvc,
 
     });
-    function handleClick() {
-        setOpen(!open);
+    async function Submit() {
+        let item = {
+            number: number,
+            exp_month: exp_month,
+            exp_year: exp_year,
+            cvc: cvc,
+        };
+        console.log("In the submit function: ", item);
+        const requestOptions = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+            },
+            body: JSON.stringify(item),
+        };
+        try {
+            const response = await axios({
+                url: BASE_URL + "/api/Payment",
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+                data: item,
+            });
+
+            const {data} = response || {};
+            if (data.username) {
+                history("/login");
+            }
+        } catch (error) {
+            console.log("error", {error});
+            const {response} = error;
+            const {data} = response;
+            const {message} = data;
+        }
+
     }
 
     const logoutHandler = () => {
         localStorage.setItem("current_user", "");
         history("/login");
     };
-    const makePayment= token => {
-        const body ={
-            token,
-            product,
+    // const makePayment= token => {
+    //     const body ={
+    //         token,
+    //         product,
+    //     }
+    //     const headers={
+    //         "Content-Type": "application/json"
+    //     }
+    //     return fetch(BASE_URL+'/api/Payment/',{
+    //         method:"POST",
+    //         headers,
+    //         body: JSON.stringify(body)
+    //     }).then(response => {
+    //         console.log("RESPONSE",response)
+    //         const {status}=response;
+    //         console.log("STATUS", status)
+    //     }).catch(error => console.log(error));
+    // }
 
-        }
-        const headers={
-            "Content-Type": "application/json"
-        }
-        return fetch(BASE_URL+'/api/Payment/',{
-            method:"POST",
-            headers,
-            body: JSON.stringify(body)
-        }).then(response => {
-            console.log("RESPONSE",response)
-            const {status}=response;
-            console.log("STATUS", status)
-        }).catch(error => console.log(error));
-    }
-
-    const makePaymentSecond= token => {
-        const body ={
-            token,
-            secondaryProduct
-        }
-        const headers={
-            "Content-Type": "application/json"
-        }
-        return fetch(BASE_URL+'/api/Payment/',{
-            method:"POST",
-            headers,
-            body: JSON.stringify(body)
-        }).then(response => {
-            console.log("RESPONSE",response)
-            const {status}=response;
-            console.log("STATUS", status)
-        }).catch(error => console.log(error));
-    }
-    const makePaymentThird= token => {
-        const body ={
-            token,
-            tertiaryProduct
-        }
-        const headers={
-            "Content-Type": "application/json"
-        }
-        return fetch(BASE_URL+'/api/Payment/',{
-            method:"POST",
-            headers,
-            body: JSON.stringify(body)
-        }).then(response => {
-            console.log("RESPONSE",response)
-            const {status}=response;
-            console.log("STATUS", status)
-        }).catch(error => console.log(error));
-    }
+    // const makePaymentSecond= token => {
+    //     const body ={
+    //         token,
+    //         secondaryProduct
+    //     }
+    //     const headers={
+    //         "Content-Type": "application/json"
+    //     }
+    //     return fetch(BASE_URL+'/api/Payment/',{
+    //         method:"POST",
+    //         headers,
+    //         body: JSON.stringify(body)
+    //     }).then(response => {
+    //         console.log("RESPONSE",response)
+    //         const {status}=response;
+    //         console.log("STATUS", status)
+    //     }).catch(error => console.log(error));
+    // }
+    // const makePaymentThird= token => {
+    //     const body ={
+    //         token,
+    //         tertiaryProduct
+    //     }
+    //     const headers={
+    //         "Content-Type": "application/json"
+    //     }
+    //     return fetch(BASE_URL+'/api/Payment/',{
+    //         method:"POST",
+    //         headers,
+    //         body: JSON.stringify(body)
+    //     }).then(response => {
+    //         console.log("RESPONSE",response)
+    //         const {status}=response;
+    //         console.log("STATUS", status)
+    //     }).catch(error => console.log(error));
+    // }
     return(
         <div>
             <AppBar position="static" className={classes.app}>
@@ -522,13 +646,8 @@ function Payment()
                     <Typography className={classes.offer2}> Upto 15 Keywords</Typography>
                 </CardContent>
                 <CardActions>
-                    <Button variant={"outlined"} color={"primary"} size="medium" className={classes.button}>
-                        <StripeCheckout
-                            stripeKey="pk_test_51Ko90cFVG2XMVBbYRIsd05IYwLiephIfD4pYR5fuM2nnhjWbJaygr3K14dUjx5I7IVBksntJRd1TI4u29lDhrzow005UFElHAk"
-                            token={makePayment}
-                            name={user.first_name+user.last_name}
-                        >
-                        </StripeCheckout>
+                    <Button onClick={handleClickOpen} variant={"outlined"} color={"primary"} size="medium" className={classes.button}>
+                       Subscribe
                     </Button>
                 </CardActions>
             </Card>
@@ -554,12 +673,8 @@ function Payment()
                     <Typography className={classes.offer3}> Upto 700 Keywords</Typography>
                 </CardContent>
                 <CardActions>
-                    <Button variant={"outlined"} color={"primary"} size="medium" className={classes.button}>
-                        <StripeCheckout
-                            stripeKey="pk_test_51Ko90cFVG2XMVBbYRIsd05IYwLiephIfD4pYR5fuM2nnhjWbJaygr3K14dUjx5I7IVBksntJRd1TI4u29lDhrzow005UFElHAk"
-                            token={makePaymentSecond}
-                            name={user.first_name+user.last_name}>
-                        </StripeCheckout>
+                    <Button onClick={handleClickOpen} variant={"outlined"} color={"primary"} size="medium" className={classes.button}>
+                        Subscribe
                     </Button>
                 </CardActions>
             </Card>
@@ -584,21 +699,33 @@ function Payment()
 
                 </CardContent>
                 <CardActions>
-                    <Button variant={"outlined"} color={"primary"} size="medium" className={classes.button}>
-                        <StripeCheckout
-                            stripeKey="pk_test_51Ko90cFVG2XMVBbYRIsd05IYwLiephIfD4pYR5fuM2nnhjWbJaygr3K14dUjx5I7IVBksntJRd1TI4u29lDhrzow005UFElHAk"
-                            token={makePaymentThird}
-                            name={user.first_name+user.last_name}>
-                        </StripeCheckout>
+                    <Button onClick={handleClickOpen} variant={"outlined"} color={"primary"} size="medium" className={classes.button}>
+                        Subscribe
                     </Button>
                 </CardActions>
             </Card>
+
+            <BootstrapDialog
+                onClose={handleClose}
+                aria-labelledby="customized-dialog-title"
+                open={openTwo}
+                className={classes.dialog}
+            >
+                <BootstrapDialogTitle  className={classes.head} id="customized-dialog-title" onClose={handleClose}>
+                    Subscription Form
+                </BootstrapDialogTitle>
+                <DialogContent dividers>
+                  <PaymentInputs />
+                </DialogContent>
+            </BootstrapDialog>
+
+    );
+}
 
             <AppBar  className={classes.bottom} position="static" color="primary">
                 <Container maxWidth="md">
                     <Toolbar>
                         <Typography className={classes.writebottom} variant="body1" color="inherit" >
-
                         </Typography>
                     </Toolbar>
                 </Container>

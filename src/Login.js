@@ -138,7 +138,7 @@ function Login() {
       console.log("this is the response: ", { response });
       //   const { data } = response;
       if (response.data.token) {
-        const { token, first_name, username,state,id} = response.data || {};
+        const { token, first_name, username,state,id, is_subscribed} = response.data || {};
 
         let userObj = {
           token,
@@ -146,6 +146,7 @@ function Login() {
           username,
           state,
           id,
+          // is_subscribed
         };
         localStorage.setItem("current_user", JSON.stringify(userObj));
         history("/homepage");
@@ -173,116 +174,112 @@ function Login() {
   const classes = useStyles();
 
   const action = (
-    <IconButton
-      size="small"
-      aria-label="close"
-      color="inherit"
-      onClick={() => setOpenSnackBAR(false)}
-    >
-      <CloseIcon fontSize="small" />
-    </IconButton>
+      <IconButton
+          size="small"
+          aria-label="close"
+          color="inherit"
+          onClick={() => setOpenSnackBAR(false)}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
   );
 
   return (
-    <div>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            HelpMeSell
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Typography className={classes.mainTitle}>HelpMeSell</Typography>
-      <Typography className={classes.textLogo}>
-        <Wave
-          text="Make Your Buying Decisions                       SMARTER!"
-          effect="stretch"
-          effectChange={1.2}
-        />{" "}
-      </Typography>
-      <form>
-        <Box
-          sx={{
-            width: 300,
-            height: 260,
-            p: 1,
-            border: "2px solid",
-            borderColor: "#89a0cc",
-            left: 750,
-            top: -50,
-            position: "relative",
-            borderRadius: 4,
-            bgcolor: "",
-          }}
-        >
-          <AppBar className={classes.bar} position="static">
-            <Toolbar>
-              <Typography className={classes.bartitle} variant="h5">
-                Login
-              </Typography>
-            </Toolbar>
-          </AppBar>
-          <Container>
-            <Grid container direction={"column"} spacing={2}>
-              <TextField
-                className={classes.field}
-                required
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                id="outlined-basic"
-                label="Username"
-                variant="outlined"
-                size="small"
-                Username
-              />
-
-              <TextField
-                className={classes.field}
-                type={"password"}
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                id="outlined-basic"
-                label="Password"
-                variant="outlined"
-                size="small"
-                Password
-              />
-            </Grid>
-
-            <Button
-              className={classes.button}
-              onClick={Submit}
-              variant="contained"
-              color="primary"
-            >
-              Login
-            </Button>
-          </Container>
-        </Box>
-        <AppBar className={classes.bottom} position="static" color="primary">
-          <Container maxWidth="md">
-            <Toolbar>
-              <Typography
-                className={classes.writebottom}
-                variant="body1"
-                color="inherit"
-              >
-
-              </Typography>
-            </Toolbar>
-          </Container>
+      <div>
+        <AppBar position="static">
+          <Toolbar>
+            <Typography variant="h6" className={classes.title}>
+              HelpMeSell
+            </Typography>
+          </Toolbar>
         </AppBar>
-      </form>
-
-      <Snackbar
-        open={openSnackBAr}
-        autoHideDuration={6000}
-        message={"Sign In Failed"}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        action={action}
-      />
-    </div>
+        <Typography className={classes.mainTitle}>HelpMeSell</Typography>
+        <Typography className={classes.textLogo}>
+          <Wave
+              text="Make Your Buying Decisions                       SMARTER!"
+              effect="stretch"
+              effectChange={1.2}
+          />{" "}
+        </Typography>
+        <form>
+          <Box
+              sx={{
+                width: 300,
+                height: 260,
+                p: 1,
+                border: "2px solid",
+                borderColor: "#89a0cc",
+                left: 750,
+                top: -50,
+                position: "relative",
+                borderRadius: 4,
+                bgcolor: "",
+              }}
+          >
+            <AppBar className={classes.bar} position="static">
+              <Toolbar>
+                <Typography className={classes.bartitle} variant="h5">
+                  Login
+                </Typography>
+              </Toolbar>
+            </AppBar>
+            <Container>
+              <Grid container direction={"column"} spacing={2}>
+                <TextField
+                    className={classes.field}
+                    required
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    id="outlined-basic"
+                    label="Username"
+                    variant="outlined"
+                    size="small"
+                    Username
+                />
+                <TextField
+                    className={classes.field}
+                    type={"password"}
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    id="outlined-basic"
+                    label="Password"
+                    variant="outlined"
+                    size="small"
+                    Password
+                />
+              </Grid>
+              <Button
+                  className={classes.button}
+                  onClick={Submit}
+                  variant="contained"
+                  color="primary"
+              >
+                Login
+              </Button>
+            </Container>
+          </Box>
+          <AppBar className={classes.bottom} position="static" color="primary">
+            <Container maxWidth="md">
+              <Toolbar>
+                <Typography
+                    className={classes.writebottom}
+                    variant="body1"
+                    color="inherit"
+                >
+                </Typography>
+              </Toolbar>
+            </Container>
+          </AppBar>
+        </form>
+        <Snackbar
+            open={openSnackBAr}
+            autoHideDuration={6000}
+            message={"Sign In Failed"}
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            action={action}
+        />
+      </div>
   );
 }
 export default Login;

@@ -15,6 +15,7 @@ import SignupLocalseller from "./SignupLocalseller";
 import Laptops from "./Laptops";
 import Smartphones from "./Smartphones";
 import Payment from "./Payment";
+import Checkout from "./Checkout";
 // import './App.css';
 
 const App = () => {
@@ -54,6 +55,7 @@ const App = () => {
         <Route path="/laptops" exact={true} element={<Laptops />} />
         <Route path="/smartphones" exact={true} element={<Smartphones />} />
         <Route path="/payment" exact={true} element={<Payment />} />
+        <Route path="/checkout" exact={true} element={<Checkout />} />
 
       </Routes>
     </Router>

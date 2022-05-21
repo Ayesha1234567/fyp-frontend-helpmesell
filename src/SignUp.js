@@ -10,6 +10,7 @@ import { Box, Toolbar, ButtonGroup, Button, AppBar } from "@material-ui/core";
 import CloseIcon from "@mui/icons-material/Close";
 import { Wave } from "react-animated-text";
 import axios from "axios";
+import {Formik} from "formik"
 import {BASE_URL} from "./Constants";
 
 const useStyles = makeStyles({
@@ -180,7 +181,7 @@ function SignUp() {
         />{" "}
       </Typography>
 
-      <form>
+
         <Box
           className={classes.mainHandler}
           sx={{
@@ -202,6 +203,7 @@ function SignUp() {
             </Toolbar>
           </AppBar>
           <Container>
+            <form>
             <Grid container direction={"row"} spacing={2}>
               <Grid item xs={6}>
                 <TextField
@@ -327,6 +329,7 @@ function SignUp() {
                 />
               </Grid>
             </Grid>
+            </form>
 
             <Button
               className={classes.button}
@@ -343,7 +346,7 @@ function SignUp() {
 
           </Container>
         </Box>
-      </form>
+
 
       <AppBar className={classes.bottom} position="static" color="primary">
         <Container maxWidth="md">
