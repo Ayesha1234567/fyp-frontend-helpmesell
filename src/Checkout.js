@@ -47,7 +47,7 @@ const useStyles = makeStyles({
         fontFamily: "serif",
     },
 });
-function PaymentInputs() {
+function PaymentInputs(props) {
     const classes = useStyles()
     const[name,setName]= useState("");
     const[email,setEmail]= useState("");
@@ -71,6 +71,9 @@ function PaymentInputs() {
     const handleClose = () => {
         setOpenTwo(false);
     };
+
+    console.log(props.paymentId)
+
     useEffect(() => {
         setUser(JSON.parse(localStorage.getItem('current_user')))
     }, []);
@@ -101,7 +104,8 @@ function PaymentInputs() {
             number: cardNumber,
             exp_date: expiryDate,
             cvc: cvc,
-            id:user.id,
+            user_id: user.id,
+            price: 'price_1KvnsYFVG2XMVBbY4b3Kio3b'
         };
 
         const requestOptions = {

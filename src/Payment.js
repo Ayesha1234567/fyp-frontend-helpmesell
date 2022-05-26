@@ -636,7 +636,7 @@ function Payment()
                     </Button>
                 </CardActions>
             </Card>
-
+                    
             <BootstrapDialog
                 onClose={handleClose}
                 aria-labelledby="customized-dialog-title"
@@ -647,10 +647,9 @@ function Payment()
                     Subscription Form
                 </BootstrapDialogTitle>
                 <DialogContent dividers>
-                    <PaymentInputs />
+                    <PaymentInputs paymentId="price_1KvnsYFVG2XMVBbY4b3Kio3b" />
                 </DialogContent>
             </BootstrapDialog>
-
             );
             }
 

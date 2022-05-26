@@ -283,48 +283,54 @@ function ProductDetails(props) {
     const [open, setOpen] = React.useState(false);
     const [data, setData] = useState({});
     const [price, setPrice] = useState([]);
-    const [user,setUser]=useState({});
+    const [user, setUser]=useState({});
     const [relatedProducts,setRelatedProducts]=useState({});
 
 
     let { id } = useParams();
     let history = useNavigate();
 
-
     useEffect(() => {
+        setUser(JSON.parse(localStorage.getItem('current_user')))
+        debugger
+        if (user && typeof user !== "undefined" && user['id'] !== "undefined"){
+          if (user['is_subscribed'] == false){
+            history("/payment");
+          }else{
+              console.log('user --->', user)
+            axios({
+                url: BASE_URL+`/api/product/${id}/${user['id']}/`,
+                method: "GET",
+            })
+                .then(({ data }) => {
+                    console.log("this is the data of a single product: ", { data });
+                    setData(data);
+                })
+                .catch((err) => {
+                    console.log("this is the error: ", { err });
+                });
+            axios({
+                url: BASE_URL+`/api/related_products/${id}/`,
+                method: "GET",
+            })
+                .then(({ data }) => {
+                    console.log("this is the data of a single product: ", { data });
+                    setRelatedProducts(data);
+                })
+                .catch((err) => {
+                    console.log("this is the error: ", { err });
+                });
+          }
+        }
         console.log("This is the useEffect of dynamic Function: ", { id });
-
-        axios({
-            url: BASE_URL+`/api/product/${id}/`,
-            method: "GET",
-        })
-            .then(({ data }) => {
-                console.log("this is the data of a single product: ", { data });
-                setData(data);
-            })
-            .catch((err) => {
-                console.log("this is the error: ", { err });
-            });
-        axios({
-            url: BASE_URL+`/api/related_products/${id}/`,
-            method: "GET",
-        })
-            .then(({ data }) => {
-                console.log("this is the data of a single product: ", { data });
-                setRelatedProducts(data);
-            })
-            .catch((err) => {
-                console.log("this is the error: ", { err });
-            });
-        setUser(JSON.parse(localStorage.getItem('current_user')))
     }, []);
 
-    useEffect(() => {
-        // console.log("This is the useEffect of dynamic Function: ", {product_name});
+    // useEffect(() => {
+    //     // console.log("This is the useEffect of dynamic Function: ", {product_name});
 
 
-        setUser(JSON.parse(localStorage.getItem('current_user')))
-    }, []);
+    //     setUser(JSON.parse(localStorage.getItem('current_user')))
+    // }, []);
     useEffect(() => {
 
         axios({

@@ -217,15 +217,8 @@ function PriceComparison()
     }
 
     useEffect(() => {
-        setUser(JSON.parse(localStorage.getItem('current_user')))
-
-        if (user && typeof user !== "undefined"){
-            fetch_products()
-            if (user['is_subscribed'] == false){
-                history("/payment");
-            }
-        }
-    }, [user]);
+        fetch_products()
+    }, []);
 
     async function search(key)
     { if (key.length>3)
