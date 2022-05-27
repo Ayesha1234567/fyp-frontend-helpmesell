@@ -6,6 +6,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 
+
 // import Card from '@mui/material/Card';
 // import CardActions from '@mui/material/CardActions';
 // import CardContent from '@mui/material/CardContent';
@@ -54,6 +55,8 @@ import axios from "axios";
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
 import {BASE_URL} from "./Constants";
+import {UserData} from "./UserData";
+import BarChart from "./BarChart";
 
 const drawerWidth = 240;
 const useStyles=makeStyles({
@@ -285,6 +288,46 @@ function ProductDetails(props) {
     const [price, setPrice] = useState([]);
     const [user, setUser]=useState({});
     const [relatedProducts,setRelatedProducts]=useState({});
+    const [userData, setUserData] = useState({
+        labels: UserData.map((data) => data.year),
+        datasets: [
+            {
+                label: "Users Gained",
+                data: UserData.map((data) => data.userGain),
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)'
+                ],
+                borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)'
+                ],
+                borderWidth: 2
+            },
+        ],
+        options: {
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        display: false,
+                        color: "rgba(0, 0, 0, 0)",
+                    }
+                }],
+                yAxes: [{
+                    gridLines: {
+                        display: false,
+                        color: "rgba(0, 0, 0, 0)",
+                    }
+                }]
+            }
+        }
+    });
 
 
     let { id } = useParams();
@@ -292,8 +335,9 @@ function ProductDetails(props) {
 
     useEffect(() => {
         setUser(JSON.parse(localStorage.getItem('current_user')))
-        debugger
-        if (user && typeof user !== "undefined" && user['id'] !== "undefined"){
+
+        if (user && typeof user !== "undefined" && user['id'] !== "undefined"){  //due to condition issue Api call for a s
+                                                                                    // single products name and image is not working
           if (user['is_subscribed'] == false){
             history("/payment");
           }else{
@@ -323,7 +367,7 @@ function ProductDetails(props) {
           }
         }
         console.log("This is the useEffect of dynamic Function: ", { id });
-    }, []);
+    }, []);   //remove user to stop multiple api calls
 
     // useEffect(() => {
     //     // console.log("This is the useEffect of dynamic Function: ", {product_name});
@@ -396,7 +440,9 @@ function ProductDetails(props) {
                             <Typography align="left" className={classes.mediaImage}>{<img style={{width: 300}} src={data.data && data.data.product.product_image}/>}</Typography>
                         </CardContent>
                     </Card>
-
+                    <div style={{ width: 400,top:260,left:600,position:"absolute"}}>
+                        <BarChart chartData={userData} />
+                    </div>
 
                     <Box sx={{ display: 'flex' }}>
                         <Box sx={{ flexGrow: 5 }}>

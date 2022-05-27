@@ -181,6 +181,7 @@ function HomePage({ children }) {
   const history = useNavigate();
   const browserHistory = require("react-router").browserHistory;
   const [open, setOpen] = React.useState(false);
+  const [openTwo, setOpenTwo] = React.useState(false);
   const [data, setData] = useState([]);
   const [user,setUser]=useState({});
   const [page, setPage] = React.useState(0);
@@ -198,6 +199,9 @@ function HomePage({ children }) {
 
   useEffect(() => {
     fetch_products()
+  }, []);
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem('current_user')))
   }, []);
 
   const handleChangeRowsPerPage = (event) => {
@@ -234,6 +238,10 @@ function HomePage({ children }) {
   console.warn("result", data);
   function handleClick() {
     setOpen(!open);
+  }
+
+  function handleClickTwo() {
+    setOpenTwo(!openTwo);
   }
 
   const logoutHandler = () => {
@@ -346,6 +354,40 @@ function HomePage({ children }) {
                     <ListItemText primary="Subscribe" />
                   </ListItemButton>
               }
+
+              <ListItemButton
+                  onClick={handleClickTwo}
+                  component={Link}
+                  to="/homepage"
+              >
+                <ListItemIcon>
+                  <AppsIcon color={"primary"} />
+                </ListItemIcon>
+                <ListItemText primary="Filter" />
+                {openTwo ? <ExpandLess /> : <ExpandMore />}
+              </ListItemButton>
+              <Collapse in={openTwo} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <ListItemButton  component={Link}  to="" sx={{ pl: 4 }}>
+                    <ListItemIcon>
+                      <PhoneIphoneIcon color={"primary"} />
+                    </ListItemIcon>
+                    <ListItemText  primary="Brands" />
+                  </ListItemButton>
+                  <ListItemButton  component={Link}  to="" sx={{ pl: 4 }}>
+                    <ListItemIcon>
+                      <LaptopMacIcon color={"primary"} />
+                    </ListItemIcon>
+                    <ListItemText   primary="Price Range" />
+                  </ListItemButton>
+                </List>
+              </Collapse>
+
+
+
+
+
+
               <ListItemButton component={Link} to="/">
                 <ListItemIcon>
                   <LogoutIcon color={"primary"} />

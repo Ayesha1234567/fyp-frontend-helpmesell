@@ -6,6 +6,7 @@ import axios from "axios";
 import {BASE_URL} from "./Constants";
 import CloseIcon from "@mui/icons-material/Close";
 import {Alert} from "@mui/material";
+import {useNavigate} from "react-router-dom";
 
 const useStyles = makeStyles({
     success:{
@@ -59,6 +60,8 @@ function PaymentInputs(props) {
     const [openSnackBAr, setOpenSnackBAR] = useState(false);
     const [openTwo, setOpenTwo] = React.useState(false);
     const [success,setSuccess]=useState(false);
+    const[subscribed,setSubscribed]=useState(false)
+    const history = useNavigate();
     const handleCardNumberChange = (event) => {
         setCardNumber(event.target.value)
     }
@@ -107,7 +110,6 @@ function PaymentInputs(props) {
             user_id: user.id,
             price: 'price_1KvnsYFVG2XMVBbY4b3Kio3b'
         };
-
         const requestOptions = {
             method: "POST",
             headers: {
@@ -126,6 +128,12 @@ function PaymentInputs(props) {
                 },
                 data: item,
             });
+            if (response.status==200||response.status==201)
+            {
+                setSubscribed(true)
+                history("/homepage")
+                console.log("in response 200")
+            }
             console.log("this is the response: ", { response });
         } catch (error) {
             console.log("error", error);
@@ -134,6 +142,8 @@ function PaymentInputs(props) {
             const { data } = response || {};
             const { message } = data || {};
             setOpenSnackBAR(true);
+
+
         }
         // const requestOptions = {
         //     method: "POST",
@@ -163,6 +173,7 @@ function PaymentInputs(props) {
         //     const { message } = data;
         //     setOpenSnackBAR(true);
         // }
+
     }
     const action = (
         <IconButton
@@ -234,9 +245,10 @@ function PaymentInputs(props) {
                         anchorOrigin={{ vertical: "top", horizontal: "right" }}
                         action={action}
                     />
+                    {success && <Alert  action={close}  className={classes.success} severity="success">File Uploaded Successfully</Alert>}
                 </Grid>
             </form>
-            {success && <Alert  action={close}  className={classes.success} severity="success">File Uploaded Successfully</Alert>}
+
         </div>
     );
 

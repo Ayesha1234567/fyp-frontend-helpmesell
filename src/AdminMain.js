@@ -43,6 +43,7 @@ import EqualizerIcon from "@mui/icons-material/Equalizer";
 import PaidRoundedIcon from "@mui/icons-material/PaidRounded";
 import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import CloseIcon from "@mui/icons-material/Close";
+import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
 // import router from "react-router-dom/es/Router";
 
 const drawerWidth = 240;

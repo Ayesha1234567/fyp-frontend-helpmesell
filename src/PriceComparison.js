@@ -187,7 +187,6 @@ function PriceComparison()
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [user,setUser]=useState({});
-    const [count, setCount] = useState(0);
     const logoutHandler = () => {
         localStorage.setItem("current_user", "");
         history("/login");
@@ -219,17 +218,15 @@ function PriceComparison()
     useEffect(() => {
         fetch_products()
     }, []);
-
+    useEffect(() => {
+        setUser(JSON.parse(localStorage.getItem('current_user')))
+    }, []);
     async function search(key)
     { if (key.length>3)
     {
         setData(data.filter(d => d.product_name.toLowerCase().includes(key.toLowerCase())));
     }
-        if(key.length>8)
-        {
-            setCount(count+1)
-            console.log("This is Count" , {count})
-        }
+
         else if(key.length===0)
         {
             let result=await fetch('https://finalproject-helpmesell.herokuapp.com/api/products/');
