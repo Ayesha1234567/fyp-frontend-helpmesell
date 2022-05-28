@@ -335,15 +335,16 @@ function ProductDetails(props) {
 
     useEffect(() => {
         setUser(JSON.parse(localStorage.getItem('current_user')))
+    }, []);
 
-        if (user && typeof user !== "undefined" && user['id'] !== "undefined"){  //due to condition issue Api call for a s
-                                                                                    // single products name and image is not working
+    useEffect(() => {
+        if (user && typeof user !== "undefined" && user['id']){
           if (user['is_subscribed'] == false){
             history("/payment");
           }else{
               console.log('user --->', user)
             axios({
-                url: BASE_URL+`/api/product/${id}/${user['id']}/`,
+                url: BASE_URL+`/api/product/${id}/`,
                 method: "GET",
             })
                 .then(({ data }) => {
@@ -354,7 +355,7 @@ function ProductDetails(props) {
                     console.log("this is the error: ", { err });
                 });
             axios({
-                url: BASE_URL+`/api/related_products/${id}/`,
+                url: BASE_URL+`/api/related_products/${id}/${user['id']}/`,
                 method: "GET",
             })
                 .then(({ data }) => {
@@ -367,14 +368,8 @@ function ProductDetails(props) {
           }
         }
         console.log("This is the useEffect of dynamic Function: ", { id });
-    }, []);   //remove user to stop multiple api calls
+    }, [user]);
 
-    // useEffect(() => {
-    //     // console.log("This is the useEffect of dynamic Function: ", {product_name});
-
-
-    //     setUser(JSON.parse(localStorage.getItem('current_user')))
-    // }, []);
     useEffect(() => {
 
         axios({
