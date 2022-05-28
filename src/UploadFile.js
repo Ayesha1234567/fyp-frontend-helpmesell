@@ -40,6 +40,7 @@ import {Alert} from "@mui/material";
 import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import {BASE_URL} from "./Constants";
+import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
 
 
 const drawerWidth = 240;
@@ -190,6 +191,11 @@ const useStyles=makeStyles({
     width:300,
     left:650,
     bottom:300
+  },
+  barTwo:{
+    position:"absolute",
+    top:280,
+    width:500
   }
 })
 
@@ -242,7 +248,18 @@ function UploadFile()
   const [openSnackBAr, setOpenSnackBAR] = useState(false);
   const [success,setSuccess]=useState(false);
   const [user,setUser]=useState({});
+  const [upload,setUpload]=useState(null)
   let history = useNavigate();
+  const [progress, setProgress] = React.useState(10);
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setProgress((prevProgress) => (prevProgress >= 100 ? 10 : prevProgress + 10));
+    }, 800);
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
 
   const logoutHandler = () => {
     localStorage.setItem("current_user", "");
@@ -265,7 +282,6 @@ function UploadFile()
           size="small"
           aria-label="close"
           color="inherit"
-
           onClick={() => setSuccess(false)}
       >
         <CloseIcon fontSize="small" />
@@ -305,7 +321,9 @@ function UploadFile()
 
     let item = {  ls_product_file: file, user: JSON.parse(localStorage.getItem('current_user')).id, file_state: 1 };
     axios({
-      url: BASE_URL+"/api/LSUploadedData/",
+      url: BASE_URL+"/api/LSUploadedData/", onUploadProgress: (data)=>{
+    setUpload(Math.round((data.loaded/data.total)*100));
+      },
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -330,8 +348,6 @@ function UploadFile()
 
   useEffect(() => {
     // console.log("This is the useEffect of dynamic Function: ", {product_name});
-
-
     setUser(JSON.parse(localStorage.getItem('current_user')))
   }, []);
   function handleClick() {
@@ -473,8 +489,10 @@ function UploadFile()
               <Button  className={classes.button} onClick={Submit}  variant="contained" color="primary">
                 Upload File
               </Button>
-
             </Container>
+            <Box sx={{ width: '100%' }} className={classes.barTwo}>
+              <LinearProgress variant="determinate" value={upload}   />
+            </Box>
           </Box>
           <AppBar  className={classes.bottom} position="static" color="primary">
             <Container maxWidth="md">
@@ -485,9 +503,9 @@ function UploadFile()
               </Toolbar>
             </Container>
           </AppBar>
-          {/*{success && <Alert className={classes.success} severity="success">This is a success alert — check it out!</Alert>}*/}
+          {success && <Alert action={close} className={classes.success} severity="success">File Uploaded Successfully!</Alert>}
         </form>
-        {success && <Alert  action={close}  className={classes.success} severity="success">File Uploaded Successfully</Alert>}
+
 
 
 
@@ -513,7 +531,7 @@ function UploadFile()
         <Snackbar
             open={openSnackBAr}
             autoHideDuration={3000}
-            message={"File not selected"}
+            message={"Invalid File"}
             anchorOrigin={{ vertical: "top", horizontal: "right" }}
             action={action}
         />

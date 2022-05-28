@@ -27,6 +27,9 @@ import LaptopMacIcon from "@mui/icons-material/LaptopMac";
 import LogoutIcon from "@mui/icons-material/Logout";
 import TableRow from "@mui/material/TableRow";
 import axios from "axios";
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
+
 // import DynamicPage from "./DynamicPages";
 // import  { Redirect } from 'react-router-dom'
 import {
@@ -44,6 +47,7 @@ import PaidRoundedIcon from "@mui/icons-material/PaidRounded";
 import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import CloseIcon from "@mui/icons-material/Close";
 import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
+import LinearProgress from "@mui/material/LinearProgress";
 // import router from "react-router-dom/es/Router";
 
 const drawerWidth = 240;
@@ -153,8 +157,21 @@ const useStyles = makeStyles({
         top:115,
         left:18,
         height:10,
+    },
+    barTwo:{
+        position:"absolute",
+        top:280,
+        width:500,
+        left:10
+    },
+    success:{
+        position:"absolute",
+        width:400,
+        left:40,
+        bottom:350,
 
-    }
+    },
+
 });
 
 const Search = styled("div")(({ theme }) => ({
@@ -212,10 +229,24 @@ function AdminMain({ children }) {
     const [link,setLink]=useState({});
     const [website, setWebsite] = React.useState('');
     const [openSnackBAr, setOpenSnackBAR] = useState(false);
+    const [upload,setUpload]=useState(null);
+    const [success,setSuccess]=useState(false)
+
 
     const handleChange = (event: SelectChangeEvent) => {
         setWebsite(event.target.value);
     };
+    const close = (
+        <IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={() => setSuccess(false)}
+        >
+            <CloseIcon fontSize="small" />
+        </IconButton>
+    );
+
 
     const action = (
         <IconButton
@@ -258,6 +289,7 @@ function AdminMain({ children }) {
         // ))}
         // history.push("/products/");
     }
+
     async function Submit() {
         let item = {
             website: website
@@ -273,7 +305,9 @@ function AdminMain({ children }) {
         };
         try {
             const response = await axios({
-                url:  BASE_URL +"/api/Scrapers/",
+                url:  BASE_URL +"/api/Scrapers/",onUploadProgress: (data)=>{
+                    setUpload(Math.round((data.loaded/data.total)*100));
+                },
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -281,7 +315,13 @@ function AdminMain({ children }) {
                 },
                 data: item,
             });
+            if (response.status==200||response.status==201)
+            {
+                setSuccess(true);
+                console.log("in response 200")
+            }
         }
+
         catch (error) {
             console.log("error", { error });
             const { response } = error;
@@ -303,6 +343,7 @@ function AdminMain({ children }) {
 
     return (
         <div>
+
             <Box sx={{ display: "flex" }}>
                 <Box sx={{ flexGrow: 5 }}>
                     <AppBar position="static" className={classes.app}>
@@ -431,6 +472,7 @@ function AdminMain({ children }) {
                         </Typography>
                     </Toolbar>
                 </AppBar>
+                {success && <Alert  action={close} className={classes.success} severity="success">Data Scrapping : Initiated-Products will show soon</Alert>}
                 <Container>
 
                     {/*<Typography style={{left:19,top:134,position:"absolute", fontSize:26,fontFamily:"serif", color:"slateblue"}}>Scrape website:</Typography>*/}
@@ -470,13 +512,15 @@ function AdminMain({ children }) {
                     <Button  className={classes.button} onClick={Submit}  variant="contained" color="primary">
                         Start Scrapper
                     </Button>
-
+                    <Box sx={{ width: '100%' }} className={classes.barTwo}>
+                        <LinearProgress variant="determinate" value={upload}   />
+                    </Box>
                 </Container>
             </Box>
             <Snackbar
                 open={openSnackBAr}
                 autoHideDuration={6000}
-                message={"Data Has Started to Scrape"}
+                message={"Data Has Failed to Scrape"}
                 anchorOrigin={{ vertical: "top", horizontal: "right" }}
                 action={action}
             />

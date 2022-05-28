@@ -55,7 +55,7 @@ import axios from "axios";
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
 import {BASE_URL} from "./Constants";
-import {UserData} from "./UserData";
+// import {UserData} from "./UserData";
 import BarChart from "./BarChart";
 
 const drawerWidth = 240;
@@ -288,46 +288,7 @@ function ProductDetails(props) {
     const [price, setPrice] = useState([]);
     const [user, setUser]=useState({});
     const [relatedProducts,setRelatedProducts]=useState({});
-    const [userData, setUserData] = useState({
-        labels: UserData.map((data) => data.year),
-        datasets: [
-            {
-                label: "Users Gained",
-                data: UserData.map((data) => data.userGain),
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(201, 203, 207, 0.2)'
-                ],
-                borderColor: [
-                    'rgb(255, 99, 132)',
-                    'rgb(75, 192, 192)',
-                    'rgb(54, 162, 235)',
-                    'rgb(153, 102, 255)',
-                    'rgb(201, 203, 207)'
-                ],
-                borderWidth: 2
-            },
-        ],
-        options: {
-            scales: {
-                xAxes: [{
-                    gridLines: {
-                        display: false,
-                        color: "rgba(0, 0, 0, 0)",
-                    }
-                }],
-                yAxes: [{
-                    gridLines: {
-                        display: false,
-                        color: "rgba(0, 0, 0, 0)",
-                    }
-                }]
-            }
-        }
-    });
+    const [reviewData, setReviewData] = useState({});
 
 
     let { id } = useParams();
@@ -335,50 +296,45 @@ function ProductDetails(props) {
 
     useEffect(() => {
         setUser(JSON.parse(localStorage.getItem('current_user')))
+    }, []);
 
-        if (user && typeof user !== "undefined" && user['id'] !== "undefined"){  //due to condition issue Api call for a s
-                                                                                    // single products name and image is not working
-          if (user['is_subscribed'] == false){
-            history("/payment");
-          }else{
-              console.log('user --->', user)
-            axios({
-                url: BASE_URL+`/api/product/${id}/${user['id']}/`,
-                method: "GET",
-            })
-                .then(({ data }) => {
-                    console.log("this is the data of a single product: ", { data });
-                    setData(data);
+    useEffect(() => {
+        if (user && typeof user !== "undefined" && user['id']){
+            if (user['is_subscribed'] == false){
+                history("/payment");
+            }else{
+                console.log('user --->', user)
+                axios({
+                    url: BASE_URL+`/api/product/${id}/`,
+                    method: "GET",
                 })
-                .catch((err) => {
-                    console.log("this is the error: ", { err });
-                });
-            axios({
-                url: BASE_URL+`/api/related_products/${id}/`,
-                method: "GET",
-            })
-                .then(({ data }) => {
-                    console.log("this is the data of a single product: ", { data });
-                    setRelatedProducts(data);
+                    .then(({ data }) => {
+                        console.log("this is the data of a single product: ", { data });
+                        setData(data);
+                    })
+                    .catch((err) => {
+                        console.log("this is the error: ", { err });
+                    });
+                axios({
+                    url: BASE_URL+`/api/related_products/${id}/${user['id']}/`,
+                    method: "GET",
                 })
-                .catch((err) => {
-                    console.log("this is the error: ", { err });
-                });
-          }
+                    .then(({ data }) => {
+                        console.log("this is the data of a single product: ", { data });
+                        setRelatedProducts(data);
+                    })
+                    .catch((err) => {
+                        console.log("this is the error: ", { err });
+                    });
+            }
         }
         console.log("This is the useEffect of dynamic Function: ", { id });
-    }, []);   //remove user to stop multiple api calls
+    }, [user]);
 
-    // useEffect(() => {
-    //     // console.log("This is the useEffect of dynamic Function: ", {product_name});
-
-
-    //     setUser(JSON.parse(localStorage.getItem('current_user')))
-    // }, []);
     useEffect(() => {
 
         axios({
-            url: `https://finalproject-helpmesell.herokuapp.com/api/price/`,
+            url: BASE_URL+`/api/price/`,
             method: "GET",
         })
             .then(({ data }) => {
@@ -391,6 +347,71 @@ function ProductDetails(props) {
         setUser(JSON.parse(localStorage.getItem('current_user')))
     }, []);
 
+    useEffect(() => {
+        axios({
+            url: BASE_URL+`/api/ProductReviewStats/${id}/`,
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+            },
+
+        })
+            .then(({ data }) => {
+                console.log("this is the data of a review product: ", { data });
+
+                setReviewData({
+                    labels: data.map((d) => d.type),
+                    datasets: [
+                        {
+                            label: "Reviews Gained",
+                            data: data.map((d) => d.value),
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(201, 203, 207, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgb(255, 99, 132)',
+                                'rgb(75, 192, 192)',
+                                'rgb(54, 162, 235)',
+                                'rgb(153, 102, 255)',
+                                'rgb(201, 203, 207)'
+                            ],
+                            borderWidth: 2
+                        },
+                    ],
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                gridLines: {
+                                    display: false,
+                                    color: "rgba(0, 0, 0, 0)",
+                                }
+                            }],
+                            yAxes: [{
+                                gridLines: {
+                                    display: false,
+                                    color: "rgba(0, 0, 0, 0)",
+                                }
+                            }]
+                        }
+                    }
+                })
+                // setReviewData(data);
+                // setSuccess(true);
+            })
+            .catch((err) => {
+                console.log("this is the error: ", { err });
+                const { response } = err || {};
+                const { d } = response || {};
+                const { message } = d || {};
+                // setOpenSnackBAR(true);
+            });
+        setUser(JSON.parse(localStorage.getItem('current_user')))
+    }, []);
 
     function handleClick() {
         setOpen(!open);
@@ -441,7 +462,8 @@ function ProductDetails(props) {
                         </CardContent>
                     </Card>
                     <div style={{ width: 400,top:260,left:600,position:"absolute"}}>
-                        <BarChart chartData={userData} />
+                        {reviewData && reviewData['labels'] &&  <BarChart chartData={reviewData} /> }
+
                     </div>
 
                     <Box sx={{ display: 'flex' }}>
