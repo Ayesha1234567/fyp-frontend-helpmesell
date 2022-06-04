@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from "react";
+import SearchIcon from '@mui/icons-material/Search';
 import {loadStripe} from "@stripe/stripe-js";
 import {useHistory} from "react-router-dom";
 import StripeCheckout from "react-stripe-checkout";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {
     CardElement,
     Elements,
@@ -37,6 +39,7 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import PaymentInputs from "./Checkout";
+import HomeIcon from "@mui/icons-material/Home";
 
 const drawerWidth = 240;
 const useStyles=makeStyles({
@@ -58,9 +61,10 @@ const useStyles=makeStyles({
         fontFamily:"serif",
     },
     head:{
-        fontFamily:"sans-serif",
+        fontFamily:"serif",
         color:"#423294",
-        fontWeight:"bold"
+        fontWeight:"bold",
+        position:"relative",
     },
     uptoolbar:{
         height:10,
@@ -90,7 +94,7 @@ const useStyles=makeStyles({
 
     font:{
         fontFamily:"serif",
-        color:"slateblue",
+        color:'#474bad',
     },
     card:{
         position:"absolute",
@@ -115,13 +119,13 @@ const useStyles=makeStyles({
     },
     button:{
         position: "absolute",
-        top: 280,
-        left:50
+        top: 290,
+        left:60
 
     },
     media:{
         position:"relative",
-        color: "slateblue",
+        color: '#474bad',
         fontFamily:"serif",
         display: "block",
         whiteSpace:"unset",
@@ -129,21 +133,6 @@ const useStyles=makeStyles({
         overflow:"hidden",
         border:1,
     },
-    mediaImage:{
-        position:"relative",
-        color: "slateblue",
-        fontFamily:"sans-serif",
-        left:50,
-        top:-20,
-    },
-    titile:
-        { overflow:"hidden",
-            left:650,
-            top:160,
-            position:"absolute",
-            fontFamily:"serif",
-            fontSize:54
-        },
     listFont:{
         fontSize:14,
     },
@@ -156,19 +145,12 @@ const useStyles=makeStyles({
         borderColor:"slateblue",
         borderRadius:5
     },
-    paginate: {
-        color: "slateblue",
-        fontFamily: "sans-serif",
-        position:"relative",
-        top:400,
-        right:500
-    },
     first:{
         position:"absolute",
         right:90,
         fontWeight:"28",
         fontFamily: "serif",
-        color: "slateblue",
+        color: '#474bad',
         top:10,
         fontSize:45,
     },
@@ -176,7 +158,7 @@ const useStyles=makeStyles({
         position:"absolute",
         right:57,
         fontFamily: "serif",
-        color: "#4d7eb0",
+        color: '#474bad',
         top:79,
         fontStyle:"italic",
         // fontSize:"21"
@@ -195,7 +177,7 @@ const useStyles=makeStyles({
         fontSize:65,
         fontFamily:"serif",
         top:128,
-        color:"slateblue",
+        color:'#474bad',
     },
     month:{
         position:"absolute",
@@ -211,7 +193,7 @@ const useStyles=makeStyles({
         fontSize:17,
         fontFamily:"serif",
         top:240,
-        color:"slateblue",
+        color:'#474bad',
         fontWeight:"bold",
     },
     offer:{
@@ -220,7 +202,7 @@ const useStyles=makeStyles({
         fontSize:14,
         fontFamily:"serif",
         top:270,
-        color:"#4d7eb0",
+        color:"#474bad",
     },
     offerTwo:{
         position:"absolute",
@@ -228,7 +210,7 @@ const useStyles=makeStyles({
         fontSize:14,
         fontFamily:"serif",
         top:290,
-        color:"#4d7eb0",
+        color:"#474bad",
     },
 
     offer2:{
@@ -237,7 +219,7 @@ const useStyles=makeStyles({
         fontSize:14,
         fontFamily:"serif",
         top:310,
-        color:"#4d7eb0",
+        color:'#474bad',
     },
 
     offer3:{
@@ -246,7 +228,7 @@ const useStyles=makeStyles({
         fontSize:14,
         fontFamily:"serif",
         top:310,
-        color:"#4d7eb0",
+        color:'#474bad',
     },
 
     rsTwo:{
@@ -264,7 +246,7 @@ const useStyles=makeStyles({
         fontSize:65,
         fontFamily:"serif",
         top:128,
-        color:"slateblue",
+        color:'#474bad',
     },
 
     monthTwo:{
@@ -291,7 +273,7 @@ const useStyles=makeStyles({
         fontSize:65,
         fontFamily:"serif",
         top:128,
-        color:"slateblue",
+        color:'#474bad',
     },
 
     monthThree:{
@@ -306,7 +288,32 @@ const useStyles=makeStyles({
         width:450,
         bottom:290,
         position:"absolute",
-        right:500
+        right:200
+    },
+    heading:{
+        position:"absolute",
+        fontFamily:"serif",
+        color:"#474bad",
+        top:100,
+        right:400
+    },
+    stPre:{
+        position:"absolute",
+        right:50,
+        fontWeight:"28",
+        fontFamily: "serif",
+        color: '#474bad',
+        top:10,
+        fontSize:45,
+    },
+    username:{
+        position:"absolute",
+        fontFamily:"serif",
+        right:30
+    },
+    icon:{
+        position:"absolute",
+        right:120
     }
 
 });
@@ -321,7 +328,8 @@ const bull = (
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
         padding: theme.spacing(2),
-        width:450
+        width:450,
+
     },
     '& .MuiDialogActions-root': {
         padding: theme.spacing(1),
@@ -332,6 +340,7 @@ export interface DialogTitleProps {
     id: string;
     children?: React.ReactNode;
     onClose: () => void;
+    position:"absolute"
 }
 
 const BootstrapDialogTitle = (props: DialogTitleProps) => {
@@ -461,8 +470,11 @@ function Payment()
         <div>
             <AppBar position="static" className={classes.app}>
                 <Toolbar>
+                    <AccountCircleIcon fontSize={"large"}className={classes.icon}></AccountCircleIcon>
+                    <Typography variant={"h6"} className={classes.username}>{user.username}</Typography>
                 </Toolbar>
             </AppBar>
+            <Typography variant={"h3"} className={classes.heading} >Choose the Right Plan for You!</Typography>
 
             <Drawer
                 className={classes.drawer}
@@ -488,6 +500,12 @@ function Payment()
                         ></ListSubheader>
                     }
                 >
+                    <ListItemButton component={Link} to="/homepage">
+                        <ListItemIcon>
+                            <HomeIcon color={"primary"} />
+                        </ListItemIcon>
+                        <ListItemText primary="Home"/>
+                    </ListItemButton>
                     {parseInt(user.state) == 2 &&
                         <ListItemButton component={Link} to="/uploadfile">
                             <ListItemIcon>
@@ -504,17 +522,11 @@ function Payment()
                             <ListItemText primary=" Scrape Website Data" />
                         </ListItemButton>
                     }
-                    <ListItemButton component={Link} to="/marketsurvey">
-                        <ListItemIcon>
-                            <EqualizerIcon color={"primary"} />
-                        </ListItemIcon>
-                        <ListItemText primary="Market Survey" />
-                    </ListItemButton>
                     <ListItemButton component={Link} to="/pricecomparison">
                         <ListItemIcon>
-                            <PaidRoundedIcon color={"primary"} />
+                            <SearchIcon color={"primary"} />
                         </ListItemIcon>
-                        <ListItemText primary="Price Comparison" />
+                        <ListItemText primary="Survey Product" />
                     </ListItemButton>
                     <ListItemButton
                         onClick={handleClick}
@@ -590,7 +602,7 @@ function Payment()
             <Card  className={classes.cardTwo}
                    sx={{ minWidth: 250, boxShadow: 2, padding: 2, margin: 1, top:200 }}>
                 <CardContent>
-                    <Typography   className={classes.first}>
+                    <Typography   className={classes.stPre}>
                         Standard
                     </Typography>
                     <Typography variant={"h6"} className={classes.second}>
@@ -615,7 +627,7 @@ function Payment()
             <Card  className={classes.cardThree}
                    sx={{ minWidth: 250, boxShadow: 2, padding: 2, margin: 1, top:200 }}>
                 <CardContent>
-                    <Typography   className={classes.first}>
+                    <Typography   className={classes.stPre}>
                         Premium
                     </Typography>
                     <Typography variant={"h6"} className={classes.second}>

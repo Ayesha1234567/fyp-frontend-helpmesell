@@ -13,6 +13,7 @@ import {
 import TableRow from "@mui/material/TableRow";
 import SearchIcon from "@mui/icons-material/Search";
 import Drawer from "@mui/material/Drawer";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ListSubheader from "@mui/material/ListSubheader";
 import ListItemButton from "@mui/material/ListItemButton";
 import {Link, useHistory, useNavigate} from "react-router-dom";
@@ -34,6 +35,7 @@ import TablePagination from "@mui/material/TablePagination";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
 import {BASE_URL} from "./Constants";
+import HomeIcon from "@mui/icons-material/Home";
 const drawerWidth = 240;
 const useStyles=makeStyles({
     drawer:{
@@ -76,7 +78,7 @@ const useStyles=makeStyles({
     },
     bottom: {
         position: "relative",
-        bottom: -490,
+        bottom: -520,
         left: 200,
         width:1319,
     },
@@ -88,7 +90,7 @@ const useStyles=makeStyles({
     card:{
         position:"relative",
         left:250,
-        top:300,
+        top:360,
         height:330
     },
     media:{
@@ -132,9 +134,18 @@ const useStyles=makeStyles({
         color: "slateblue",
         fontFamily: "sans-serif",
         position:"relative",
-        top:400,
+        top:500,
         right:500
     },
+    username:{
+        position:"absolute",
+        fontFamily:"serif",
+        right:30
+    },
+    icon:{
+        position:"absolute",
+        right:120
+    }
 })
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -245,6 +256,8 @@ function PriceComparison()
                 <Box sx={{ flexGrow: 5 }}>
                     <AppBar position="static" className={classes.app}>
                         <Toolbar>
+                            <AccountCircleIcon fontSize={"large"}className={classes.icon}></AccountCircleIcon>
+                            <Typography variant={"h6"} className={classes.username}>{user.username}</Typography>
                         </Toolbar>
                     </AppBar>
                 </Box>
@@ -272,6 +285,12 @@ function PriceComparison()
                             ></ListSubheader>
                         }
                     >
+                        <ListItemButton component={Link} to="/homepage">
+                            <ListItemIcon>
+                                <HomeIcon color={"primary"} />
+                            </ListItemIcon>
+                            <ListItemText primary="Home"/>
+                        </ListItemButton>
                         {parseInt(user.state)==2 &&
                             <ListItemButton component={Link} to="/uploadfile">
                                 <ListItemIcon>
@@ -288,22 +307,16 @@ function PriceComparison()
                                 <ListItemText primary=" Scrape Website Data" />
                             </ListItemButton>
                         }
-                        <ListItemButton component={Link} to="/marketsurvey">
-                            <ListItemIcon>
-                                <EqualizerIcon color={"primary"} />
-                            </ListItemIcon>
-                            <ListItemText primary="Market Survey" />
-                        </ListItemButton>
                         <ListItemButton component={Link} to="/pricecomparison">
                             <ListItemIcon>
-                                <PaidRoundedIcon color={"primary"} />
+                                <SearchIcon color={"primary"} />
                             </ListItemIcon>
-                            <ListItemText primary="Price Comparison" />
+                            <ListItemText primary="Survey Product" />
                         </ListItemButton>
                         <ListItemButton
                             onClick={handleClick}
                             component={Link}
-                            to="/homepage"
+                            to="/pricecomparison"
                         >
                             <ListItemIcon>
                                 <AppsIcon color={"primary"} />
@@ -345,11 +358,11 @@ function PriceComparison()
                 </Drawer>
             </Box>
 
-            <Typography style={{fontSize:56,fontFamily:"serif",left:670,top:160, color:"slateblue",position:"absolute"}}>Survey Product</Typography>
-            <TextField className={classes.searchbar}  onChange={(e)=>search(e.target.value)} id="outlined-basic" label="name" variant="outlined" size="small" Last Name/>
+            <Typography style={{fontSize:56,fontFamily:"serif",left:670,top:160, color:'#474bad',position:"absolute"}}>Survey Product</Typography>
+            <TextField className={classes.searchbar}  onChange={(e)=>search(e.target.value)} id="outlined-basic" label="product name" variant="outlined" size="small" />
 
             <SearchIconWrapper>
-                <SearchIcon style={{color:"slateblue",left:580, width:100, height:100, top:85,position:"absolute"}}/>
+                <SearchIcon style={{color:'#474bad',left:580, width:100, height:100, top:85,position:"absolute"}}/>
             </SearchIconWrapper>
             {/*<Button variant="contained" color={"primary"} style={{left:1120, top:185}} onClick={Search}>Search</Button>*/}
             {<Box

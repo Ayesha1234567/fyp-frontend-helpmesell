@@ -5,7 +5,7 @@ import ListSubheader from "@mui/material/ListSubheader";
 import ListItemButton from "@mui/material/ListItemButton";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-
+import SearchIcon from '@mui/icons-material/Search';
 
 // import Card from '@mui/material/Card';
 // import CardActions from '@mui/material/CardActions';
@@ -57,6 +57,8 @@ import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
 import {BASE_URL} from "./Constants";
 // import {UserData} from "./UserData";
 import BarChart from "./BarChart";
+import HomeIcon from "@mui/icons-material/Home";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const drawerWidth = 240;
 const useStyles=makeStyles({
@@ -235,6 +237,16 @@ const useStyles=makeStyles({
         left:200,
         top:20,
     },
+    username:{
+        position:"absolute",
+        fontFamily:"serif",
+        // right:100
+
+    },
+    icon:{
+        position:"absolute",
+        // right:100
+    },
 
 
 })
@@ -367,18 +379,17 @@ function ProductDetails(props) {
                             label: "Reviews Gained",
                             data: data.map((d) => d.value),
                             backgroundColor: [
-                                'rgba(255, 99, 132, 0.2)',
                                 'rgba(75, 192, 192, 0.2)',
                                 'rgba(54, 162, 235, 0.2)',
-                                'rgba(153, 102, 255, 0.2)',
-                                'rgba(201, 203, 207, 0.2)'
+                                'rgba(255, 99, 132, 0.2)',
+
+
                             ],
                             borderColor: [
-                                'rgb(255, 99, 132)',
                                 'rgb(75, 192, 192)',
                                 'rgb(54, 162, 235)',
-                                'rgb(153, 102, 255)',
-                                'rgb(201, 203, 207)'
+                                'rgb(255, 99, 132)',
+
                             ],
                             borderWidth: 2
                         },
@@ -470,6 +481,7 @@ function ProductDetails(props) {
                         <Box sx={{ flexGrow: 5 }}>
                             <AppBar position="static" className={classes.application}>
                                 <Toolbar>
+                                    <Typography variant={"h6"} className={classes.username}> <AccountCircleIcon fontSize={"large"}className={classes.icon}/>{user.username}</Typography>
                                 </Toolbar>
                             </AppBar>
                         </Box>
@@ -497,6 +509,12 @@ function ProductDetails(props) {
                                     ></ListSubheader>
                                 }
                             >
+                                <ListItemButton component={Link} to="/homepage">
+                                    <ListItemIcon>
+                                        <HomeIcon color={"primary"} />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Home"/>
+                                </ListItemButton>
                                 {parseInt(user.state)==2 &&
                                     <ListItemButton component={Link} to="/uploadfile">
                                         <ListItemIcon>
@@ -513,17 +531,12 @@ function ProductDetails(props) {
                                         <ListItemText primary=" Scrape Website Data" />
                                     </ListItemButton>
                                 }
-                                <ListItemButton component={Link} to="/marketsurvey">
-                                    <ListItemIcon>
-                                        <EqualizerIcon color={"primary"} />
-                                    </ListItemIcon>
-                                    <ListItemText primary="Market Survey" />
-                                </ListItemButton>
+
                                 <ListItemButton component={Link} to="/pricecomparison">
                                     <ListItemIcon>
-                                        <PaidRoundedIcon color={"primary"} />
+                                        <SearchIcon color={"primary"} />
                                     </ListItemIcon>
-                                    <ListItemText primary="Price Comparison" />
+                                    <ListItemText primary="Survey Product" />
                                 </ListItemButton>
                                 <ListItemButton
                                     onClick={handleClick}

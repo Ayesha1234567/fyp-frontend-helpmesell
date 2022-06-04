@@ -195,7 +195,7 @@ function PaymentInputs(props) {
                         <TextField
                             className={classes.field}
                             required
-                            value={name}
+                            value={user.username}
                             type={"name"}
                             onChange={(e) => setName(e.target.value)}
                             id="outlined-basic"

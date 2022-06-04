@@ -32,8 +32,8 @@ const useStyles = makeStyles({
     cont: { marginTop: 5, marginLeft: 24, fontSize: 30 },
     button: {
         position: "relative",
-        top: 30,
-        left: 300,
+        top: 40,
+        left: 295,
         maxHeight: 80,
         maxWidth: 100,
         fontFamily: "serif",
@@ -59,7 +59,7 @@ const useStyles = makeStyles({
     },
     bottom: {
         position: "relative",
-        bottom: -120,
+        bottom: -10,
     },
     writeBottom: {
         position: "relative",
@@ -178,12 +178,6 @@ function SignUp() {
                         HelpMeSell
                     </Typography>
                     <Typography className={classes.mainTitle}>HelpMeSell</Typography>
-                    <ButtonGroup>
-                        <Button onClick={LoggingIn} className={classes.login}>
-                            Login
-                        </Button>
-                        <Button className={classes.login}>Admin Portal</Button>
-                    </ButtonGroup>
                 </Toolbar>
             </AppBar>
 
@@ -299,12 +293,12 @@ function SignUp() {
                                     className={classes.field}
                                     required
                                     value={dob}
-                                    tlabel={"date of birth"}
+                                    label={"DD/MM/YYYY"}
                                     onChange={(e) => setDob(e.target.value)}
                                     id="outlined-basic"
                                     variant="outlined"
                                     size="small"
-                                    label={"date of birth"}
+                                    label={"DD/MM/YYYY"}
                                     Dob
                                 />
                             </Grid>

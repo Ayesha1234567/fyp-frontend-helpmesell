@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {Box, Container} from "@material-ui/core";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Drawer from "@mui/material/Drawer";
 import ListSubheader from "@mui/material/ListSubheader";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -35,6 +36,7 @@ import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
 import {BASE_URL} from "./Constants";
+import HomeIcon from "@mui/icons-material/Home";
 
 const drawerWidth = 240;
 const drawerHeight= -100;
@@ -71,7 +73,7 @@ const useStyles = makeStyles({
     },
     bottom: {
         position: "absolute",
-        bottom: -450,
+        bottom: -640,
         left: 95,
     },
     searchmain: {
@@ -118,20 +120,29 @@ const useStyles = makeStyles({
         color: "slateblue",
         fontFamily: "sans-serif",
         position:"relative",
-        top:300,
+        top:500,
         right:500
     },
-    titile: {
+    label: {
         overflow: "hidden",
-        left: 300,
-        top: 200,
+        left: 750,
+        top: 217,
         position: "absolute",
         fontFamily: "serif",
-        fontSize: 54,
+        fontSize: 57,
     },
     listFont: {
         fontSize: 14,
     },
+    username:{
+        position:"absolute",
+        fontFamily:"serif",
+        right:30
+    },
+    icon:{
+        position:"absolute",
+        right:120
+    }
 });
 
 const Search = styled("div")(({ theme }) => ({
@@ -250,15 +261,8 @@ function Laptops({ children }) {
                 <Box sx={{ flexGrow: 5 }}>
                     <AppBar position="static" className={classes.app}>
                         <Toolbar>
-                            <Search className={classes.search}>
-                                <SearchIconWrapper>
-                                    <SearchIcon />
-                                </SearchIconWrapper>
-                                <StyledInputBase
-                                    placeholder="Search…"
-                                    inputProps={{ "aria-label": "search" }}
-                                />
-                            </Search>
+                            <AccountCircleIcon fontSize={"large"}className={classes.icon}></AccountCircleIcon>
+                            <Typography variant={"h6"} className={classes.username}>{user.username}</Typography>
                         </Toolbar>
                     </AppBar>
                 </Box>
@@ -286,6 +290,12 @@ function Laptops({ children }) {
                             ></ListSubheader>
                         }
                     >
+                        <ListItemButton component={Link} to="/homepage">
+                            <ListItemIcon>
+                                <HomeIcon color={"primary"} />
+                            </ListItemIcon>
+                            <ListItemText primary="Home"/>
+                        </ListItemButton>
                         {parseInt(user.state) == 2 &&
                             <ListItemButton component={Link} to="/uploadfile">
                                 <ListItemIcon>
@@ -302,22 +312,16 @@ function Laptops({ children }) {
                                 <ListItemText primary=" Scrape Website Data" />
                             </ListItemButton>
                         }
-                        <ListItemButton component={Link} to="/marketsurvey">
-                            <ListItemIcon>
-                                <EqualizerIcon color={"primary"} />
-                            </ListItemIcon>
-                            <ListItemText primary="Market Survey" />
-                        </ListItemButton>
                         <ListItemButton component={Link} to="/pricecomparison">
                             <ListItemIcon>
-                                <PaidRoundedIcon color={"primary"} />
+                                <SearchIcon color={"primary"} />
                             </ListItemIcon>
-                            <ListItemText primary="Price Comparison" />
+                            <ListItemText primary="Survey Product" />
                         </ListItemButton>
                         <ListItemButton
                             onClick={handleClick}
                             component={Link}
-                            to="/homepage"
+                            to="/laptops"
                         >
                             <ListItemIcon>
                                 <AppsIcon color={"primary"} />
@@ -358,11 +362,14 @@ function Laptops({ children }) {
                     </List>
                 </Drawer>
             </Box>
+            <LaptopMacIcon style={{color:"#4044a8",left:830, width:150, height:55, top:180,position:"absolute"}} />
+            <LaptopMacIcon style={{color:"#4044a8",left:703, width:150, height:55, top:180,position:"absolute"}} />
+            <LaptopMacIcon style={{color:"#4044a8",left:732, width:220, height:70, top:170,position:"absolute"}} />
             <Typography
-                className={classes.titile}
+                className={classes.label}
                 variant={"body2"}
                 color={"primary"}
-            >Laptops:
+            >Laptops
             </Typography>
 
             <Box

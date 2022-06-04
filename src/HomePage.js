@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import {Box, Container} from "@material-ui/core";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
+import LaptopIcon from '@mui/icons-material/Laptop';
 import Drawer from "@mui/material/Drawer";
 import ListSubheader from "@mui/material/ListSubheader";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -13,12 +16,25 @@ import { useTheme } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 import InputBase from "@mui/material/InputBase";
 import { useNavigate } from "react-router-dom";
-import SearchIcon from "@mui/icons-material/Search";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import LaptopMacIcon from "@mui/icons-material/LaptopMac";
 import LogoutIcon from "@mui/icons-material/Logout";
 import TableRow from "@mui/material/TableRow";
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import NativeSelect from '@mui/material/NativeSelect';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import SearchIcon from '@mui/icons-material/Search';
+import Image from 'material-ui-image'
+import OutlinedInput from '@mui/material/OutlinedInput';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import DevicesIcon from '@mui/icons-material/Devices';
 import {
   makeStyles,
   List,
@@ -35,10 +51,18 @@ import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
 import {BASE_URL} from "./Constants";
+import {CardActionArea, CardMedia} from "@mui/material";
+
+
+
 
 const drawerWidth = 240;
 const drawerHeight= -100;
 const useStyles = makeStyles({
+  icon:{
+    position:"absolute",
+    right:120
+  },
   drawer: {
     width: drawerWidth,
     height: drawerHeight,
@@ -71,18 +95,9 @@ const useStyles = makeStyles({
   },
   bottom: {
     position: "absolute",
-    bottom: -450,
+    bottom: -635,
     left: 95,
   },
-  searchmain: {
-    border: "solid 2px",
-    borderColor: "slateblue",
-    left: 550,
-    top: 180,
-    position: "absolute",
-    maxWidth: 550,
-  },
-
   font: {
     fontFamily: "serif",
     color: "slateblue",
@@ -104,8 +119,6 @@ const useStyles = makeStyles({
     overflow: "hidden",
     //textOverflow:"clip",
     border: 1,
-
-
   },
   mediaImage: {
     position: "relative",
@@ -118,7 +131,7 @@ const useStyles = makeStyles({
     color: "slateblue",
     fontFamily: "sans-serif",
     position:"relative",
-    top:300,
+    top:480,
     right:500
   },
   titile: {
@@ -132,8 +145,57 @@ const useStyles = makeStyles({
   listFont: {
     fontSize: 14,
   },
+  filter:{
+    position:"relative",
+    top:8,
+    left:10,
+    color:"slateblue"
+  },
+  filterTwo:{
+    position:"relative",
+    top:20,
+    left:10,
+    color:"slateblue"
+  },
+  filterButton:{
+    position:"absolute",
+    top:320,
+    left:1360,
+    color:"slateblue",
+  },
+  dialogue:{
+    position:"relative",
+    color:"slateblue",
+    bottom:-50
+  },
+  closeButton:{
+    position:"absolute",
+    left:30,
+  },
+  openButton:{
+    color:"slateblue",
+  },
+  buttonIcon:{
+    position:"relative",
+    color:"slateblue",
+    left:10
+  },
+  cardMain:{
+    position:"absolute",
+    left:240,
+    width:1279,
+    height:400
+  },
+  username:{
+    position:"relative",
+    fontFamily:"serif",
+    left:1150
+  }
 });
 
+function valuetext(value: number) {
+  return `${value}°C`;
+}
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -186,6 +248,16 @@ function HomePage({ children }) {
   const [user,setUser]=useState({});
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [openFilter, setOpenFilter] = React.useState(false);
+
+  const handleClickOpenFilter = () => {
+    setOpenFilter(true);
+  };
+  const handleCloseFilter = (event: React.SyntheticEvent<unknown>, reason?: string) => {
+    if (reason !== 'backdropClick') {
+      setOpenFilter(false);
+    }
+  };
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -196,6 +268,12 @@ function HomePage({ children }) {
     result = await result.json();
     setData(result);
   }
+  function valuetext(value: number) {
+    return `${value}°C`;
+  }
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem('current_user')))
+  }, []);
 
   useEffect(() => {
     fetch_products()
@@ -255,15 +333,8 @@ function HomePage({ children }) {
           <Box sx={{ flexGrow: 5 }}>
             <AppBar position="static" className={classes.app}>
               <Toolbar>
-                <Search className={classes.search}>
-                  <SearchIconWrapper>
-                    <SearchIcon />
-                  </SearchIconWrapper>
-                  <StyledInputBase
-                      placeholder="Search…"
-                      inputProps={{ "aria-label": "search" }}
-                  />
-                </Search>
+                <AccountCircleIcon fontSize={"large"}className={classes.icon}></AccountCircleIcon>
+                <Typography variant={"h6"} className={classes.username}>{user.username}</Typography>
               </Toolbar>
             </AppBar>
           </Box>
@@ -307,17 +378,11 @@ function HomePage({ children }) {
                     <ListItemText primary=" Scrape Website Data" />
                   </ListItemButton>
               }
-              <ListItemButton component={Link} to="/marketsurvey">
-                <ListItemIcon>
-                  <EqualizerIcon color={"primary"} />
-                </ListItemIcon>
-                <ListItemText primary="Market Survey" />
-              </ListItemButton>
               <ListItemButton component={Link} to="/pricecomparison">
                 <ListItemIcon>
-                  <PaidRoundedIcon color={"primary"} />
+                  <SearchIcon color={"primary"} />
                 </ListItemIcon>
-                <ListItemText primary="Price Comparison" />
+                <ListItemText primary="Survey Product" />
               </ListItemButton>
               <ListItemButton
                   onClick={handleClick}
@@ -346,7 +411,7 @@ function HomePage({ children }) {
                   </ListItemButton>
                 </List>
               </Collapse>
-              {parseInt(user.state) == 2 &&
+              {parseInt(user.state) == 2 || parseInt(user.state) ==1 &&
                   <ListItemButton component={Link} to="/payment">
                     <ListItemIcon>
                       <SubscriptionsIcon color={"primary"}/>
@@ -354,40 +419,6 @@ function HomePage({ children }) {
                     <ListItemText primary="Subscribe" />
                   </ListItemButton>
               }
-
-              <ListItemButton
-                  onClick={handleClickTwo}
-                  component={Link}
-                  to="/homepage"
-              >
-                <ListItemIcon>
-                  <AppsIcon color={"primary"} />
-                </ListItemIcon>
-                <ListItemText primary="Filter" />
-                {openTwo ? <ExpandLess /> : <ExpandMore />}
-              </ListItemButton>
-              <Collapse in={openTwo} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  <ListItemButton  component={Link}  to="" sx={{ pl: 4 }}>
-                    <ListItemIcon>
-                      <PhoneIphoneIcon color={"primary"} />
-                    </ListItemIcon>
-                    <ListItemText  primary="Brands" />
-                  </ListItemButton>
-                  <ListItemButton  component={Link}  to="" sx={{ pl: 4 }}>
-                    <ListItemIcon>
-                      <LaptopMacIcon color={"primary"} />
-                    </ListItemIcon>
-                    <ListItemText   primary="Price Range" />
-                  </ListItemButton>
-                </List>
-              </Collapse>
-
-
-
-
-
-
               <ListItemButton component={Link} to="/">
                 <ListItemIcon>
                   <LogoutIcon color={"primary"} />
@@ -397,13 +428,18 @@ function HomePage({ children }) {
             </List>
           </Drawer>
         </Box>
-        <Typography
-            className={classes.titile}
-            variant={"body2"}
-            color={"primary"}
-        >Recently Added :
-        </Typography>
-
+        {/*<Typography*/}
+        {/*    className={classes.titile}*/}
+        {/*    variant={"body2"}*/}
+        {/*    color={"primary"}*/}
+        {/*>Recently Added :*/}
+        {/*</Typography>*/}
+        {/*<PhoneAndroidIcon style={{color:"#4044a8",left:910, width:200, height:50, top:180,position:"absolute"}}/>*/}
+          <PhoneIphoneIcon style={{color:"#474bad",left:850, width:200, height:65, top:145,position:"absolute"}}/>
+          <LaptopMacIcon style={{color:"#474bad",left:730, width:200, height:100, top:120,position:"absolute"}}/>
+          <LaptopIcon style={{color:"#474bad",left:635, width:200, height:80, top:135,position:"absolute"}}/>
+          <PhoneAndroidIcon style={{color:"#4044a8",left:805, width:200, height:80, top:130,position:"absolute"}}/>
+        <Typography style={{fontSize:56,fontFamily:"serif",left:650,top:200, color:'#474bad',position:"absolute"}}>HELP ME SELL</Typography>
         <Box
             sx={{
               display: "flex",
@@ -513,6 +549,66 @@ function HomePage({ children }) {
             rowsPerPage={rowsPerPage}
             onRowsPerPageChange={handleChangeRowsPerPage}
         />
+
+        <Button variant={"outlined"} className={classes.filterButton} onClick={handleClickOpenFilter}> Filters</Button>
+        <Dialog className={classes.dialogue} disableEscapeKeyDown open={openFilter} onClose={handleCloseFilter}>
+          <DialogTitle>Choose Options </DialogTitle>
+          <DialogContent>
+
+            <Box component="form"  className={classes.filter}>
+              <FormControl fullWidth>
+                <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                  Brand
+                </InputLabel>
+                <NativeSelect
+                    defaultValue={30}
+                    inputProps={{
+                      name: 'brand',
+                      id: 'uncontrolled-native',
+                    }}
+                >
+                  <option value={10}>Apple</option>
+                  <option value={20}>Samsung</option>
+                  <option value={30}>Xiaomi</option>
+                  <option value={40}>Oppo</option>
+                  <option value={50}>Dell</option>
+                  <option value={60}>Hp</option>
+                  <option value={70}>Asus</option>
+                  <option value={80}>Acer</option>
+
+                </NativeSelect>
+              </FormControl>
+            </Box>
+            <Box className={classes.filterTwo}>
+              <FormControl fullWidth>
+                <InputLabel  variant="standard" htmlFor="uncontrolled-native">
+                  Price Range
+                </InputLabel>
+                <NativeSelect
+                    defaultValue={30}
+                    inputProps={{
+                      name: 'brand',
+                      id: 'uncontrolled-native',
+                    }}
+                >
+                  <option value={0}>Under Rs 50,000</option>
+                  <option value={10}>Rs 50,000 - 100,000</option>
+                  <option value={20}>Rs 110,000 - 200,000</option>
+                  <option value={30}>Rs 210,000 - 300,000</option>
+                  <option value={40}>Rs 310,000 - 400,000</option>
+                  <option value={50}>Rs 410,000 - 500,000</option>
+                  <option value={60}>Rs 510,000 - 600,000</option>
+                  <option value={70}>Rs 610,000 - 700,000</option>
+
+                </NativeSelect>
+              </FormControl>
+            </Box>
+          </DialogContent>
+          <DialogActions>
+            <Button className={classes.closeButton} onClick={handleCloseFilter}>Cancel</Button>
+            <Button className={classes.openButton} onClick={handleCloseFilter}>Ok</Button>
+          </DialogActions>
+        </Dialog>
       </div>
 
 

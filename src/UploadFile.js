@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react"
+import SearchIcon from '@mui/icons-material/Search';
 import {Box, Container, Grid, IconButton, Snackbar, TextField} from "@material-ui/core";
 import Drawer from '@mui/material/Drawer';
 import ListSubheader from '@mui/material/ListSubheader';
@@ -12,6 +13,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import LaptopMacIcon from '@mui/icons-material/LaptopMac';
 import LogoutIcon from '@mui/icons-material/Logout';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 import {
   makeStyles,
@@ -41,6 +43,7 @@ import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import {BASE_URL} from "./Constants";
 import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
+import HomeIcon from '@mui/icons-material/Home';
 
 
 const drawerWidth = 240;
@@ -196,7 +199,17 @@ const useStyles=makeStyles({
     position:"absolute",
     top:280,
     width:500
+  },
+  username:{
+    position:"absolute",
+    fontFamily:"serif",
+    right:30
+  },
+  icon:{
+    position:"absolute",
+    right:120
   }
+
 })
 
 const Search = styled('div')(({ theme }) => ({
@@ -362,6 +375,8 @@ function UploadFile()
           <Box sx={{ flexGrow: 5 }}>
             <AppBar position="static" className={classes.application}>
               <Toolbar>
+                <AccountCircleIcon fontSize={"large"}className={classes.icon}></AccountCircleIcon>
+                <Typography variant={"h6"} className={classes.username}>{user.username}</Typography>
               </Toolbar>
             </AppBar>
           </Box>
@@ -389,6 +404,12 @@ function UploadFile()
                   ></ListSubheader>
                 }
             >
+              <ListItemButton component={Link} to="/homepage">
+                <ListItemIcon>
+                  <HomeIcon color={"primary"} />
+                </ListItemIcon>
+                <ListItemText primary="Home"/>
+              </ListItemButton>
               {
                   parseInt(user.state)==1 &&
                   <ListItemButton component={Link} to="/adminmain">
@@ -398,22 +419,16 @@ function UploadFile()
                     <ListItemText primary=" Scrape Website Data" />
                   </ListItemButton>
               }
-              <ListItemButton component={Link} to="/marketsurvey">
-                <ListItemIcon>
-                  <EqualizerIcon color={"primary"} />
-                </ListItemIcon>
-                <ListItemText primary="Market Survey" />
-              </ListItemButton>
               <ListItemButton component={Link} to="/pricecomparison">
                 <ListItemIcon>
-                  <PaidRoundedIcon color={"primary"} />
+                  <SearchIcon color={"primary"} />
                 </ListItemIcon>
-                <ListItemText primary="Price Comparison" />
+                <ListItemText primary="Survey Product" />
               </ListItemButton>
               <ListItemButton
                   onClick={handleClick}
                   component={Link}
-                  to="/products/:id"
+                  to="/uploadfile"
               >
                 <ListItemIcon>
                   <AppsIcon color={"primary"} />

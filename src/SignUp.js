@@ -284,7 +284,7 @@ function SignUp() {
                       className={classes.field}
                       required
                       value={dob}
-                      label={"date of birth"}
+                      label={"DD/MM/YYYY"}
                       onChange={(e) => setDob(e.target.value)}
                       id="outlined-basic"
                       variant="outlined"

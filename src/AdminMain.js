@@ -11,6 +11,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AppsIcon from "@mui/icons-material/Apps";
 import Collapse from "@mui/material/Collapse";
 import { styled, alpha } from "@mui/material/styles";
@@ -48,6 +49,7 @@ import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import CloseIcon from "@mui/icons-material/Close";
 import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
 import LinearProgress from "@mui/material/LinearProgress";
+import HomeIcon from "@mui/icons-material/Home";
 // import router from "react-router-dom/es/Router";
 
 const drawerWidth = 240;
@@ -171,6 +173,15 @@ const useStyles = makeStyles({
         bottom:350,
 
     },
+    username:{
+        position:"absolute",
+        fontFamily:"serif",
+        right:30
+    },
+    icon:{
+        position:"absolute",
+        right:120
+    }
 
 });
 
@@ -348,6 +359,8 @@ function AdminMain({ children }) {
                 <Box sx={{ flexGrow: 5 }}>
                     <AppBar position="static" className={classes.app}>
                         <Toolbar>
+                            <AccountCircleIcon fontSize={"large"}className={classes.icon}></AccountCircleIcon>
+                            <Typography variant={"h6"} className={classes.username}>{user.username}</Typography>
                         </Toolbar>
                     </AppBar>
                 </Box>
@@ -375,6 +388,12 @@ function AdminMain({ children }) {
                             ></ListSubheader>
                         }
                     >
+                        <ListItemButton component={Link} to="/homepage">
+                            <ListItemIcon>
+                                <HomeIcon color={"primary"} />
+                            </ListItemIcon>
+                            <ListItemText primary="Homepage"/>
+                        </ListItemButton>
                         {parseInt(user.state)==2 &&
                             <ListItemButton component={Link} to="/uploadfile">
                                 <ListItemIcon>
@@ -391,22 +410,16 @@ function AdminMain({ children }) {
                                 <ListItemText primary=" Scrape Website Data" />
                             </ListItemButton>
                         }
-                        <ListItemButton component={Link} to="/marketsurvey">
-                            <ListItemIcon>
-                                <EqualizerIcon color={"primary"} />
-                            </ListItemIcon>
-                            <ListItemText primary="Market Survey" />
-                        </ListItemButton>
                         <ListItemButton component={Link} to="/pricecomparison">
                             <ListItemIcon>
-                                <PaidRoundedIcon color={"primary"} />
+                                <SearchIcon color={"primary"} />
                             </ListItemIcon>
-                            <ListItemText primary="Price Comparison" />
+                            <ListItemText primary="Survey Product" />
                         </ListItemButton>
                         <ListItemButton
                             onClick={handleClick}
                             component={Link}
-                            to="/homepage"
+                            to="/adminmain"
                         >
                             <ListItemIcon>
                                 <AppsIcon color={"primary"} />

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import {Box, Container} from "@material-ui/core";
 import Drawer from "@mui/material/Drawer";
 import ListSubheader from "@mui/material/ListSubheader";
 import ListItemButton from "@mui/material/ListItemButton";
 import TablePagination from '@mui/material/TablePagination';
 import Card from "@mui/material/Card";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CardContent from "@mui/material/CardContent";
 import AppsIcon from "@mui/icons-material/Apps";
 import Collapse from "@mui/material/Collapse";
@@ -35,6 +37,7 @@ import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
 import {BASE_URL} from "./Constants";
+import HomeIcon from "@mui/icons-material/Home";
 
 const drawerWidth = 240;
 const drawerHeight= -100;
@@ -71,7 +74,7 @@ const useStyles = makeStyles({
     },
     bottom: {
         position: "absolute",
-        bottom: -450,
+        bottom: -635,
         left: 95,
     },
     searchmain: {
@@ -118,12 +121,12 @@ const useStyles = makeStyles({
         color: "slateblue",
         fontFamily: "sans-serif",
         position:"relative",
-        top:300,
+        top:470,
         right:500
     },
-    titile: {
+    label: {
         overflow: "hidden",
-        left: 300,
+        left: 715,
         top: 200,
         position: "absolute",
         fontFamily: "serif",
@@ -132,6 +135,23 @@ const useStyles = makeStyles({
     listFont: {
         fontSize: 14,
     },
+    phone:{
+        position:"absolute",
+        left:460,
+        top:200
+    },
+    username:{
+        position:"absolute",
+        fontFamily:"serif",
+        right:30
+    },
+    icon:{
+        position:"absolute",
+        right:120
+    }
+
+
+
 });
 
 const Search = styled("div")(({ theme }) => ({
@@ -250,15 +270,8 @@ function Smartphones({ children }) {
                 <Box sx={{ flexGrow: 5 }}>
                     <AppBar position="static" className={classes.app}>
                         <Toolbar>
-                            <Search className={classes.search}>
-                                <SearchIconWrapper>
-                                    <SearchIcon />
-                                </SearchIconWrapper>
-                                <StyledInputBase
-                                    placeholder="Search…"
-                                    inputProps={{ "aria-label": "search" }}
-                                />
-                            </Search>
+                            <AccountCircleIcon fontSize={"large"}className={classes.icon}></AccountCircleIcon>
+                            <Typography variant={"h6"} className={classes.username}>{user.username}</Typography>
                         </Toolbar>
                     </AppBar>
                 </Box>
@@ -286,6 +299,12 @@ function Smartphones({ children }) {
                             ></ListSubheader>
                         }
                     >
+                        <ListItemButton component={Link} to="/homepage">
+                            <ListItemIcon>
+                                <HomeIcon color={"primary"} />
+                            </ListItemIcon>
+                            <ListItemText primary="Home"/>
+                        </ListItemButton>
                         {parseInt(user.state) == 2 &&
                             <ListItemButton component={Link} to="/uploadfile">
                                 <ListItemIcon>
@@ -302,22 +321,16 @@ function Smartphones({ children }) {
                                 <ListItemText primary=" Scrape Website Data" />
                             </ListItemButton>
                         }
-                        <ListItemButton component={Link} to="/marketsurvey">
-                            <ListItemIcon>
-                                <EqualizerIcon color={"primary"} />
-                            </ListItemIcon>
-                            <ListItemText primary="Market Survey" />
-                        </ListItemButton>
                         <ListItemButton component={Link} to="/pricecomparison">
                             <ListItemIcon>
-                                <PaidRoundedIcon color={"primary"} />
+                                <SearchIcon color={"primary"} />
                             </ListItemIcon>
-                            <ListItemText primary="Price Comparison" />
+                            <ListItemText primary="Survey Product" />
                         </ListItemButton>
                         <ListItemButton
                             onClick={handleClick}
                             component={Link}
-                            to="/homepage"
+                            to="/smartphones"
                         >
                             <ListItemIcon>
                                 <AppsIcon color={"primary"} />
@@ -358,11 +371,14 @@ function Smartphones({ children }) {
                     </List>
                 </Drawer>
             </Box>
+            <PhoneIphoneIcon style={{color:"#4044a8",left:720, width:200, height:60, top:150,position:"absolute"}} />
+            <PhoneAndroidIcon  style={{color:"#4044a8",left:760, width:200, height:80, top:130,position:"absolute"}} />
+            <PhoneIphoneIcon style={{color:"#4044a8",left:803, width:200, height:60, top:150,position:"absolute"}} />
             <Typography
-                className={classes.titile}
+                className={classes.label}
                 variant={"body2"}
                 color={"primary"}
-            >Smartphones :
+            >Smartphones
             </Typography>
 
             <Box
