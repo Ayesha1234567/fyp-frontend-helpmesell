@@ -311,6 +311,7 @@ function ProductDetails(props) {
 
     useEffect(() => {
         if (user && typeof user !== "undefined" && user['id']){
+            console.log(user['is_subscribed'], '--->>>>>>> user', user)
             if (user['is_subscribed'] == false){
                 history("/payment");
             }else{

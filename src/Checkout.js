@@ -130,6 +130,8 @@ function PaymentInputs(props) {
             });
             if (response.status==200||response.status==201)
             {
+                user.is_subscribed = true
+                localStorage.setItem('current_user', JSON.stringify(user))
                 setSubscribed(true)
                 history("/homepage")
                 console.log("in response 200")
