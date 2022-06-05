@@ -137,14 +137,14 @@ const useStyles=makeStyles({
         top:500,
         right:500
     },
-    username:{
-        position:"absolute",
-        fontFamily:"serif",
-        right:30
-    },
     icon:{
         position:"absolute",
         right:120
+    },
+    username:{
+        position:"relative",
+        fontFamily:"serif",
+        left:1150
     }
 })
 const Search = styled('div')(({ theme }) => ({
@@ -307,12 +307,7 @@ function PriceComparison()
                                 <ListItemText primary=" Scrape Website Data" />
                             </ListItemButton>
                         }
-                        <ListItemButton component={Link} to="/pricecomparison">
-                            <ListItemIcon>
-                                <SearchIcon color={"primary"} />
-                            </ListItemIcon>
-                            <ListItemText primary="Survey Product" />
-                        </ListItemButton>
+
                         <ListItemButton
                             onClick={handleClick}
                             component={Link}
@@ -341,6 +336,14 @@ function PriceComparison()
                             </List>
                         </Collapse>
                         {parseInt(user.state) == 2 &&
+                            <ListItemButton component={Link} to="/payment">
+                                <ListItemIcon>
+                                    <SubscriptionsIcon color={"primary"}/>
+                                </ListItemIcon>
+                                <ListItemText primary="Subscribe" />
+                            </ListItemButton>
+                        }
+                        {parseInt(user.state) ==3 &&
                             <ListItemButton component={Link} to="/payment">
                                 <ListItemIcon>
                                     <SubscriptionsIcon color={"primary"}/>

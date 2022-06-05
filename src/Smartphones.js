@@ -140,14 +140,14 @@ const useStyles = makeStyles({
         left:460,
         top:200
     },
-    username:{
-        position:"absolute",
-        fontFamily:"serif",
-        right:30
-    },
     icon:{
         position:"absolute",
         right:120
+    },
+    username:{
+        position:"relative",
+        fontFamily:"serif",
+        left:1150
     }
 
 
@@ -355,6 +355,14 @@ function Smartphones({ children }) {
                             </List>
                         </Collapse>
                         {parseInt(user.state) == 2 &&
+                            <ListItemButton component={Link} to="/payment">
+                                <ListItemIcon>
+                                    <SubscriptionsIcon color={"primary"}/>
+                                </ListItemIcon>
+                                <ListItemText primary="Subscribe" />
+                            </ListItemButton>
+                        }
+                        {parseInt(user.state) ==3 &&
                             <ListItemButton component={Link} to="/payment">
                                 <ListItemIcon>
                                     <SubscriptionsIcon color={"primary"}/>

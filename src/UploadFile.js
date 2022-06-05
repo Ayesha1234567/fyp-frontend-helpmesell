@@ -200,14 +200,14 @@ const useStyles=makeStyles({
     top:280,
     width:500
   },
-  username:{
-    position:"absolute",
-    fontFamily:"serif",
-    right:30
-  },
   icon:{
     position:"absolute",
     right:120
+  },
+  username:{
+    position:"relative",
+    fontFamily:"serif",
+    left:1160
   }
 
 })

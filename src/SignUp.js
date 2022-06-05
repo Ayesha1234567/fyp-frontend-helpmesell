@@ -109,6 +109,7 @@ function SignUp() {
       contact_no: contactNo,
       dob: dob,
       password: password,
+      state:3,
     };
 
     console.log("In the submit function: ", item);

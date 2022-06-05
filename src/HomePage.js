@@ -105,7 +105,7 @@ const useStyles = makeStyles({
   card: {
     position: "relative",
     left: 250,
-    top: 300,
+    top: 340,
     height:300
 
   },
@@ -152,15 +152,15 @@ const useStyles = makeStyles({
     color:"slateblue"
   },
   filterTwo:{
-    position:"relative",
-    top:20,
-    left:10,
-    color:"slateblue"
+    position:"absolute",
+    top:330,
+    left:1250,
+    color:"slateblue",
   },
   filterButton:{
     position:"absolute",
-    top:320,
-    left:1360,
+    top:330,
+    left:1130,
     color:"slateblue",
   },
   dialogue:{
@@ -411,7 +411,15 @@ function HomePage({ children }) {
                   </ListItemButton>
                 </List>
               </Collapse>
-              {parseInt(user.state) == 2 || parseInt(user.state) ==1 &&
+              {parseInt(user.state) ==2 &&
+                  <ListItemButton component={Link} to="/payment">
+                    <ListItemIcon>
+                      <SubscriptionsIcon color={"primary"}/>
+                    </ListItemIcon>
+                    <ListItemText primary="Subscribe" />
+                  </ListItemButton>
+              }
+              {parseInt(user.state) ==3 &&
                   <ListItemButton component={Link} to="/payment">
                     <ListItemIcon>
                       <SubscriptionsIcon color={"primary"}/>
@@ -439,7 +447,7 @@ function HomePage({ children }) {
           <LaptopMacIcon style={{color:"#474bad",left:730, width:200, height:100, top:120,position:"absolute"}}/>
           <LaptopIcon style={{color:"#474bad",left:635, width:200, height:80, top:135,position:"absolute"}}/>
           <PhoneAndroidIcon style={{color:"#4044a8",left:805, width:200, height:80, top:130,position:"absolute"}}/>
-        <Typography style={{fontSize:56,fontFamily:"serif",left:650,top:200, color:'#474bad',position:"absolute"}}>HELP ME SELL</Typography>
+        <Typography style={{fontSize:56,fontFamily:"serif",left:650,top:200, color:'#474bad',position:"absolute"}}>HELP ME SELL {user.state}</Typography>
         <Box
             sx={{
               display: "flex",
@@ -550,12 +558,9 @@ function HomePage({ children }) {
             onRowsPerPageChange={handleChangeRowsPerPage}
         />
 
-        <Button variant={"outlined"} className={classes.filterButton} onClick={handleClickOpenFilter}> Filters</Button>
-        <Dialog className={classes.dialogue} disableEscapeKeyDown open={openFilter} onClose={handleCloseFilter}>
-          <DialogTitle>Choose Options </DialogTitle>
-          <DialogContent>
 
-            <Box component="form"  className={classes.filter}>
+
+            <Box component="form"  className={classes.filterButton}>
               <FormControl fullWidth>
                 <InputLabel variant="standard" htmlFor="uncontrolled-native">
                   Brand
@@ -575,6 +580,8 @@ function HomePage({ children }) {
                   <option value={60}>Hp</option>
                   <option value={70}>Asus</option>
                   <option value={80}>Acer</option>
+                  <option value={90}>All</option>
+
 
                 </NativeSelect>
               </FormControl>
@@ -591,24 +598,19 @@ function HomePage({ children }) {
                       id: 'uncontrolled-native',
                     }}
                 >
-                  <option value={0}>Under Rs 50,000</option>
-                  <option value={10}>Rs 50,000 - 100,000</option>
-                  <option value={20}>Rs 110,000 - 200,000</option>
-                  <option value={30}>Rs 210,000 - 300,000</option>
-                  <option value={40}>Rs 310,000 - 400,000</option>
-                  <option value={50}>Rs 410,000 - 500,000</option>
-                  <option value={60}>Rs 510,000 - 600,000</option>
-                  <option value={70}>Rs 610,000 - 700,000</option>
+                  <option value={10}>Under Rs 50,000</option>
+                  <option value={20}>Rs 50,000 - 100,000</option>
+                  <option value={30}>Rs 110,000 - 200,000</option>
+                  <option value={40}>Rs 210,000 - 300,000</option>
+                  <option value={50}>Rs 310,000 - 400,000</option>
+                  <option value={60}>Rs 410,000 - 500,000</option>
+                  <option value={70}>Rs 510,000 - 600,000</option>
+                  <option value={80}>Rs 610,000 - 700,000</option>
+                  <option value={80}>All</option>
 
                 </NativeSelect>
               </FormControl>
             </Box>
-          </DialogContent>
-          <DialogActions>
-            <Button className={classes.closeButton} onClick={handleCloseFilter}>Cancel</Button>
-            <Button className={classes.openButton} onClick={handleCloseFilter}>Ok</Button>
-          </DialogActions>
-        </Dialog>
       </div>
 
 

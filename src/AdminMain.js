@@ -173,14 +173,14 @@ const useStyles = makeStyles({
         bottom:350,
 
     },
-    username:{
-        position:"absolute",
-        fontFamily:"serif",
-        right:30
-    },
     icon:{
         position:"absolute",
         right:120
+    },
+    username:{
+        position:"relative",
+        fontFamily:"serif",
+        left:1165
     }
 
 });
@@ -392,7 +392,7 @@ function AdminMain({ children }) {
                             <ListItemIcon>
                                 <HomeIcon color={"primary"} />
                             </ListItemIcon>
-                            <ListItemText primary="Homepage"/>
+                            <ListItemText primary="Home"/>
                         </ListItemButton>
                         {parseInt(user.state)==2 &&
                             <ListItemButton component={Link} to="/uploadfile">
@@ -402,14 +402,7 @@ function AdminMain({ children }) {
                                 <ListItemText primary="User Data" />
                             </ListItemButton>
                         }
-                        {parseInt(user.state)==1 &&
-                            <ListItemButton component={Link} to="/adminmain">
-                                <ListItemIcon>
-                                    <EqualizerIcon color={"primary"} />
-                                </ListItemIcon>
-                                <ListItemText primary=" Scrape Website Data" />
-                            </ListItemButton>
-                        }
+
                         <ListItemButton component={Link} to="/pricecomparison">
                             <ListItemIcon>
                                 <SearchIcon color={"primary"} />

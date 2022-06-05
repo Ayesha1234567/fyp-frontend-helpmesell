@@ -237,17 +237,15 @@ const useStyles=makeStyles({
         left:200,
         top:20,
     },
-    username:{
-        position:"absolute",
-        fontFamily:"serif",
-        // right:100
-
-    },
     icon:{
         position:"absolute",
-        // right:100
+        right:100
     },
-
+    username:{
+        position:"relative",
+        fontFamily:"serif",
+        left:1360
+    }
 
 })
 
@@ -391,7 +389,8 @@ function ProductDetails(props) {
                                 'rgb(255, 99, 132)',
 
                             ],
-                            borderWidth: 2
+                            borderWidth: 2,
+
                         },
                     ],
                     options: {
@@ -565,7 +564,7 @@ function ProductDetails(props) {
                                         </ListItemButton>
                                     </List>
                                 </Collapse>
-                                {parseInt(user.state) == 2 &&
+                                {parseInt(user.state) == 2 && 3 &&
                                     <ListItemButton component={Link} to="/payment">
                                         <ListItemIcon>
                                             <SubscriptionsIcon color={"primary"}/>

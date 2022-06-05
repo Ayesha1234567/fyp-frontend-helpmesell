@@ -306,14 +306,14 @@ const useStyles=makeStyles({
         top:10,
         fontSize:45,
     },
-    username:{
-        position:"absolute",
-        fontFamily:"serif",
-        right:30
-    },
     icon:{
         position:"absolute",
         right:120
+    },
+    username:{
+        position:"relative",
+        fontFamily:"serif",
+        left:1390
     }
 
 });
@@ -531,7 +531,7 @@ function Payment()
                     <ListItemButton
                         onClick={handleClick}
                         component={Link}
-                        to="/homepage"
+                        to="/payment"
                     >
                         <ListItemIcon>
                             <AppsIcon color={"primary"} />
@@ -555,14 +555,6 @@ function Payment()
                             </ListItemButton>
                         </List>
                     </Collapse>
-                    {parseInt(user.state) == 2 &&
-                        <ListItemButton component={Link} to="/payment">
-                            <ListItemIcon>
-                                <SubscriptionsIcon color={"primary"}/>
-                            </ListItemIcon>
-                            <ListItemText primary="Subscribe" />
-                        </ListItemButton>
-                    }
                     <ListItemButton component={Link} to="/">
                         <ListItemIcon>
                             <LogoutIcon color={"primary"} />
