@@ -50,7 +50,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
 import LinearProgress from "@mui/material/LinearProgress";
 import HomeIcon from "@mui/icons-material/Home";
-import ReviewsIcon from "@mui/icons-material/Reviews";
 // import router from "react-router-dom/es/Router";
 
 const drawerWidth = 240;
@@ -114,7 +113,7 @@ const useStyles = makeStyles({
     },
     button:{
         position:"relative",
-        top:130,
+        top:100,
         left:118,
         maxHeight: 80,
         width:200,
@@ -231,7 +230,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 
-function AdminMain({ children }) {
+function ScrapeReviews({ children }) {
     const classes = useStyles();
     const history = useNavigate();
     const browserHistory = require("react-router").browserHistory;
@@ -317,7 +316,7 @@ function AdminMain({ children }) {
         };
         try {
             const response = await axios({
-                url:  BASE_URL +"/api/Scrapers/",onUploadProgress: (data)=>{
+                url:  BASE_URL +"/api/PullReviews/",onUploadProgress: (data)=>{
                     setUpload(Math.round((data.loaded/data.total)*100));
                 },
                 method: "POST",
@@ -403,14 +402,7 @@ function AdminMain({ children }) {
                                 <ListItemText primary="User Data" />
                             </ListItemButton>
                         }
-                        {parseInt(user.state)==1 &&
-                            <ListItemButton component={Link} to="/scrapereviews">
-                                <ListItemIcon>
-                                    <ReviewsIcon color={"primary"} />
-                                </ListItemIcon>
-                                <ListItemText primary=" Scrape Reviews" />
-                            </ListItemButton>
-                        }
+
                         <ListItemButton component={Link} to="/pricecomparison">
                             <ListItemIcon>
                                 <SearchIcon color={"primary"} />
@@ -420,7 +412,7 @@ function AdminMain({ children }) {
                         <ListItemButton
                             onClick={handleClick}
                             component={Link}
-                            to="/adminmain"
+                            to="/scrapereviews"
                         >
                             <ListItemIcon>
                                 <AppsIcon color={"primary"} />
@@ -486,7 +478,7 @@ function AdminMain({ children }) {
                         </Typography>
                     </Toolbar>
                 </AppBar>
-                {success && <Alert  action={close} className={classes.success} severity="success">Data Scrapping : Initiated-Products will show soon</Alert>}
+                {success && <Alert  action={close} className={classes.success} severity="success">Review Scrapping : Initiated</Alert>}
                 <Container>
 
                     {/*<Typography style={{left:19,top:134,position:"absolute", fontSize:26,fontFamily:"serif", color:"slateblue"}}>Scrape website:</Typography>*/}
@@ -502,29 +494,8 @@ function AdminMain({ children }) {
                     {/*                        size="small"*/}
 
                     {/*                    />*/}
-                    <Box  className={classes.dropdown} sx={{ minWidth: 120 }}>
-                        <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">Website Name</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={website}
-                                label="Website"
-                                onChange={handleChange}
-                            >
-                                <MenuItem value="https://www.shophive.com/prices/mobile-phones/samsung">Shophive-Samsung</MenuItem>
-                                <MenuItem value="https://www.shophive.com/prices/mobile-phones/xiaomi-mi">Shophive-Xiaomi</MenuItem>
-                                <MenuItem value="https://www.shophive.com/prices/mobile-phones/realme">Shophive-Realme</MenuItem>
-                                <MenuItem value="https://www.shophive.com/prices/mobile-phones/oppo">Shophive-Oppo</MenuItem>
-                                <MenuItem value="https://www.shophive.com/apple/iphone">Shophive-IPhone</MenuItem>
-                                <MenuItem value="https://pakistanistores.com/prices/laptops-and-pc/laptops/hp">PakistaniStores-HP Laptops</MenuItem>
-                                <MenuItem value="https://pakistanistores.com/prices/laptops-and-pc/laptops/dell">PakistaniStores-Dell Laptops</MenuItem>
-                                <MenuItem value="https://pakistanistores.com/prices/laptops-and-pc/laptops/acer">PakistaniStores-Acer Laptops</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Box>
                     <Button  className={classes.button} onClick={Submit}  variant="contained" color="primary">
-                        Start Scrapper
+                        Scrape Reviews
                     </Button>
                     <Box sx={{ width: '100%' }} className={classes.barTwo}>
                         <LinearProgress variant="determinate" value={upload}   />
@@ -534,7 +505,7 @@ function AdminMain({ children }) {
             <Snackbar
                 open={openSnackBAr}
                 autoHideDuration={6000}
-                message={"Data Has Failed to Scrape"}
+                message={"Reviews have Failed to Scrape"}
                 anchorOrigin={{ vertical: "top", horizontal: "right" }}
                 action={action}
             />
@@ -542,4 +513,4 @@ function AdminMain({ children }) {
     );
 }
 
-export default AdminMain;
+export default ScrapeReviews;

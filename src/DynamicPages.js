@@ -59,6 +59,7 @@ import {BASE_URL} from "./Constants";
 import BarChart from "./BarChart";
 import HomeIcon from "@mui/icons-material/Home";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import ReviewsIcon from "@mui/icons-material/Reviews";
 
 const drawerWidth = 240;
 const useStyles=makeStyles({
@@ -528,6 +529,14 @@ function ProductDetails(props) {
                                             <EqualizerIcon color={"primary"} />
                                         </ListItemIcon>
                                         <ListItemText primary=" Scrape Website Data" />
+                                    </ListItemButton>
+                                }
+                                {parseInt(user.state)==1 &&
+                                    <ListItemButton component={Link} to="/scrapereviews">
+                                        <ListItemIcon>
+                                            <ReviewsIcon color={"primary"} />
+                                        </ListItemIcon>
+                                        <ListItemText primary=" Scrape Reviews" />
                                     </ListItemButton>
                                 }
 

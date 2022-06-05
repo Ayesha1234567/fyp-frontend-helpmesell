@@ -44,6 +44,7 @@ import FileUploadIcon from "@mui/icons-material/FileUpload";
 import {BASE_URL} from "./Constants";
 import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
 import HomeIcon from '@mui/icons-material/Home';
+import ReviewsIcon from "@mui/icons-material/Reviews";
 
 
 const drawerWidth = 240;
@@ -417,6 +418,14 @@ function UploadFile()
                       <EqualizerIcon color={"primary"} />
                     </ListItemIcon>
                     <ListItemText primary=" Scrape Website Data" />
+                  </ListItemButton>
+              }
+              {parseInt(user.state)==1 &&
+                  <ListItemButton component={Link} to="/scrapereviews">
+                    <ListItemIcon>
+                      <ReviewsIcon color={"primary"} />
+                    </ListItemIcon>
+                    <ListItemText primary=" Scrape Reviews" />
                   </ListItemButton>
               }
               <ListItemButton component={Link} to="/pricecomparison">

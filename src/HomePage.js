@@ -35,6 +35,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import DevicesIcon from '@mui/icons-material/Devices';
+import ReviewsIcon from '@mui/icons-material/Reviews';
 import {
   makeStyles,
   List,
@@ -376,6 +377,14 @@ function HomePage({ children }) {
                       <EqualizerIcon color={"primary"} />
                     </ListItemIcon>
                     <ListItemText primary=" Scrape Website Data" />
+                  </ListItemButton>
+              }
+              {parseInt(user.state)==1 &&
+                  <ListItemButton component={Link} to="/scrapereviews">
+                    <ListItemIcon>
+                      <ReviewsIcon color={"primary"} />
+                    </ListItemIcon>
+                    <ListItemText primary=" Scrape Reviews" />
                   </ListItemButton>
               }
               <ListItemButton component={Link} to="/pricecomparison">

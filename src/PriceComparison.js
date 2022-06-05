@@ -36,6 +36,7 @@ import FileUploadIcon from "@mui/icons-material/FileUpload";
 import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
 import {BASE_URL} from "./Constants";
 import HomeIcon from "@mui/icons-material/Home";
+import ReviewsIcon from "@mui/icons-material/Reviews";
 const drawerWidth = 240;
 const useStyles=makeStyles({
     drawer:{
@@ -307,7 +308,14 @@ function PriceComparison()
                                 <ListItemText primary=" Scrape Website Data" />
                             </ListItemButton>
                         }
-
+                        {parseInt(user.state)==1 &&
+                            <ListItemButton component={Link} to="/scrapereviews">
+                                <ListItemIcon>
+                                    <ReviewsIcon color={"primary"} />
+                                </ListItemIcon>
+                                <ListItemText primary=" Scrape Reviews" />
+                            </ListItemButton>
+                        }
                         <ListItemButton
                             onClick={handleClick}
                             component={Link}

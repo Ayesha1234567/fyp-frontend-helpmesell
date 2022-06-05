@@ -16,6 +16,7 @@ import Laptops from "./Laptops";
 import Smartphones from "./Smartphones";
 import Payment from "./Payment";
 import NativeSelectDemo from "./test";
+import ScrapeReviews from "./ScrapeReviews";
 // import './App.css';
 
 const App = () => {
@@ -55,6 +56,7 @@ const App = () => {
           <Route path="/laptops" exact={true} element={<Laptops />} />
           <Route path="/smartphones" exact={true} element={<Smartphones />} />
           <Route path="/payment" exact={true} element={<Payment />} />
+          <Route path="/scrapereviews" exact={true} element={<ScrapeReviews />} />
           <Route path="/test" exact={true} element={<NativeSelectDemo />} />
 
         </Routes>

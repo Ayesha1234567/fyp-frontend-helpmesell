@@ -40,6 +40,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import PaymentInputs from "./Checkout";
 import HomeIcon from "@mui/icons-material/Home";
+import ReviewsIcon from "@mui/icons-material/Reviews";
 
 const drawerWidth = 240;
 const useStyles=makeStyles({
@@ -520,6 +521,14 @@ function Payment()
                                 <EqualizerIcon color={"primary"} />
                             </ListItemIcon>
                             <ListItemText primary=" Scrape Website Data" />
+                        </ListItemButton>
+                    }
+                    {parseInt(user.state)==1 &&
+                        <ListItemButton component={Link} to="/scrapereviews">
+                            <ListItemIcon>
+                                <ReviewsIcon color={"primary"} />
+                            </ListItemIcon>
+                            <ListItemText primary=" Scrape Reviews" />
                         </ListItemButton>
                     }
                     <ListItemButton component={Link} to="/pricecomparison">
