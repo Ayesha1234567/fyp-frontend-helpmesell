@@ -17,6 +17,9 @@ import Smartphones from "./Smartphones";
 import Payment from "./Payment";
 import NativeSelectDemo from "./test";
 import ScrapeReviews from "./ScrapeReviews";
+import ForgotPassword from "./ForgotPassword";
+import MyProfile from "./MyProfile";
+import ResetPassword from "./ResetPassword";
 // import './App.css';
 
 const App = () => {
@@ -58,7 +61,9 @@ const App = () => {
           <Route path="/payment" exact={true} element={<Payment />} />
           <Route path="/scrapereviews" exact={true} element={<ScrapeReviews />} />
           <Route path="/test" exact={true} element={<NativeSelectDemo />} />
-
+          <Route path="/forgotpassword" exact={true} element={<ForgotPassword />} />
+          <Route path="/myprofile/:id" exact={true} element={<MyProfile />} />
+          <Route path="/ResetPassword" exact={true} element={<ResetPassword />} />
         </Routes>
       </Router>
 

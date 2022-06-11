@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {
   AppBar,
   Button,
@@ -24,7 +24,7 @@ const useStyles = makeStyles({
   field: {
     marginTop: 50,
     marginBottom: 10,
-    left: 25,
+    left: 40,
     top: 0,
     width: 180,
     height: 1,
@@ -43,8 +43,8 @@ const useStyles = makeStyles({
   },
   button: {
     position: "relative",
-    top: 60,
-    left: 100,
+    top: 55,
+    left: 90,
     maxHeight: 80,
     maxWidth: 100,
     fontFamily: "serif",
@@ -205,7 +205,7 @@ function Login() {
           <Box
               sx={{
                 width: 300,
-                height: 260,
+                height: 300,
                 p: 1,
                 border: "2px solid",
                 borderColor: "#89a0cc",
@@ -260,6 +260,9 @@ function Login() {
                 Login
               </Button>
             </Container>
+            <Typography style={{   color:'#512ca8',fontFamily:"serif", left:70, height: 65, top: 265, position: "absolute" }}>Forgot Password?</Typography>
+            <Link to={"/forgotpassword"} > <Typography style={{ color:'#512ca8',fontFamily:"serif", position:"absolute",top:265,left:190}}>Reset it!</Typography> </Link>
+
           </Box>
           <AppBar className={classes.bottom} position="static" color="primary">
             <Container maxWidth="md">
