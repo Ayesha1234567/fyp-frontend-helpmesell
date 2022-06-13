@@ -144,7 +144,7 @@ function Login() {
         };
         try {
             const response = await axios({
-                url: BASE_URL+"/userslogin/",
+                url: BASE_URL+"/api/ForgetPassword/",
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

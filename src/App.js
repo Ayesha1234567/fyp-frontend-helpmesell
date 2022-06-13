@@ -63,7 +63,7 @@ const App = () => {
           <Route path="/test" exact={true} element={<NativeSelectDemo />} />
           <Route path="/forgotpassword" exact={true} element={<ForgotPassword />} />
           <Route path="/myprofile/:id" exact={true} element={<MyProfile />} />
-          <Route path="/ResetPassword" exact={true} element={<ResetPassword />} />
+          <Route path="/ResetPassword/:id" exact={true} element={<ResetPassword />} />
         </Routes>
       </Router>
 

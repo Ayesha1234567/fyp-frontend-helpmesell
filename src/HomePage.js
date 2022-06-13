@@ -158,6 +158,12 @@ const useStyles = makeStyles({
     left: 1180,
     color: "slateblue",
   },
+  clear: {
+    position: "absolute",
+    top: 340,
+    left: 850,
+    color: "slateblue",
+  },
   filterThree: {
     position: "absolute",
     top: 330,
@@ -268,30 +274,52 @@ function HomePage({ children }) {
 
   const handleChange = (event: SelectChangeEvent) => {
     setBrand(event.target.value);
+
+
     if(event.target.value != 'all' ){
       setDataFilter(data.filter( (d) => d.product_name.toUpperCase().includes(event.target.value.toUpperCase())))
     }else{
       setDataFilter(data)
     }
-
   }
+
+
+  const clear_filter = () => {
+    setBrand('all')
+    setMinPrice(0)
+    setMaxPrice(0)
+    setDataFilter(data)
+  }
+
   const handleChangeMinPrice = (event: SelectChangeEvent) => {
-    setMinPrice(event.target.value);
-    if(event.target.value != 0 ){
-      setMinDataFilter(data.filter( (data) => data.min_price(event.target.value)))
+    if (event.target.value > maxPrice){
+      alert('Min price can not be grater then max price')
+      clear_filter()
     }else{
-      setMinDataFilter(data)
+      setMinPrice(event.target.value);
+      if(event.target.value != 0 ){
+        setDataFilter(data.filter( (data) => parseInt(data.price) >  (event.target.value)))
+      }else{
+        setDataFilter(data)
+      }
     }
   }
 
   const handleChangeMaxPrice = (event: SelectChangeEvent) => {
-    setMaxPrice(event.target.value);
-    if(event.target.value != 0 ){
-      setMaxDataFilter(data.filter( (data) => data.max_price(event.target.value)))
+    if (minPrice == 0){
+      setMaxPrice(event.target.value);
+      if(event.target.value != 0 ){
+        setDataFilter(data.filter( (data) => parseInt(data.price) <  (event.target.value)))
+      }else{
+        setDataFilter(data)
+      }
     }else{
-      setMaxDataFilter(data)
+      if (event.target.value < minPrice){
+        alert('Maximun price can not be less then min price')
+        clear_filter()
+      }
+      setDataFilter(data.filter( (data) => parseInt(data.price) >  minPrice && parseInt(data.price) <  (event.target.value)))
     }
-
   }
 
   const fetch_products = async () => {
@@ -603,6 +631,10 @@ function HomePage({ children }) {
         {/*  </FormControl>*/}
         {/*</Box>*/}
 
+        <Box className={classes.clear}>
+          <Button variant="contained" onClick={clear_filter} >Clear Filter</Button>
+        </Box>
+
         <Box className={classes.filterButton}>
           <FormControl fullWidth>
             <InputLabel variant="standard" htmlFor="uncontrolled-native">
@@ -641,13 +673,15 @@ function HomePage({ children }) {
                   id: 'uncontrolled-native',
                 }}
             >
+              <option value={15000}>Rs 15,000 </option>
+              <option value={20000}>Rs 20,000 </option>
+              <option value={30000}>Rs 30,000 </option>
               <option value={50000}>Rs 50,000 </option>
-              <option value={110000}>Rs 110,000 </option>
-              <option value={210000}>Rs 210,000 </option>
-              <option value={310000}>Rs 310,000 </option>
-              <option value={410000 }>Rs 410,000 </option>
-              <option value={510000 }>Rs 510,000 </option>
-              <option value={610000}>Rs 610,000 </option>
+              <option value={60000 }>Rs 60,000 </option>
+              <option value={70000 }>Rs 70,000 </option>
+              <option value={100000}>Rs 100,000 </option>
+              <option value={150000}>Rs 150,000 </option>
+              <option value={200000}>Rs 200,000 </option>
               <option value={0}>All</option>
 
             </NativeSelect>
@@ -668,14 +702,16 @@ function HomePage({ children }) {
                   id: 'uncontrolled-native',
                 }}
             >
-
-              <option value={100000}>Rs 100,000</option>
-              <option value={200000}>Rs 200,000</option>
-              <option value={300000}>Rs 300,000</option>
-              <option value={400000}>Rs 400,000</option>
-              <option value={500000}>Rs 500,000</option>
-              <option value={600000}>Rs 600,000</option>
-              <option value={700000}>Rs 700,000</option>
+              <option value={15000}>Rs 15,000 </option>
+              <option value={20000}>Rs 20,000 </option>
+              <option value={30000}>Rs 30,000 </option>
+              <option value={50000}>Rs 50,000 </option>
+              <option value={60000 }>Rs 60,000 </option>
+              <option value={70000 }>Rs 70,000 </option>
+              <option value={100000}>Rs 100,000 </option>
+              <option value={150000}>Rs 150,000 </option>
+              <option value={200000}>Rs 200,000 </option>
+              <option value={350000}>Rs 350,000 </option>
               <option value={0}>All</option>
 
             </NativeSelect>
