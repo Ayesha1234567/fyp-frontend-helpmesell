@@ -107,6 +107,8 @@ function Login() {
 
   const [openSnackBAr, setOpenSnackBAR] = useState(false);
 
+  const [snackMessage, setSnackMesaage] = useState('')
+
   /*const history=useHistory();
     useEffect(()=>{
         if(localStorage.getItem('user-info',JSON.stringify(u)))
@@ -165,6 +167,8 @@ function Login() {
       const { response } = error || {};
       const { data } = response || {};
       const { message } = data || {};
+      setSnackMesaage(message || error.message || 'Invalid Username or Password')
+
       setOpenSnackBAR(true);
     }
   }
@@ -282,9 +286,10 @@ function Login() {
         <Snackbar
             open={openSnackBAr}
             autoHideDuration={6000}
-            message={"Invalid Username or Password"}
+            // message={"Invalid Username or Password"}
             anchorOrigin={{ vertical: "top", horizontal: "right" }}
             action={action}
+            message={snackMessage}
         />
       </div>
   );
