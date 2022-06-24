@@ -1,4 +1,3 @@
-// import logo from './logo.svg';
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useHistory } from "react-router-dom"
@@ -20,6 +19,9 @@ import ScrapeReviews from "./ScrapeReviews";
 import ForgotPassword from "./ForgotPassword";
 import MyProfile from "./MyProfile";
 import ResetPassword from "./ResetPassword";
+import EmailPassword from "./EmailPassword";
+import ResetSuccess from "./ResetSuccess";
+import PaymentSuccess from "./PaymentSuccess";
 // import './App.css';
 
 const App = () => {
@@ -63,7 +65,10 @@ const App = () => {
           <Route path="/test" exact={true} element={<NativeSelectDemo />} />
           <Route path="/forgotpassword" exact={true} element={<ForgotPassword />} />
           <Route path="/myprofile/:id" exact={true} element={<MyProfile />} />
-          <Route path="/ResetPassword" exact={true} element={<ResetPassword />} />
+          <Route path="/ResetPassword/:id" exact={true} element={<ResetPassword />} />
+          <Route path="/emailpassword" exact={true} element={<EmailPassword />} />
+          <Route path="/resetsuccess" exact={true} element={<ResetSuccess />} />
+          <Route path="/paymentsuccess" exact={true} element={<PaymentSuccess />} />
         </Routes>
       </Router>
 
@@ -85,5 +90,4 @@ const App = () => {
       // </div>
   );
 };
-
 export default App;

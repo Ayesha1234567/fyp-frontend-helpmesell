@@ -133,7 +133,7 @@ function PaymentInputs(props) {
                 user.is_subscribed = true
                 localStorage.setItem('current_user', JSON.stringify(user))
                 setSubscribed(true)
-                history("/homepage")
+                history("/paymentsuccess")
                 console.log("in response 200")
             }
             console.log("this is the response: ", { response });

@@ -107,7 +107,7 @@ const useStyles = makeStyles({
         fontFamily: "serif",
     },
 });
-function Login() {
+function ForgotPassword() {
     const history = useNavigate();
     const [email, setEmail] = useState("");
     const [openSnackBAr, setOpenSnackBAR] = useState(false);
@@ -144,7 +144,7 @@ function Login() {
         };
         try {
             const response = await axios({
-                url: BASE_URL+"/userslogin/",
+                url: BASE_URL+"/api/ForgetPassword/",
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -152,6 +152,15 @@ function Login() {
                 },
                 data: item,
             });
+
+            if (response.status==200||response.status==201)
+            {
+                user.is_subscribed = true
+                localStorage.setItem('current_user', JSON.stringify(user))
+                setSubscribed(true)
+                history("/emailPassword")
+                console.log("in response 200")
+            }
 
             console.log("this is the response: ", { response });
             //   const { data } = response;
@@ -175,15 +184,9 @@ function Login() {
                 localStorage.setItem('current_user', JSON.stringify(user))
                 setSubscribed(true)
                 console.log("in response 200")
+                history("/emailpassword")
             }
-            // const response = await fetch('https://finalproject-helpmesell.herokuapp.com/userslogin/', requestOptions);
-            // const data = await response.json();
-            // this.setState({ postId: data.id });
-            // let auth = await response.json()
-            // if( response.status === 200 )
-            //     history.push('/homepage')
-            // else{
-            // }
+
         } catch (error) {
             console.log("error", error);
 
@@ -193,12 +196,10 @@ function Login() {
             setOpenSnackBAR(true);
         }
     }
-    useEffect(() => {
-        setUser(JSON.parse(localStorage.getItem('current_user')))
-    }, []);
-    function AdminSubmit() {
-        history.push("/adminlogin");
-    }
+    // useEffect(() => {
+    //     setUser(JSON.parse(localStorage.getItem('current_user')))
+    // }, []);
+
     const classes = useStyles();
 
     const action = (
@@ -247,7 +248,7 @@ function Login() {
                     <AppBar className={classes.bar} position="static">
                         <Toolbar>
                             <Typography className={classes.bartitle} variant="h5">
-                               Reset Password
+                                Reset Password
                             </Typography>
                         </Toolbar>
                     </AppBar>
@@ -304,4 +305,4 @@ function Login() {
         </div>
     );
 }
-export default Login;
+export default ForgotPassword;

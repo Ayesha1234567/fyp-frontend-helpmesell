@@ -377,9 +377,11 @@ function Payment()
     const [exp_year,setExp_Year]=useState({});
     const [cvc,setCVC]=useState({});
     const [openTwo, setOpenTwo] = React.useState(false);
+    const [currentPackageId, setCurrentPackageId] = useState('')
 
 
-    const handleClickOpen = () => {
+    const handleClickOpen = (id) => {
+        setCurrentPackageId(id)
         setOpenTwo(true);
     };
     const handleClose = () => {
@@ -591,7 +593,7 @@ function Payment()
                     <Typography className={classes.offer2}> Upto 15 Keywords</Typography>
                 </CardContent>
                 <CardActions>
-                    <Button token={makePayment} onClick={handleClickOpen} variant={"outlined"} color={"primary"} size="medium" className={classes.button}>
+                    <Button token={makePayment} onClick={() => handleClickOpen(product)} variant={"outlined"} color={"primary"} size="medium" className={classes.button}>
                         Subscribe
                     </Button>
                 </CardActions>
@@ -618,7 +620,7 @@ function Payment()
                     <Typography className={classes.offer3}> Upto 700 Keywords</Typography>
                 </CardContent>
                 <CardActions>
-                    <Button token={makePaymentSecond} onClick={handleClickOpen} variant={"outlined"} color={"primary"} size="medium" className={classes.button}>
+                    <Button token={makePaymentSecond} onClick={() => handleClickOpen(secondaryProduct)} variant={"outlined"} color={"primary"} size="medium" className={classes.button}>
                         Subscribe
                     </Button>
                 </CardActions>
@@ -644,12 +646,12 @@ function Payment()
 
                 </CardContent>
                 <CardActions>
-                    <Button token={makePaymentThird} onClick={handleClickOpen} variant={"outlined"} color={"primary"} size="medium" className={classes.button}>
+                    <Button token={makePaymentThird} onClick={() => handleClickOpen(tertiaryProduct)} variant={"outlined"} color={"primary"} size="medium" className={classes.button}>
                         Subscribe
                     </Button>
                 </CardActions>
             </Card>
-                    
+
             <BootstrapDialog
                 onClose={handleClose}
                 aria-labelledby="customized-dialog-title"
@@ -660,11 +662,11 @@ function Payment()
                     Subscription Form
                 </BootstrapDialogTitle>
                 <DialogContent dividers>
-                    <PaymentInputs paymentId="price_1KvnsYFVG2XMVBbY4b3Kio3b" />
+                    {/* <PaymentInputs paymentId="price_1KvnsYFVG2XMVBbY4b3Kio3b" /> */}
+                    <PaymentInputs paymentId={currentPackageId ? currentPackageId :'price_1KvntgFVG2XMVBbYF9GP2cqJ'}/>
                 </DialogContent>
             </BootstrapDialog>
             );
-            }
 
             <AppBar  className={classes.bottom} position="static" color="primary">
                 <Container maxWidth="md">

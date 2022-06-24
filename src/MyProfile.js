@@ -59,6 +59,7 @@ import { CardActionArea, CardMedia } from "@mui/material";
 import axios from "axios";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
+import HomeIcon from "@mui/icons-material/Home";
 
 
 
@@ -94,9 +95,9 @@ const useStyles = makeStyles({
         width: -200,
     },
     app: {
-        right:2,
+        right:-20,
         position: "absolute",
-        width:1320
+        width:1305
 
     },
     search: {
@@ -261,14 +262,14 @@ function HomePage({ children }) {
     const [openTwo, setOpenTwo] = React.useState(false);
     const [data, setData] = useState({});
     const [user, setUser] = useState({});
-    const [dataTwo, setDataTwo] = useState({});
+    const [dataSecond, setDataSecond] = useState({});
     const [userInitials, setUserInitials] = useState([]);
 
     let { id } = useParams();
 
     const fetch_products = async () => {
         axios({
-            url: BASE_URL+`/user/${id}`,
+            url: BASE_URL+`/user/${id}/`,
             method: "GET",
         })
             .then(({ data }) => {
@@ -278,29 +279,42 @@ function HomePage({ children }) {
             .catch((err) => {
                 console.log("this is the error: ", { err });
             });
-    }
-
-    const fetch_productsTwo = async () => {
         axios({
             url: BASE_URL+`/api/UserStats/${id}/`,
             method: "GET",
         })
-            .then(({ dataTwo }) => {
-                console.log("this is the data of a single user: ", { dataTwo });
-                setDataTwo(dataTwo);
+            .then(({ data }) => {
+                console.log("this is the data of a single user: ", { data});
+                setDataSecond(data);
             })
             .catch((err) => {
                 console.log("this is the error: ", { err });
             });
     }
 
+    // const fetch_productsTwo = async () => {
+    //     axios({
+    //         url: BASE_URL+`/api/UserStats/${id}/`,
+    //         method: "GET",
+    //     })
+    //         .then(({ dataSecond }) => {
+    //             console.log("this is the data of a single user: ", { dataSecond });
+    //             setDataSecond(dataSecond);
+    //         })
+    //         .catch((err) => {
+    //             console.log("this is the error: ", { err });
+    //         });
+    // }
+
 
     useEffect(() => {
-        fetch_products()
+        fetch_products();
+        // fetch_productsTwo()
+
     }, []);
-    useEffect(() => {
-        fetch_productsTwo()
-    }, []);
+    // useEffect(() => {
+    //     fetch_productsTwo()
+    // }, []);
     useEffect(() => {
         setUser(JSON.parse(localStorage.getItem('current_user')))
         setUserInitials(JSON.parse(localStorage.getItem('current_user')))
@@ -308,6 +322,7 @@ function HomePage({ children }) {
 
 
     console.warn("result", data);
+    console.warn("result", dataSecond);
     function handleClick() {
         setOpen(!open);
     }
@@ -330,20 +345,29 @@ function HomePage({ children }) {
                         </Toolbar>
                     </AppBar>
                 </Box>
-                    <Avatar  style={{ background:'#dad5e6', color: "#474bad", left: 270, width: 160, height:160, top: 80, position: "absolute" }}></Avatar>
-                <Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 460, width: 160, height:160, top: 105, position: "absolute" }}> Name : </Typography>
-                <Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 460, width: 160, height:160, top: 125, position: "absolute" }}>{data.username}</Typography>
-                <Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 460, width: 160, height:160, top: 175, position: "absolute" }}> Date Of Birth : </Typography>
-                <Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 460, width: 160, height:160, top: 195, position: "absolute" }}>{data.dob}</Typography>
-                <Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 460, width: 160, height:160, top: 240, position: "absolute" }}>Contact No : </Typography>
-                <Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 460, width: 160, height:160, top: 260, position: "absolute" }}>{data.contact_no}</Typography>
-                <Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 460, width: 160, height:160, top: 300, position: "absolute" }}>Email : </Typography>
-                <Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 460, width: 160, height:160, top: 320, position: "absolute" }}>{data.email}</Typography>
-                <Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 460, width: 160, height:160, top: 175, position: "absolute" }}> Date Of Birth : </Typography>
-                <Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 460, width: 160, height:160, top: 195, position: "absolute" }}>{data.dob}</Typography>
 
-                <Typography style={{fontFamily:"serif", fontSize:28, color: "#474bad", left: 460, width: 160, height:160, top: 120, position: "absolute" }}>{dataTwo.contact_no}</Typography>
-                <Typography style={{fontFamily:"serif", fontSize:28, color: "#474bad", left: 460, width: 160, height:160, top: 150, position: "absolute" }}>{dataTwo.dob}</Typography>
+                    <Avatar  style={{ background:'#dad5e6', color: "#474bad", left: 270, width: 160, height:160, top: 80, position: "absolute" }}></Avatar>
+                <Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 460, width: 160, height:160, top: 105, position: "absolute" }}> Name  </Typography>
+                <Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 460, width: 160, height:160, top: 125, position: "absolute" }}>{data.username}</Typography>
+                <Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 460, width: 160, height:160, top: 175, position: "absolute" }}> Date Of Birth  </Typography>
+                <Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 460, width: 160, height:160, top: 195, position: "absolute" }}>{data.dob}</Typography>
+                <Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 460, width: 160, height:160, top: 240, position: "absolute" }}>Contact No  </Typography>
+                <Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 460, width: 160, height:160, top: 260, position: "absolute" }}>{data.contact_no}</Typography>
+                <Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 460, width: 160, height:160, top: 300, position: "absolute" }}>Email  </Typography>
+                <Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 460, width: 160, height:160, top: 320, position: "absolute" }}>{data.email}</Typography>
+                <Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 460, width: 160, height:160, top: 175, position: "absolute" }}> Date Of Birth  </Typography>
+                <Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 460, width: 160, height:160, top: 195, position: "absolute" }}>{data.dob}</Typography>
+                <Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 700, width: 160, height:160, top: 175, position: "absolute" }}> Package Name </Typography>
+                <Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 700, width: 700, height:160, top: 193, position: "absolute" }}>{dataSecond.package}</Typography>
+                <Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 700, width: 160, height:160, top: 240, position: "absolute" }}> Clicks Used  </Typography>
+                <Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 700, width: 700, height:160, top: 260, position: "absolute" }}>{dataSecond.consumed} / {dataSecond.total}</Typography>
+                {/*<Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 700, width: 160, height:160, top: 105, position: "absolute" }}> Subscription Status : </Typography>*/}
+                {/*<Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 700, width: 700, height:160, top: 260, position: "absolute" }}>{dataSecond.is_subscribed}</Typography>*/}
+
+
+
+                {/*<Typography style={{fontFamily:"serif", fontSize:28, color: "#474bad", left: 460, width: 160, height:160, top: 120, position: "absolute" }}>{dataTwo.contact_no}</Typography>*/}
+                {/*<Typography style={{fontFamily:"serif", fontSize:28, color: "#474bad", left: 460, width: 160, height:160, top: 150, position: "absolute" }}>{dataTwo.dob}</Typography>*/}
 
                 <Drawer
                     className={classes.drawer}
@@ -369,11 +393,11 @@ function HomePage({ children }) {
                             ></ListSubheader>
                         }
                     >
-                        <ListItemButton component={Link} to="/myprofile">
+                        <ListItemButton component={Link} to="/homepage">
                             <ListItemIcon>
-                                <AccountCircleIcon color={"primary"}></AccountCircleIcon>
+                                <HomeIcon color={"primary"} />
                             </ListItemIcon>
-                            <ListItemText primary="My Profile" />
+                            <ListItemText primary="Home"/>
                         </ListItemButton>
 
                         {parseInt(user.state) == 2 &&
@@ -409,7 +433,7 @@ function HomePage({ children }) {
                         <ListItemButton
                             onClick={handleClick}
                             component={Link}
-                            to="/homepage"
+                            to="/myprofile/:id"
                         >
                             <ListItemIcon>
                                 <AppsIcon color={"primary"} />

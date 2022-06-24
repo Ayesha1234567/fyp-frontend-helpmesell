@@ -14,6 +14,7 @@ import {
     Snackbar,
 } from "@material-ui/core";
 import { Wave } from "react-animated-text";
+import {  useParams } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
 import {BASE_URL} from "./Constants";
@@ -116,6 +117,9 @@ function ResetPassword() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [success,setSuccess]=useState(false);
+
+    let { id } = useParams();
+
     const close = (
         <IconButton
             size="small"
@@ -143,37 +147,25 @@ function ResetPassword() {
         };
         try {
             const response = await axios({
-                url: BASE_URL+"/userslogin/",
+                url: BASE_URL+"/api/ResetPassword/",
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     Accept: "application/json",
                 },
-                data: item,
+                data: {user_id: id, ...item},
             });
-
             console.log("this is the response: ", { response });
             //   const { data } = response;
-            if (response.data.token) {
-                const { token, first_name, username, state, id, is_subscribed,email} = response.data || {};
-
-                let userObj = {
-                    token,
-                    first_name,
-                    username,
-                    state,
-                    id,
-                    is_subscribed,
-                    email
-                };
-                localStorage.setItem("current_user", JSON.stringify(userObj));
-                history("/homepage");
+            if (response) {
+                history("/login");
             }
             if (response.status==200||response.status==201)
             {
                 localStorage.setItem('current_user', JSON.stringify(user))
                 setSubscribed(true)
                 console.log("in response 200")
+                history("/resetsuccess")
             }
             // const response = await fetch('https://finalproject-helpmesell.herokuapp.com/userslogin/', requestOptions);
             // const data = await response.json();

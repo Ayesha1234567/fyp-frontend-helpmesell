@@ -97,6 +97,7 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [openSnackBAr, setOpenSnackBAR] = useState(false);
+  const [snackMessage, setSnackMesaage] = useState('')
 
   const history = useNavigate();
 
@@ -141,6 +142,7 @@ function SignUp() {
       const { response } = error;
       const { data } = response;
       const { message } = data;
+      setSnackMesaage(message || error.message || 'Sign Up Failed')
       setOpenSnackBAR(true);
     }
   }
@@ -362,7 +364,8 @@ function SignUp() {
         <Snackbar
             open={openSnackBAr}
             autoHideDuration={6000}
-            message={"Sign Up Failed"}
+            // message={"Sign Up Failed"}
+            message={snackMessage}
             anchorOrigin={{ vertical: "top", horizontal: "right" }}
             action={action}
         />

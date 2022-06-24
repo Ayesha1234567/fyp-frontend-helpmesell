@@ -50,7 +50,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
 import LinearProgress from "@mui/material/LinearProgress";
 import HomeIcon from "@mui/icons-material/Home";
-import ReviewsIcon from "@mui/icons-material/Reviews";
 // import router from "react-router-dom/es/Router";
 
 const drawerWidth = 240;
@@ -403,14 +402,7 @@ function AdminMain({ children }) {
                                 <ListItemText primary="User Data" />
                             </ListItemButton>
                         }
-                        {parseInt(user.state)==1 &&
-                            <ListItemButton component={Link} to="/scrapereviews">
-                                <ListItemIcon>
-                                    <ReviewsIcon color={"primary"} />
-                                </ListItemIcon>
-                                <ListItemText primary=" Scrape Reviews" />
-                            </ListItemButton>
-                        }
+
                         <ListItemButton component={Link} to="/pricecomparison">
                             <ListItemIcon>
                                 <SearchIcon color={"primary"} />
