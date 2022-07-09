@@ -39,6 +39,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import DevicesIcon from '@mui/icons-material/Devices';
 import ReviewsIcon from '@mui/icons-material/Reviews';
+import Paper from '@mui/material/Paper';
 import {
     makeStyles,
     List,
@@ -105,7 +106,7 @@ const useStyles = makeStyles({
     },
     bottom: {
         position: "absolute",
-        bottom: -660,
+        bottom: -680,
         left: 112,
     },
     font: {
@@ -113,10 +114,14 @@ const useStyles = makeStyles({
         color: "slateblue",
     },
     card: {
-        position: "relative",
-        left: 250,
-        top: 340,
-        height: 300
+        position: "absolute",
+        left: 450,
+        top: 40,
+        height: 200,
+        width:650,
+        border:2,
+        borderColor:"slateblue",
+        boxShadow: 2, padding: 2, margin: 1, borderRadius: 1,
 
     },
     media: {
@@ -213,7 +218,8 @@ const useStyles = makeStyles({
         fontSize: 66,
         left: 550,
         top:500
-    }
+    },
+
 });
 
 function valuetext(value: number) {
@@ -261,7 +267,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-function HomePage({ children }) {
+function AdminProfile({ children }) {
     const classes = useStyles();
     const history = useNavigate();
     const browserHistory = require("react-router").browserHistory;
@@ -293,7 +299,7 @@ function HomePage({ children }) {
                 console.log("this is the error: ", { err });
             });
         axios({
-            url: BASE_URL+`/api/UserStats/${id}/`,
+            url: BASE_URL+`/api/ReportingStatistics`,
             method: "GET",
         })
             .then(({ data }) => {
@@ -334,27 +340,27 @@ function HomePage({ children }) {
 
     }, []);
 
-function UserState() {
+    function UserState() {
 
-    if (user.state === 1) {
-        setIsAdmin(true)
+        if (user.state === 1) {
+            setIsAdmin(true)
+        }
+        else {
+            setIsAdmin(false)
+        }
+        if (user.state === 2) {
+            setIsLocalSeller(true)
+        }
+        else {
+            setIsLocalSeller(false)
+        }
+        if (user.state === 3) {
+            setIsCustomer(true)
+        }
+        else {
+            setIsCustomer(false)
+        }
     }
-    else {
-        setIsAdmin(false)
-    }
-    if (user.state === 2) {
-        setIsLocalSeller(true)
-    }
-    else {
-        setIsLocalSeller(false)
-    }
-    if (user.state === 3) {
-        setIsCustomer(true)
-    }
-    else {
-        setIsCustomer(false)
-    }
-}
 
 
     console.warn("result", dataSecond);
@@ -380,25 +386,172 @@ function UserState() {
                         </Toolbar>
                     </AppBar>
                 </Box>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        '& > :not(style)': {
+                            m: 1,
+                            width: 158,
+                            height: 180,
+                            position:"absolute",
+                            top:120,
+                            left:500,
+                            borderColor:"slateblue"
 
-                {isAdmin?<Typography className={classes.user}>Admin: {data.username}</Typography>:<Typography>Hello</Typography>}
-                    <Avatar  style={{ background:'#dad5e6', color: "#474bad", left: 270, width: 160, height:160, top: 80, position: "absolute" }}></Avatar>
-                <Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 700, width: 160, height:160, top: 105, position: "absolute" }}> Status  </Typography>
-                <Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 700, width: 160, height:160, top: 125, position: "absolute" }}>Customer</Typography>
-                <Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 460, width: 160, height:160, top: 105, position: "absolute" }}> Username  </Typography>
-                <Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 460, width: 160, height:160, top: 125, position: "absolute" }}>{data.username}</Typography>
-                <Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 460, width: 160, height:160, top: 175, position: "absolute" }}> Date Of Birth  </Typography>
-                <Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 460, width: 160, height:160, top: 195, position: "absolute" }}>{data.dob}</Typography>
-                <Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 460, width: 160, height:160, top: 240, position: "absolute" }}>Contact No  </Typography>
-                <Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 460, width: 160, height:160, top: 260, position: "absolute" }}>{data.contact_no}</Typography>
-                <Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 460, width: 160, height:160, top: 300, position: "absolute" }}>Email  </Typography>
-                <Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 460, width: 160, height:160, top: 320, position: "absolute" }}>{data.email}</Typography>
+                        },
+                    }}
+                >
+
+                    <Paper>
+                        <Typography style={{fontFamily:"serif", fontSize:17, color: "#474bad", right:-60, width: 160, height:160, top: 19, position: "absolute" }}> Status  </Typography>
+                        <Typography style={{fontFamily:"serif", fontSize:27, color: "#474bad", right:-42, width: 160, height:160, top: 41, position: "absolute" }}>Admin</Typography>
+                        <Typography style={{fontFamily:"serif", fontSize:17, color: "#474bad", right: -45, width: 160, height:160, top: 95, position: "absolute" }}> Username  </Typography>
+                        <Typography style={{fontFamily:"serif", fontSize:32, color: "#474bad", right: -34, width: 160, height:160, top: 114, position: "absolute" }}>{data.username}</Typography>
+                    </Paper>
+
+                </Box>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        '& > :not(style)': {
+                            m: 1,
+                            width: 158,
+                            height: 180,
+                            position:"absolute",
+                            top:120,
+                            left:750,
+                            borderColor:"slateblue"
+
+                        },
+                    }}
+                >
+
+                    <Paper>
+                        <Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", right:-40, width: 160, height:160, top: 19, position: "absolute" }}> Total Users  </Typography>
+                        <Typography style={{fontFamily:"serif", fontSize:87, color: "#474bad", right:-46, width: 160, height:160, top: 41, position: "absolute" }}>{dataSecond.user_count}</Typography>
+                    </Paper>
+
+                </Box>
+
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        '& > :not(style)': {
+                            m: 1,
+                            width: 158,
+                            height: 180,
+                            position:"absolute",
+                            top:120,
+                            left:1250,
+                            borderColor:"slateblue"
+
+                        },
+                    }}
+                >
+
+                    <Paper>
+                        <Typography style={{fontFamily:"serif", fontSize:14, color: "#474bad", right:-18, width: 160, height:160, top: 19, position: "absolute" }}> Most Bought Package </Typography>
+                        <Typography style={{fontFamily:"serif", fontSize:87, color: "#474bad", right:-46, width: 160, height:160, top: 41, position: "absolute" }}>{dataSecond.MostBoughtPackage}</Typography>
+                    </Paper>
+
+                </Box>
+
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        '& > :not(style)': {
+                            m: 1,
+                            width: 158,
+                            height: 180,
+                            position:"absolute",
+                            top:380,
+                            left:500,
+                            borderColor:"slateblue"
+
+                        },
+                    }}
+                >
+
+                    <Paper>
+                        <Typography style={{fontFamily:"serif", fontSize:17, color: "#474bad", right:-35, width: 160, height:160, top: 19, position: "absolute" }}> Total Phones  </Typography>
+                        <Typography style={{fontFamily:"serif", fontSize:107, color: "#474bad", right:-29, width: 160, height:160, top: 20, position: "absolute" }}>{dataSecond.mobile_count}</Typography>
+
+                    </Paper>
+
+                </Box>
+
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        '& > :not(style)': {
+                            m: 1,
+                            width: 158,
+                            height: 180,
+                            position:"absolute",
+                            top:380,
+                            left:750,
+                            borderColor:"slateblue"
+
+                        },
+                    }}
+                >
+
+                    <Paper>
+                        <Typography style={{fontFamily:"serif", fontSize:17, color: "#474bad", right:-35, width: 160, height:160, top: 19, position: "absolute" }}> Total Laptops  </Typography>
+                        <Typography style={{fontFamily:"serif", fontSize:107, color: "#474bad", right:-30, width: 160, height:160, top: 20, position: "absolute" }}>{dataSecond.laptop_count}</Typography>
+                    </Paper>
+
+                </Box>
+
+
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        '& > :not(style)': {
+                            m: 1,
+                            width: 158,
+                            height: 180,
+                            position:"absolute",
+                            top:120,
+                            left:1000,
+                            borderColor:"slateblue"
+
+                        },
+                    }}
+                >
+
+                    <Paper>
+                        <Typography style={{fontFamily:"serif", fontSize:14, color: "#474bad", right:-28, width: 160, height:160, top: 19, position: "absolute" }}> Total Subscriptions </Typography>
+                        <Typography style={{fontFamily:"serif", fontSize:87, color: "#474bad", right:-46, width: 160, height:160, top: 41, position: "absolute" }}>{dataSecond.MostBoughtPackage}</Typography>
+                    </Paper>
+                </Box>
+
+
+
+
+                    <Avatar  style={{ background:'#dad5e6', color: "#474bad", left: 270, width: 160, height:160, top: 120, position: "absolute" }}></Avatar>
+                {/*<Typography style={{fontFamily:"serif", fontSize:26, color: "#474bad", right: 150, width: 160, height:160, top: 105, position: "absolute" }}> Username  </Typography>*/}
+                {/*<Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", right: 260, width: 160, height:160, top: 125, position: "absolute" }}>{data.username}</Typography>*/}
+                {/*<Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 700, width: 160, height:160, top: 105, position: "absolute" }}> Status  </Typography>*/}
+                {/*<Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 700, width: 160, height:160, top: 125, position: "absolute" }}>Admin</Typography>*/}
+                {/*<Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 460, width: 160, height:160, top: 175, position: "absolute" }}> Date Of Birth  </Typography>*/}
+                {/*<Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 460, width: 160, height:160, top: 195, position: "absolute" }}>{data.dob}</Typography>*/}
+                {/*<Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 460, width: 160, height:160, top: 240, position: "absolute" }}>Contact No  </Typography>*/}
+                {/*<Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 460, width: 160, height:160, top: 260, position: "absolute" }}>{data.contact_no}</Typography>*/}
+                {/*<Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 460, width: 160, height:160, top: 300, position: "absolute" }}>Email  </Typography>*/}
+                {/*<Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 460, width: 160, height:160, top: 320, position: "absolute" }}>{data.email}</Typography>*/}
                 {/*<Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 460, width: 160, height:160, top: 175, position: "absolute" }}> Date Of Birth  </Typography>*/}
                 {/*<Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 460, width: 160, height:160, top: 195, position: "absolute" }}></Typography>*/}
-                <Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 700, width: 160, height:160, top: 175, position: "absolute" }}> Package Name </Typography>
-                <Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 700, width: 700, height:160, top: 193, position: "absolute" }}>{dataSecond.package}</Typography>
-                <Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 700, width: 160, height:160, top: 240, position: "absolute" }}> Clicks Used  </Typography>
-                <Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 700, width: 700, height:160, top: 260, position: "absolute" }}>{dataSecond.consumed} / {dataSecond.total}</Typography>
+                {/*<Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 700, width: 160, height:160, top: 175, position: "absolute" }}> Package Name </Typography>*/}
+                {/*<Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 700, width: 700, height:160, top: 193, position: "absolute" }}>{dataSecond.package}</Typography>*/}
+                {/*<Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 700, width: 160, height:160, top: 240, position: "absolute" }}> Clicks Used  </Typography>*/}
+                {/*<Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 700, width: 700, height:160, top: 260, position: "absolute" }}>{dataSecond.consumed} / {dataSecond.total}</Typography>*/}
                 {/*<Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 700, width: 160, height:160, top: 105, position: "absolute" }}> Subscription Status : </Typography>*/}
                 {/*<Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 700, width: 700, height:160, top: 260, position: "absolute" }}>{dataSecond.is_subscribed}</Typography>*/}
 
@@ -471,7 +624,7 @@ function UserState() {
                         <ListItemButton
                             onClick={handleClick}
                             component={Link}
-                            to="/myprofile/:id"
+                            to="/adminprofile/:id"
                         >
                             <ListItemIcon>
                                 <AppsIcon color={"primary"} />
@@ -551,4 +704,4 @@ function UserState() {
 
 }
 
-export default HomePage;
+export default AdminProfile;

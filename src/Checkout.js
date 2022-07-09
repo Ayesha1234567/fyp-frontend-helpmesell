@@ -20,7 +20,7 @@ const useStyles = makeStyles({
         marginBottom: 10,
         left: 10,
         top: -15,
-        width: 410,
+        width: 310,
         height: 0,
         position: "relative",
         fontFamily: "serif",
@@ -38,10 +38,10 @@ const useStyles = makeStyles({
         display: "block",
     },
     button: {
-        position: "relative",
+        position: "absolute",
         marginBottom:40,
-        top: 80,
-        right:86,
+        bottom: -15,
+        right:135,
         maxHeight: 40,
         width:100,
         maxWidth: 100,
@@ -197,15 +197,13 @@ function PaymentInputs(props) {
                         <TextField
                             className={classes.field}
                             required
-                            value={user.username}
+                            value={name}
                             type={"name"}
                             onChange={(e) => setName(e.target.value)}
                             id="outlined-basic"
-                            label=" Name"
+                            label=" Username"
                             variant="outlined"
                             size="small"
-                            First
-                            Name
                         />
                     </Grid>
 

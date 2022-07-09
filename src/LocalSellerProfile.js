@@ -105,7 +105,7 @@ const useStyles = makeStyles({
     },
     bottom: {
         position: "absolute",
-        bottom: -660,
+        bottom: -680,
         left: 112,
     },
     font: {
@@ -261,7 +261,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-function HomePage({ children }) {
+function LocalSellerProfile({ children }) {
     const classes = useStyles();
     const history = useNavigate();
     const browserHistory = require("react-router").browserHistory;
@@ -334,27 +334,27 @@ function HomePage({ children }) {
 
     }, []);
 
-function UserState() {
+    function UserState() {
 
-    if (user.state === 1) {
-        setIsAdmin(true)
+        if (user.state === 1) {
+            setIsAdmin(true)
+        }
+        else {
+            setIsAdmin(false)
+        }
+        if (user.state === 2) {
+            setIsLocalSeller(true)
+        }
+        else {
+            setIsLocalSeller(false)
+        }
+        if (user.state === 3) {
+            setIsCustomer(true)
+        }
+        else {
+            setIsCustomer(false)
+        }
     }
-    else {
-        setIsAdmin(false)
-    }
-    if (user.state === 2) {
-        setIsLocalSeller(true)
-    }
-    else {
-        setIsLocalSeller(false)
-    }
-    if (user.state === 3) {
-        setIsCustomer(true)
-    }
-    else {
-        setIsCustomer(false)
-    }
-}
 
 
     console.warn("result", dataSecond);
@@ -380,13 +380,11 @@ function UserState() {
                         </Toolbar>
                     </AppBar>
                 </Box>
-
-                {isAdmin?<Typography className={classes.user}>Admin: {data.username}</Typography>:<Typography>Hello</Typography>}
-                    <Avatar  style={{ background:'#dad5e6', color: "#474bad", left: 270, width: 160, height:160, top: 80, position: "absolute" }}></Avatar>
+                <Avatar  style={{ background:'#dad5e6', color: "#474bad", left: 270, width: 160, height:160, top: 80, position: "absolute" }}></Avatar>
                 <Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 700, width: 160, height:160, top: 105, position: "absolute" }}> Status  </Typography>
-                <Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 700, width: 160, height:160, top: 125, position: "absolute" }}>Customer</Typography>
+                <Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 700, width: 160, height:160, top: 125, position: "absolute" }}>LocalSeller</Typography>
                 <Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 460, width: 160, height:160, top: 105, position: "absolute" }}> Username  </Typography>
-                <Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 460, width: 160, height:160, top: 125, position: "absolute" }}>{data.username}</Typography>
+                <Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 460, width: 160, height:160, top: 125, position: "absolute" }}> {data.username}</Typography>
                 <Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 460, width: 160, height:160, top: 175, position: "absolute" }}> Date Of Birth  </Typography>
                 <Typography style={{fontFamily:"serif", fontSize:20, color: "#474bad", left: 460, width: 160, height:160, top: 195, position: "absolute" }}>{data.dob}</Typography>
                 <Typography style={{fontFamily:"serif", fontWeight:"bold", fontSize:16, color: "#474bad", left: 460, width: 160, height:160, top: 240, position: "absolute" }}>Contact No  </Typography>
@@ -471,7 +469,7 @@ function UserState() {
                         <ListItemButton
                             onClick={handleClick}
                             component={Link}
-                            to="/myprofile/:id"
+                            to="/localsellerprofile/:id"
                         >
                             <ListItemIcon>
                                 <AppsIcon color={"primary"} />
@@ -551,4 +549,4 @@ function UserState() {
 
 }
 
-export default HomePage;
+export default LocalSellerProfile;

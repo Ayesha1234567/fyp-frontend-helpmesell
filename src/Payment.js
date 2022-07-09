@@ -286,10 +286,10 @@ const useStyles=makeStyles({
         color:"#9ea3a8"
     },
     dialog:{
-        width:450,
+        // width:1300,
         bottom:290,
         position:"absolute",
-        right:200
+        left:100,
     },
     heading:{
         position:"absolute",
@@ -372,10 +372,6 @@ function Payment()
     const history = useNavigate();
     const [open, setOpen] = React.useState(false);
     const [user,setUser]=useState({});
-    const [number,setNumber]=useState({});
-    const [exp_month,setExp_Month]=useState({});
-    const [exp_year,setExp_Year]=useState({});
-    const [cvc,setCVC]=useState({});
     const [openTwo, setOpenTwo] = React.useState(false);
     const [currentPackageId, setCurrentPackageId] = useState('')
 
@@ -503,12 +499,37 @@ function Payment()
                         ></ListSubheader>
                     }
                 >
+                    {parseInt(user.state) == 1 &&
+                        <ListItemButton component={Link} to={"/adminprofile/" + user.id}>
+                            <ListItemIcon>
+                                <AccountCircleIcon color={"primary"}></AccountCircleIcon>
+                            </ListItemIcon>
+                            <ListItemText primary="My Profile"/>
+                        </ListItemButton>
+                    }
+                    {parseInt(user.state) == 2 &&
+                        <ListItemButton component={Link} to={"/localsellerprofile/" + user.id}>
+                            <ListItemIcon>
+                                <AccountCircleIcon color={"primary"}></AccountCircleIcon>
+                            </ListItemIcon>
+                            <ListItemText primary="My Profile"/>
+                        </ListItemButton>
+                    }
+                    {parseInt(user.state) == 3 &&
+                        <ListItemButton component={Link} to={"/myprofile/" + user.id}>
+                            <ListItemIcon>
+                                <AccountCircleIcon color={"primary"}></AccountCircleIcon>
+                            </ListItemIcon>
+                            <ListItemText primary="My Profile"/>
+                        </ListItemButton>
+                    }
                     <ListItemButton component={Link} to="/homepage">
                         <ListItemIcon>
                             <HomeIcon color={"primary"} />
                         </ListItemIcon>
                         <ListItemText primary="Home"/>
                     </ListItemButton>
+
                     {parseInt(user.state) == 2 &&
                         <ListItemButton component={Link} to="/uploadfile">
                             <ListItemIcon>

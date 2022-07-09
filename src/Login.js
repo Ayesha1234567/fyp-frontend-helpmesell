@@ -23,7 +23,7 @@ import {BASE_URL} from "./Constants";
 const useStyles = makeStyles({
   field: {
     marginTop: 50,
-    marginBottom: 10,
+    marginBottom: 19,
     left: 40,
     top: 0,
     width: 180,
@@ -42,9 +42,9 @@ const useStyles = makeStyles({
     top: 200,
   },
   button: {
-    position: "relative",
-    top: 55,
-    left: 90,
+    position: "absolute",
+    bottom: 58,
+    left: 126,
     maxHeight: 80,
     maxWidth: 100,
     fontFamily: "serif",
@@ -61,7 +61,7 @@ const useStyles = makeStyles({
   },
   bottom: {
     position: "relative",
-    bottom: -120,
+    bottom: -45,
     left: -1,
   },
 
@@ -99,13 +99,47 @@ const useStyles = makeStyles({
     top: -230,
     fontFamily: "serif",
   },
+  success:{
+    position:"relative",
+    left:50,
+    fontSize:10,
+    top:25,
+    color:"red"
+  },
 });
 function Login() {
   const history = useNavigate();
   const [username, setUsername] = useState("");
+  const [usernameErr, setUsernameErr] = useState("");
   const [password, setPassword] = useState("");
-
+  const [passwordErr, setPasswordErr] = useState("");
   const [openSnackBAr, setOpenSnackBAR] = useState(false);
+  function UserNameHandler(e)
+  {
+    setUsername(e.target.value)
+    let UName=e.target.value;
+    if(UName.length < 3)
+    {
+      setUsernameErr(true)
+    }
+    else
+    {
+      setUsernameErr(false)
+    }
+  }
+  function PasswordHandler(e)
+  {
+    setPassword(e.target.value)
+    let password=e.target.value;
+    if(password.length < 1)
+    {
+      setPasswordErr(true)
+    }
+    else
+    {
+      setPasswordErr(false)
+    }
+  }
 
   /*const history=useHistory();
     useEffect(()=>{
@@ -205,7 +239,7 @@ function Login() {
           <Box
               sx={{
                 width: 300,
-                height: 300,
+                height: 330,
                 p: 1,
                 border: "2px solid",
                 borderColor: "#89a0cc",
@@ -229,26 +263,29 @@ function Login() {
                     className={classes.field}
                     required
                     value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    onChange={UserNameHandler}
                     id="outlined-basic"
                     label="Username"
                     variant="outlined"
                     size="small"
                     Username
                 />
+                {usernameErr?<Typography className={classes.success} >Field is empty!</Typography>:null}
 
                 <TextField
                     className={classes.field}
                     type={"password"}
                     required
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={PasswordHandler}
                     id="outlined-basic"
                     label="Password"
                     variant="outlined"
                     size="small"
                     Password
                 />
+                {passwordErr?<Typography className={classes.success} >Field is empty!</Typography>:null}
+
               </Grid>
 
               <Button
@@ -260,8 +297,8 @@ function Login() {
                 Login
               </Button>
             </Container>
-            <Typography style={{   color:'#512ca8',fontFamily:"serif", left:70, height: 65, top: 265, position: "absolute" }}>Forgot Password?</Typography>
-            <Link to={"/forgotpassword"} > <Typography style={{ color:'#512ca8',fontFamily:"serif", position:"absolute",top:265,left:190}}>Reset it!</Typography> </Link>
+            <Typography style={{   color:'#512ca8',fontFamily:"serif", left:70, height: 65, bottom:-27, position: "absolute" }}>Forgot Password?</Typography>
+            <Link to={"/forgotpassword"} > <Typography style={{ color:'#512ca8',fontFamily:"serif", position:"absolute",bottom:13, left:190}}>Reset it!</Typography> </Link>
 
           </Box>
           <AppBar className={classes.bottom} position="static" color="primary">

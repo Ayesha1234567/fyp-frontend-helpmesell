@@ -22,6 +22,8 @@ import ResetPassword from "./ResetPassword";
 import EmailPassword from "./EmailPassword";
 import ResetSuccess from "./ResetSuccess";
 import PaymentSuccess from "./PaymentSuccess";
+import AdminProfile from "./AdminProfile";
+import LocalSellerProfile from "./LocalSellerProfile";
 // import './App.css';
 
 const App = () => {
@@ -29,33 +31,25 @@ const App = () => {
       <Router>
         <Routes>
           <Route path="/login" exact={true} element={<Login />} />
-          {/* <Login /  >
-        </Route> */}
+
           <Route path="/" exact={true} element={<SignUp />} />
-          {/* <SignUp />
-        </Route> */}
+
           <Route path="/homepage" exact={true} element={<HomePage />} />
-          {/* <HomePage />
-        </Route> */}
+
           <Route path="/adminmain" exact={true} element={<AdminMain />} />
-          {/* <AdminMain />
-        </Route> */}
+
           <Route path="/adminlogin" exact={true} element={<AdminLogin />} />
-          {/* <AdminLogin />
-        </Route> */}
+
           <Route path="/marketsurvey" exact={true} element={<MarketSurvey />} />
-          {/* <MarketSurvey />
-        </Route> */}
+
           <Route
               path="/pricecomparison"
               exact={true}
               element={<PriceComparison />}
           />
-          {/* <PriceComparison />
-        </Route> */}
+
           <Route path="/products/:id" exact={true} element={<DynamicPage />} />
-          {/* <DynamicPage />
-        </Route> */}
+
           <Route path="/uploadfile" exact={true} element={<UploadFile />} />
           <Route path="/signuplocalseller" exact={true} element={<SignupLocalseller />} />
           <Route path="/laptops" exact={true} element={<Laptops />} />
@@ -65,6 +59,8 @@ const App = () => {
           <Route path="/test" exact={true} element={<NativeSelectDemo />} />
           <Route path="/forgotpassword" exact={true} element={<ForgotPassword />} />
           <Route path="/myprofile/:id" exact={true} element={<MyProfile />} />
+          <Route path="/adminprofile/:id" exact={true} element={<AdminProfile/>}/>
+          <Route path="/localsellerprofile/:id" exact={true} element={<LocalSellerProfile/>}/>
           <Route path="/ResetPassword/:id" exact={true} element={<ResetPassword />} />
           <Route path="/emailpassword" exact={true} element={<EmailPassword />} />
           <Route path="/resetsuccess" exact={true} element={<ResetSuccess />} />
@@ -72,22 +68,6 @@ const App = () => {
         </Routes>
       </Router>
 
-      // <div className="App">
-      //   <header className="App-header">
-      //     <img src={logo} className="App-logo" alt="logo" />
-      //     <p>
-      //       Edit <code>src/App.js</code> and save to reload.
-      //     </p>
-      //     <a
-      //       className="App-link"
-      //       href="https://reactjs.org"
-      //       target="_blank"
-      //       rel="noopener noreferrer"
-      //     >
-      //       Learn React
-      //     </a>
-      //   </header>
-      // </div>
   );
 };
 export default App;

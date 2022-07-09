@@ -405,12 +405,37 @@ function UploadFile()
                   ></ListSubheader>
                 }
             >
+              {parseInt(user.state) == 1 &&
+                  <ListItemButton component={Link} to={"/adminprofile/" + user.id}>
+                    <ListItemIcon>
+                      <AccountCircleIcon color={"primary"}></AccountCircleIcon>
+                    </ListItemIcon>
+                    <ListItemText primary="My Profile"/>
+                  </ListItemButton>
+              }
+              {parseInt(user.state) == 2 &&
+                  <ListItemButton component={Link} to={"/localsellerprofile/" + user.id}>
+                    <ListItemIcon>
+                      <AccountCircleIcon color={"primary"}></AccountCircleIcon>
+                    </ListItemIcon>
+                    <ListItemText primary="My Profile"/>
+                  </ListItemButton>
+              }
+              {parseInt(user.state) == 3 &&
+                  <ListItemButton component={Link} to={"/myprofile/" + user.id}>
+                    <ListItemIcon>
+                      <AccountCircleIcon color={"primary"}></AccountCircleIcon>
+                    </ListItemIcon>
+                    <ListItemText primary="My Profile"/>
+                  </ListItemButton>
+              }
               <ListItemButton component={Link} to="/homepage">
-                <ListItemIcon>
-                  <HomeIcon color={"primary"} />
-                </ListItemIcon>
-                <ListItemText primary="Home"/>
-              </ListItemButton>
+              <ListItemIcon>
+                <HomeIcon color={"primary"} />
+              </ListItemIcon>
+              <ListItemText primary="Home"/>
+            </ListItemButton>
+
               {
                   parseInt(user.state)==1 &&
                   <ListItemButton component={Link} to="/adminmain">

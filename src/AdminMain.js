@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {BASE_URL} from './Constants';
 import {Box, Container, Grid, IconButton, Snackbar, TextField} from "@material-ui/core";
 import Drawer from "@mui/material/Drawer";
@@ -18,6 +18,7 @@ import { styled, alpha } from "@mui/material/styles";
 import { useTheme } from "@mui/material/styles";
 import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 import InputBase from "@mui/material/InputBase";
+import axios, {cancelToken, isCancel} from "axios";
 // import {History} from "@material-ui/icons";
 // import { browserHistory } from "react-router";
 import { useNavigate } from "react-router-dom";
@@ -27,7 +28,6 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import LaptopMacIcon from "@mui/icons-material/LaptopMac";
 import LogoutIcon from "@mui/icons-material/Logout";
 import TableRow from "@mui/material/TableRow";
-import axios from "axios";
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 
@@ -50,6 +50,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
 import LinearProgress from "@mui/material/LinearProgress";
 import HomeIcon from "@mui/icons-material/Home";
+import ReviewsIcon from "@mui/icons-material/Reviews";
 // import router from "react-router-dom/es/Router";
 
 const drawerWidth = 240;
@@ -241,7 +242,8 @@ function AdminMain({ children }) {
     const [website, setWebsite] = React.useState('');
     const [openSnackBAr, setOpenSnackBAR] = useState(false);
     const [upload,setUpload]=useState(null);
-    const [success,setSuccess]=useState(false)
+    const [success,setSuccess]=useState(false);
+    const cancelFileUpload = useRef(null);
 
 
     const handleChange = (event: SelectChangeEvent) => {
@@ -313,6 +315,7 @@ function AdminMain({ children }) {
                 Accept: "application/json",
             },
             body: JSON.stringify(item),
+            cancelToken: new cancelToken(cancel => cancelFileUpload.current = cancel)
         };
         try {
             const response = await axios({
@@ -339,6 +342,17 @@ function AdminMain({ children }) {
             const { data } = response;
             const { message } = data;
             setOpenSnackBAR(true);
+            if (isCancel(error))
+            {
+                alert(error.message)
+            }
+        }
+        const cancelUpload =()=>
+        {
+            if(cancelFileUpload.current)
+            {
+                cancelFileUpload.current("User has cancelled")
+            }
         }
 
     }
@@ -388,12 +402,45 @@ function AdminMain({ children }) {
                             ></ListSubheader>
                         }
                     >
+                        {parseInt(user.state) == 1 &&
+                            <ListItemButton component={Link} to={"/adminprofile/" + user.id}>
+                                <ListItemIcon>
+                                    <AccountCircleIcon color={"primary"}></AccountCircleIcon>
+                                </ListItemIcon>
+                                <ListItemText primary="My Profile"/>
+                            </ListItemButton>
+                        }
+                        {parseInt(user.state) == 2 &&
+                            <ListItemButton component={Link} to={"/localsellerprofile/" + user.id}>
+                                <ListItemIcon>
+                                    <AccountCircleIcon color={"primary"}></AccountCircleIcon>
+                                </ListItemIcon>
+                                <ListItemText primary="My Profile"/>
+                            </ListItemButton>
+                        }
+                        {parseInt(user.state) == 3 &&
+                            <ListItemButton component={Link} to={"/myprofile/" + user.id}>
+                                <ListItemIcon>
+                                    <AccountCircleIcon color={"primary"}></AccountCircleIcon>
+                                </ListItemIcon>
+                                <ListItemText primary="My Profile"/>
+                            </ListItemButton>
+                        }
                         <ListItemButton component={Link} to="/homepage">
                             <ListItemIcon>
                                 <HomeIcon color={"primary"} />
                             </ListItemIcon>
                             <ListItemText primary="Home"/>
                         </ListItemButton>
+
+                        {parseInt(user.state) == 1 &&
+                            <ListItemButton component={Link} to="/scrapereviews">
+                                <ListItemIcon>
+                                    <ReviewsIcon color={"primary"} />
+                                </ListItemIcon>
+                                <ListItemText primary=" Scrape Reviews" />
+                            </ListItemButton>
+                        }
                         {parseInt(user.state)==2 &&
                             <ListItemButton component={Link} to="/uploadfile">
                                 <ListItemIcon>

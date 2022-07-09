@@ -292,7 +292,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         },
     },
 }));
-function ProductDetails(props) {
+function ProductDetails() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [data, setData] = useState({});
@@ -437,7 +437,7 @@ function ProductDetails(props) {
     return (
         <div>
 
-            {data !== {} ? (
+            {/*{data !== {} ? (*/}
                 <>
                     <TableContainer component={Paper}>*/}
                         <Table className={classes.list} aria-label="simple table">
@@ -510,12 +510,37 @@ function ProductDetails(props) {
                                     ></ListSubheader>
                                 }
                             >
+                                {parseInt(user.state) == 1 &&
+                                    <ListItemButton component={Link} to={"/adminprofile/" + user.id}>
+                                        <ListItemIcon>
+                                            <AccountCircleIcon color={"primary"}></AccountCircleIcon>
+                                        </ListItemIcon>
+                                        <ListItemText primary="My Profile"/>
+                                    </ListItemButton>
+                                }
+                                {parseInt(user.state) == 2 &&
+                                    <ListItemButton component={Link} to={"/localsellerprofile/" + user.id}>
+                                        <ListItemIcon>
+                                            <AccountCircleIcon color={"primary"}></AccountCircleIcon>
+                                        </ListItemIcon>
+                                        <ListItemText primary="My Profile"/>
+                                    </ListItemButton>
+                                }
+                                {parseInt(user.state) == 3 &&
+                                    <ListItemButton component={Link} to={"/myprofile/" + user.id}>
+                                        <ListItemIcon>
+                                            <AccountCircleIcon color={"primary"}></AccountCircleIcon>
+                                        </ListItemIcon>
+                                        <ListItemText primary="My Profile"/>
+                                    </ListItemButton>
+                                }
                                 <ListItemButton component={Link} to="/homepage">
                                     <ListItemIcon>
                                         <HomeIcon color={"primary"} />
                                     </ListItemIcon>
                                     <ListItemText primary="Home"/>
                                 </ListItemButton>
+
                                 {parseInt(user.state)==2 &&
                                     <ListItemButton component={Link} to="/uploadfile">
                                         <ListItemIcon>
@@ -593,9 +618,9 @@ function ProductDetails(props) {
                     </Box>
 
                 </>
-            ) : (
-                <h5>Loading</h5>
-            )}
+            // ) : (
+            //     <h5>Loading</h5>
+            // )}
         </div>
     );
 }

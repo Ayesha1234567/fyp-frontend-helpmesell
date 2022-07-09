@@ -255,7 +255,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 function HomePage({ children }) {
   const classes = useStyles();
   const history = useNavigate();
-  const browserHistory = require("react-router").browserHistory;
   const [open, setOpen] = React.useState(false);
   const [openTwo, setOpenTwo] = React.useState(false);
   const [dataTwo, setDataTwo] = useState({});
@@ -396,13 +395,30 @@ function HomePage({ children }) {
                   ></ListSubheader>
                 }
             >
-              <ListItemButton component={Link} to={"/myprofile/"+ user.id}>
-                <ListItemIcon>
-                  <AccountCircleIcon color={"primary"}></AccountCircleIcon>
-                </ListItemIcon>
-                <ListItemText primary="My Profile" />
-              </ListItemButton>
-
+              {parseInt(user.state) == 1 &&
+                  <ListItemButton component={Link} to={"/adminprofile/" + user.id}>
+                    <ListItemIcon>
+                      <AccountCircleIcon color={"primary"}></AccountCircleIcon>
+                    </ListItemIcon>
+                    <ListItemText primary="My Profile"/>
+                  </ListItemButton>
+              }
+              {parseInt(user.state) == 2 &&
+                  <ListItemButton component={Link} to={"/localsellerprofile/" + user.id}>
+                    <ListItemIcon>
+                      <AccountCircleIcon color={"primary"}></AccountCircleIcon>
+                    </ListItemIcon>
+                    <ListItemText primary="My Profile"/>
+                  </ListItemButton>
+              }
+              {parseInt(user.state) == 3 &&
+                  <ListItemButton component={Link} to={"/myprofile/" + user.id}>
+                    <ListItemIcon>
+                      <AccountCircleIcon color={"primary"}></AccountCircleIcon>
+                    </ListItemIcon>
+                    <ListItemText primary="My Profile"/>
+                  </ListItemButton>
+              }
               {parseInt(user.state) == 2 &&
                   <ListItemButton component={Link} to="/uploadfile">
                     <ListItemIcon>
@@ -496,7 +512,7 @@ function HomePage({ children }) {
         <LaptopMacIcon style={{ color: "#474bad", left: 730, width: 200, height: 100, top: 120, position: "absolute" }} />
         <LaptopIcon style={{ color: "#474bad", left: 635, width: 200, height: 80, top: 135, position: "absolute" }} />
         <PhoneAndroidIcon style={{ color: "#4044a8", left: 805, width: 200, height: 80, top: 130, position: "absolute" }} />
-        <Typography style={{ fontSize: 56, fontFamily: "serif", left: 650, top: 200, color: '#474bad', position: "absolute" }}>HELP ME SELL {user.state}</Typography>
+        <Typography style={{ fontSize: 56, fontFamily: "serif", left: 650, top: 200, color: '#474bad', position: "absolute" }}>HELP ME SELL </Typography>
         <Box
             sx={{
               display: "flex",
