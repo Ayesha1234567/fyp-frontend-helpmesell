@@ -117,7 +117,11 @@ function ResetPassword() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [success,setSuccess]=useState(false);
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> ce693116355461fc5397a7991af48ba7c8dce6a4
     let { id } = useParams();
 
     const close = (

@@ -684,7 +684,11 @@ function Payment()
                 </BootstrapDialogTitle>
                 <DialogContent dividers>
                     {/* <PaymentInputs paymentId="price_1KvnsYFVG2XMVBbY4b3Kio3b" /> */}
+<<<<<<< HEAD
                     <PaymentInputs paymentId={currentPackageId ? currentPackageId :'price_1KvntgFVG2XMVBbYF9GP2cqJ'}/>
+=======
+                    <PaymentInputs paymentId={currentPackageId ? currentPackageId :'price_1KvnsYFVG2XMVBbY4b3Kio3b'}/>
+>>>>>>> ce693116355461fc5397a7991af48ba7c8dce6a4
                 </DialogContent>
             </BootstrapDialog>
             );

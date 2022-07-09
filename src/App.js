@@ -59,12 +59,16 @@ const App = () => {
           <Route path="/test" exact={true} element={<NativeSelectDemo />} />
           <Route path="/forgotpassword" exact={true} element={<ForgotPassword />} />
           <Route path="/myprofile/:id" exact={true} element={<MyProfile />} />
+<<<<<<< HEAD
           <Route path="/adminprofile/:id" exact={true} element={<AdminProfile/>}/>
           <Route path="/localsellerprofile/:id" exact={true} element={<LocalSellerProfile/>}/>
           <Route path="/ResetPassword/:id" exact={true} element={<ResetPassword />} />
           <Route path="/emailpassword" exact={true} element={<EmailPassword />} />
           <Route path="/resetsuccess" exact={true} element={<ResetSuccess />} />
           <Route path="/paymentsuccess" exact={true} element={<PaymentSuccess />} />
+=======
+          <Route path="/ResetPassword/:id" exact={true} element={<ResetPassword />} />
+>>>>>>> ce693116355461fc5397a7991af48ba7c8dce6a4
         </Routes>
       </Router>
 

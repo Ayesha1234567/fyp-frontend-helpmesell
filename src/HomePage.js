@@ -276,6 +276,10 @@ function HomePage({ children }) {
   const handleChange = (event: SelectChangeEvent) => {
     setBrand(event.target.value);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> ce693116355461fc5397a7991af48ba7c8dce6a4
     if(event.target.value != 'all' ){
       setDataFilter(data.filter( (d) => d.product_name.toUpperCase().includes(event.target.value.toUpperCase())))
     }else{
