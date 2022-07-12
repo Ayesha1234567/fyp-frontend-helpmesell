@@ -329,9 +329,9 @@ function UploadFile()
     console.warn(file)
     const formdata=new FormData();
     console.log(file)
-    formdata.append(" ls_product_file",file)
-    formdata.append(" user",JSON.parse(localStorage.getItem('current_user')).id)
-    formdata.append(" file_state",1)
+    formdata.append("ls_product_file",file)
+    formdata.append("user",JSON.parse(localStorage.getItem('current_user')).id)
+    formdata.append("file_state",1)
 
     let item = {  ls_product_file: file, user: JSON.parse(localStorage.getItem('current_user')).id, file_state: 1 };
     axios({

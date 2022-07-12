@@ -108,7 +108,6 @@ const useStyles = makeStyles({
 });
 
 function SignUp() {
-<<<<<<< HEAD
     const classes = useStyles();
     const [firstName, setFirstName] = useState("");
     const [fNameErr, setFNameErr] = useState(false);
@@ -130,24 +129,10 @@ function SignUp() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const[cPasswordErr,setCPasswordErr] = useState(false);
     const [openSnackBAr, setOpenSnackBAR] = useState(false);
-=======
-  const classes = useStyles();
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [contactNo, setContactNo] = useState("");
-  const [dob, setDob] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [openSnackBAr, setOpenSnackBAR] = useState(false);
-  const [snackMessage, setSnackMesaage] = useState('')
->>>>>>> ce693116355461fc5397a7991af48ba7c8dce6a4
+    const [snackMessage, setSnackMesaage] = useState('')
 
 
 
-
-<<<<<<< HEAD
     const history = useNavigate();
 
     async function Submit() {
@@ -212,23 +197,10 @@ function SignUp() {
             const { response } = error;
             const { data } = response;
             const { message } = data;
-            // setSnackMesaage(message || error.message || 'Sign Up Failed')
-            // setOpenSnackBAR(true)
-        }
-=======
-      const { data } = response || {};
-      if (data.username) {
-        history("/login");
-      }
-    } catch (error) {
-      console.log("error", { error });
-      const { response } = error;
-      const { data } = response;
-      const { message } = data;
-      setSnackMesaage(message || error.message || 'Sign Up Failed')
-      setOpenSnackBAR(true);
->>>>>>> ce693116355461fc5397a7991af48ba7c8dce6a4
-    }
+            setSnackMesaage(message || error.message || 'Sign Up Failed')
+            setOpenSnackBAR(true);
+          }
+    } 
     const closeTwo = (
         <IconButton
             size="small"
@@ -548,7 +520,6 @@ function SignUp() {
                                     variant="outlined"
                                     size="small"
 
-<<<<<<< HEAD
                                 />
                                 {cPasswordErr?<Typography className={classes.success} >Password does not match</Typography>:null}
                             </Grid>
@@ -596,17 +567,5 @@ function SignUp() {
             }
         </div>
     );
-=======
-        <Snackbar
-            open={openSnackBAr}
-            autoHideDuration={6000}
-            // message={"Sign Up Failed"}
-            message={snackMessage}
-            anchorOrigin={{ vertical: "top", horizontal: "right" }}
-            action={action}
-        />
-      </div>
-  );
->>>>>>> ce693116355461fc5397a7991af48ba7c8dce6a4
 }
 export default SignUp;

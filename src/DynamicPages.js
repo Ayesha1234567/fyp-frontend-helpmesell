@@ -336,6 +336,7 @@ function ProductDetails() {
                         setRelatedProducts(data);
                     })
                     .catch((err) => {
+                        history("/payment")
                         console.log("this is the error: ", { err });
                     });
             }

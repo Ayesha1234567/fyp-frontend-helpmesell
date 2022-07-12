@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {BASE_URL} from './Constants';
 import {Box, Container, Grid, IconButton, Snackbar, TextField} from "@material-ui/core";
 import Drawer from "@mui/material/Drawer";
@@ -18,7 +18,6 @@ import { styled, alpha } from "@mui/material/styles";
 import { useTheme } from "@mui/material/styles";
 import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 import InputBase from "@mui/material/InputBase";
-import axios, {cancelToken, isCancel} from "axios";
 // import {History} from "@material-ui/icons";
 // import { browserHistory } from "react-router";
 import { useNavigate } from "react-router-dom";
@@ -28,9 +27,9 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import LaptopMacIcon from "@mui/icons-material/LaptopMac";
 import LogoutIcon from "@mui/icons-material/Logout";
 import TableRow from "@mui/material/TableRow";
+import axios from "axios";
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
-
 // import DynamicPage from "./DynamicPages";
 // import  { Redirect } from 'react-router-dom'
 import {
@@ -50,9 +49,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
 import LinearProgress from "@mui/material/LinearProgress";
 import HomeIcon from "@mui/icons-material/Home";
-import ReviewsIcon from "@mui/icons-material/Reviews";
 // import router from "react-router-dom/es/Router";
-
 const drawerWidth = 240;
 const useStyles = makeStyles({
     drawer: {
@@ -81,7 +78,6 @@ const useStyles = makeStyles({
     search: {
         left: 1000,
     },
-
     searchmain: {
         border: "solid 2px",
         borderColor: "slateblue",
@@ -90,7 +86,6 @@ const useStyles = makeStyles({
         position: "absolute",
         maxWidth: 550,
     },
-
     font: {
         fontFamily: "serif",
         color: "slateblue",
@@ -172,7 +167,6 @@ const useStyles = makeStyles({
         width:400,
         left:40,
         bottom:350,
-
     },
     icon:{
         position:"absolute",
@@ -183,9 +177,7 @@ const useStyles = makeStyles({
         fontFamily:"serif",
         left:1165
     }
-
 });
-
 const Search = styled("div")(({ theme }) => ({
     position: "relative",
     borderRadius: theme.shape.borderRadius,
@@ -200,7 +192,6 @@ const Search = styled("div")(({ theme }) => ({
         width: "auto",
     },
 }));
-
 const SearchIconWrapper = styled("div")(({ theme }) => ({
     padding: theme.spacing(0, 2),
     height: "100%",
@@ -210,9 +201,6 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
     alignItems: "center",
     justifyContent: "center",
 }));
-
-
-
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: "inherit",
     "& .MuiInputBase-input": {
@@ -229,8 +217,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         },
     },
 }));
-
-
 function AdminMain({ children }) {
     const classes = useStyles();
     const history = useNavigate();
@@ -242,10 +228,7 @@ function AdminMain({ children }) {
     const [website, setWebsite] = React.useState('');
     const [openSnackBAr, setOpenSnackBAR] = useState(false);
     const [upload,setUpload]=useState(null);
-    const [success,setSuccess]=useState(false);
-    const cancelFileUpload = useRef(null);
-
-
+    const [success,setSuccess]=useState(false)
     const handleChange = (event: SelectChangeEvent) => {
         setWebsite(event.target.value);
     };
@@ -259,8 +242,6 @@ function AdminMain({ children }) {
             <CloseIcon fontSize="small" />
         </IconButton>
     );
-
-
     const action = (
         <IconButton
             size="small"
@@ -271,8 +252,6 @@ function AdminMain({ children }) {
             <CloseIcon fontSize="small" />
         </IconButton>
     );
-
-
     const theme = useTheme();
     const bull = (
         <Box
@@ -284,7 +263,6 @@ function AdminMain({ children }) {
     //     history.push("/uploadfile/");
     // }
     useEffect(async () => {
-
         // axios;
         let result = await fetch(
             BASE_URL+"/api/products/"
@@ -293,7 +271,6 @@ function AdminMain({ children }) {
         setData(result);
         setUser(JSON.parse(localStorage.getItem('current_user')))
     }, []);
-
     function passValues() {
         console.log("thats the click handler");
         //     {data.map((row) => (
@@ -302,12 +279,10 @@ function AdminMain({ children }) {
         // ))}
         // history.push("/products/");
     }
-
     async function Submit() {
         let item = {
             website: website
         };
-
         const requestOptions = {
             method: "POST",
             headers: {
@@ -315,7 +290,6 @@ function AdminMain({ children }) {
                 Accept: "application/json",
             },
             body: JSON.stringify(item),
-            cancelToken: new cancelToken(cancel => cancelFileUpload.current = cancel)
         };
         try {
             const response = await axios({
@@ -335,40 +309,24 @@ function AdminMain({ children }) {
                 console.log("in response 200")
             }
         }
-
         catch (error) {
             console.log("error", { error });
             const { response } = error;
             const { data } = response;
             const { message } = data;
             setOpenSnackBAR(true);
-            if (isCancel(error))
-            {
-                alert(error.message)
-            }
         }
-        const cancelUpload =()=>
-        {
-            if(cancelFileUpload.current)
-            {
-                cancelFileUpload.current("User has cancelled")
-            }
-        }
-
     }
     console.warn("result", data);
     function handleClick() {
         setOpen(!open);
     }
-
     const logoutHandler = () => {
         localStorage.setItem("current_user", "");
         history("/login");
     };
-
     return (
         <div>
-
             <Box sx={{ display: "flex" }}>
                 <Box sx={{ flexGrow: 5 }}>
                     <AppBar position="static" className={classes.app}>
@@ -402,45 +360,12 @@ function AdminMain({ children }) {
                             ></ListSubheader>
                         }
                     >
-                        {parseInt(user.state) == 1 &&
-                            <ListItemButton component={Link} to={"/adminprofile/" + user.id}>
-                                <ListItemIcon>
-                                    <AccountCircleIcon color={"primary"}></AccountCircleIcon>
-                                </ListItemIcon>
-                                <ListItemText primary="My Profile"/>
-                            </ListItemButton>
-                        }
-                        {parseInt(user.state) == 2 &&
-                            <ListItemButton component={Link} to={"/localsellerprofile/" + user.id}>
-                                <ListItemIcon>
-                                    <AccountCircleIcon color={"primary"}></AccountCircleIcon>
-                                </ListItemIcon>
-                                <ListItemText primary="My Profile"/>
-                            </ListItemButton>
-                        }
-                        {parseInt(user.state) == 3 &&
-                            <ListItemButton component={Link} to={"/myprofile/" + user.id}>
-                                <ListItemIcon>
-                                    <AccountCircleIcon color={"primary"}></AccountCircleIcon>
-                                </ListItemIcon>
-                                <ListItemText primary="My Profile"/>
-                            </ListItemButton>
-                        }
                         <ListItemButton component={Link} to="/homepage">
                             <ListItemIcon>
                                 <HomeIcon color={"primary"} />
                             </ListItemIcon>
                             <ListItemText primary="Home"/>
                         </ListItemButton>
-
-                        {parseInt(user.state) == 1 &&
-                            <ListItemButton component={Link} to="/scrapereviews">
-                                <ListItemIcon>
-                                    <ReviewsIcon color={"primary"} />
-                                </ListItemIcon>
-                                <ListItemText primary=" Scrape Reviews" />
-                            </ListItemButton>
-                        }
                         {parseInt(user.state)==2 &&
                             <ListItemButton component={Link} to="/uploadfile">
                                 <ListItemIcon>
@@ -449,7 +374,6 @@ function AdminMain({ children }) {
                                 <ListItemText primary="User Data" />
                             </ListItemButton>
                         }
-
                         <ListItemButton component={Link} to="/pricecomparison">
                             <ListItemIcon>
                                 <SearchIcon color={"primary"} />
@@ -501,7 +425,6 @@ function AdminMain({ children }) {
             {/*   <Button  className={classes.label} onClick={Submit}  variant="contained" color="primary">*/}
             {/*        Upload File*/}
             {/*    </Button>*/}
-
             {/*</Container>*/}
             <Box
                 sx={{
@@ -515,7 +438,6 @@ function AdminMain({ children }) {
                     position:'relative',
                     borderRadius:4,
                     bgcolor:"",
-
                 }}
             >
                 <AppBar className={classes.bar} position="static">
@@ -527,7 +449,6 @@ function AdminMain({ children }) {
                 </AppBar>
                 {success && <Alert  action={close} className={classes.success} severity="success">Data Scrapping : Initiated-Products will show soon</Alert>}
                 <Container>
-
                     {/*<Typography style={{left:19,top:134,position:"absolute", fontSize:26,fontFamily:"serif", color:"slateblue"}}>Scrape website:</Typography>*/}
                     {/*                    <TextField*/}
                     {/*                        className={classes.field}*/}
@@ -539,7 +460,6 @@ function AdminMain({ children }) {
                     {/*                        label="URl"*/}
                     {/*                        variant="outlined"*/}
                     {/*                        size="small"*/}
-
                     {/*                    />*/}
                     <Box  className={classes.dropdown} sx={{ minWidth: 120 }}>
                         <FormControl fullWidth>
@@ -559,6 +479,15 @@ function AdminMain({ children }) {
                                 <MenuItem value="https://pakistanistores.com/prices/laptops-and-pc/laptops/hp">PakistaniStores-HP Laptops</MenuItem>
                                 <MenuItem value="https://pakistanistores.com/prices/laptops-and-pc/laptops/dell">PakistaniStores-Dell Laptops</MenuItem>
                                 <MenuItem value="https://pakistanistores.com/prices/laptops-and-pc/laptops/acer">PakistaniStores-Acer Laptops</MenuItem>
+                                <MenuItem value="https://pakistanistores.com/products/xiaomi-Phones">PakistaniStores-Xiaomi Mobile</MenuItem>
+                                <MenuItem value="https://pakistanistores.com/products/Samsung-Phones">PakistaniStores-Samsung Mobile</MenuItem>
+                                <MenuItem value="https://pakistanistores.com/products/xiaomi-Phones">pakistanistores-xiaomi-Phon</MenuItem>
+                                <MenuItem value="https://pakistanistores.com/products/Apple-Phones">pakistanistores-Apple-Phone</MenuItem>
+                                <MenuItem value="https://pakistanistores.com/products/oppo-Phones">pakistanistores-oppo-Phones</MenuItem>
+                                <MenuItem value="https://pakistanistores.com/products/realme-Phones">pakistanistores-realme-Phon</MenuItem>
+                                <MenuItem value="https://www.shophive.com/laptops-computers/laptops/dell?product_list_mode=grid">shophive-dell</MenuItem>
+                                <MenuItem value="https://www.shophive.com/laptops-computers/laptops/hp?product_list_mode=grid">shophive-hp</MenuItem>
+                                <MenuItem value="https://www.shophive.com/laptops-computers/laptops/acer?product_list_mode=grid">shophive-acer</MenuItem>
                             </Select>
                         </FormControl>
                     </Box>
@@ -580,5 +509,4 @@ function AdminMain({ children }) {
         </div>
     );
 }
-
 export default AdminMain;
